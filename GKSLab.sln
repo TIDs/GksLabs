@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab", "GKSLab\GKSLab.csproj", "{8D9294CF-6841-479E-8A35-B380EFF012AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Web", "GKSLab\GKSLab.Web.csproj", "{8D9294CF-6841-479E-8A35-B380EFF012AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Bussiness.Logic", "GKSLab.Bussiness.Logic\GKSLab.Bussiness.Logic.csproj", "{DDDD7DED-1246-43D3-87F5-3E3F9C7D5636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Bussiness.Entities", "GKSLab.Bussiness.Entities\GKSLab.Bussiness.Entities.csproj", "{B8A44661-DFAA-477A-AC37-C80AE5D9E172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8D9294CF-6841-479E-8A35-B380EFF012AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D9294CF-6841-479E-8A35-B380EFF012AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D9294CF-6841-479E-8A35-B380EFF012AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDDD7DED-1246-43D3-87F5-3E3F9C7D5636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDD7DED-1246-43D3-87F5-3E3F9C7D5636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDD7DED-1246-43D3-87F5-3E3F9C7D5636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDD7DED-1246-43D3-87F5-3E3F9C7D5636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8A44661-DFAA-477A-AC37-C80AE5D9E172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A44661-DFAA-477A-AC37-C80AE5D9E172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A44661-DFAA-477A-AC37-C80AE5D9E172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A44661-DFAA-477A-AC37-C80AE5D9E172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
