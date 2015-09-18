@@ -25,6 +25,7 @@ namespace GKSLab.Models
 
     public class VerifyCodeViewModel
     {
+
         [Required]
         public string Provider { get; set; }
 
