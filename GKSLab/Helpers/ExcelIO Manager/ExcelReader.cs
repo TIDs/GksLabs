@@ -73,13 +73,14 @@ namespace GKSLab.Web.ExcelIOManager
         private static List<List<string>> GetWorkSheetData(DataTable item)
         {
             List<List<string>> resultList = new List<List<string>>();
-            var i = 1;
+            var i = 0;
             try
             {
                 do
                 {
                     resultList.Add(item.Rows[i].ItemArray.Select(x => x.ToString())
                     .Where((s => !string.IsNullOrEmpty(s))).ToList());
+                    i++;
                 } while (i != item.Rows.Count);
             }
             catch (Exception)

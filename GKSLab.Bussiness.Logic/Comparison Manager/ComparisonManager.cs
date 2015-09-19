@@ -8,14 +8,23 @@ namespace GKSLab.Bussiness.Logic.Comparison_Manager
     {
         public static ComparationResult CompareDetails(List<List<string>> inputData)
         {
-            var result = new ComparationResult();
-            var row = new List<string>();
+            var row = new HashSet<string>();
             inputData.ForEach(x => x.ForEach(elem => row.Add(elem)));
-            var uniqueElementsAmount = inputData.Count;
-            result.UniqueElementsAmount = uniqueElementsAmount;
-            foreach (var item in inputData)
+            var uniqueElementsAmount = row.Count;
+            var result = new ComparationResult(inputData.Count, uniqueElementsAmount)
             {
-                row.AddRange(item);
+                UniqueElementsAmount = uniqueElementsAmount
+            };
+            for (var i = 0; i < inputData.Count; i++)
+            {
+                for (var j = 0; j < inputData.Count; j++)
+                {
+                    if (i == j)
+                        continue;
+                    var comparableDetails = inputData[j];
+                    var uniqueElements = inputData[i].Union(inputData[j]).Except(inputData[i].Intersect(inputData[j])).ToList();
+                    result.ResultingMatrix[i][j] = (uniqueElementsAmount - uniqueElements.Count);
+                }
             }
             for (int i = 0; i < inputData.Count; i++)
             {
@@ -23,9 +32,7 @@ namespace GKSLab.Bussiness.Logic.Comparison_Manager
                 {
                     if (i == j)
                         continue;
-                    var comparableDetails = inputData[j];
-                    var uniqueElements = inputData[i].Except(inputData[j]).ToList();
-                    result.ResultingMatrix[i][j] = (uniqueElementsAmount - uniqueElements.Count);
+                    
                 }
             }
             return result;

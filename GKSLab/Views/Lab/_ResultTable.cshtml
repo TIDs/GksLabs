@@ -1,0 +1,16 @@
+﻿@model GKSLab.Bussiness.Entities.ComparationResult
+<h2> Результат</h2>
+<div class="rezultaty">
+    <table>
+        @foreach (var item in Model.ResultingMatrix)
+        {
+            <tr>
+                @for (int i = 0; i < Model.ResultingMatrix.Count; i++)
+                {
+                    <td>@item[i]</td>
+                }
+            </tr>
+        }
+    </table>
+</div>
+

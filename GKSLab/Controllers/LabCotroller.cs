@@ -10,13 +10,15 @@ using GKSLab.Web.ExcelIOManager;
 
 namespace GKSLab.Controllers
 {
-    public class ApplicationController : Controller
+    public class LabController : Controller
     {
         // GET: Application
         public ActionResult Lab1()
         {
             return View();
         }
+
+        ///TODO: angular . async update of container
         /// <summary>
         /// CreateExamFromFile method. Is called after HttpPost request
         /// </summary>
@@ -27,12 +29,14 @@ namespace GKSLab.Controllers
         /// 
         /// </returns>
         [HttpPost]
-        public ActionResult Lab1(HttpPostedFileBase fileUpload)
+        public ActionResult Count(HttpPostedFileBase formData)
         {
+            ComparationResult result;
+            HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                var inputData = ExcelReader.Read(fileUpload);
-                ComparationResult result = ComparisonManager.CompareDetails(inputData);
+                var inputData = ExcelReader.Read(file);
+                result = ComparisonManager.CompareDetails(inputData);
             }
             catch (Exception e)
             {
@@ -41,9 +45,9 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            return View();
+            return PartialView("_ResultTable", result);
         }
     }
 
-    
+
 }
