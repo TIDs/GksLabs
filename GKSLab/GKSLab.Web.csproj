@@ -224,6 +224,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Lab\Lab1.cshtml" />
     <Content Include="Views\Lab\_ResultTable.cshtml" />
+    <Content Include="Views\Lab\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

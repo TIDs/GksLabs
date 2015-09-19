@@ -29,13 +29,13 @@ namespace GKSLab.Controllers
         /// 
         /// </returns>
         [HttpPost]
-        public ActionResult Count(HttpPostedFileBase formData)
+        public ActionResult Count(HttpPostedFileBase fileUpload)
         {
             ComparationResult result;
-            HttpPostedFileBase file = HttpContext.Request.Files[0];
+            //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                var inputData = ExcelReader.Read(file);
+                var inputData = ExcelReader.Read(fileUpload);
                 result = ComparisonManager.CompareDetails(inputData);
             }
             catch (Exception e)
@@ -45,7 +45,7 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            return PartialView("_ResultTable", result);
+            return View("Result", result);
         }
     }
 
