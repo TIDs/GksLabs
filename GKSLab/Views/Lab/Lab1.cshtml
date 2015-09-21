@@ -24,7 +24,7 @@
             for (var j = 0; j < fields; j++) {
                 var td = document.createElement("td");
                 input = document.createElement("input");
-                input.name = 'val' + (i + 1) + (j + 1);
+                input.name = 'MatrixList['+ i +'].Row[' + j + ']';
                 input.placeholder = (i + 1) + '.' + (j + 1);
                 input.size = 3;
                 td.appendChild(input);
