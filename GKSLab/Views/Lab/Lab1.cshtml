@@ -1,4 +1,4 @@
-﻿
+﻿@model string
 @{
    Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -52,6 +52,8 @@
                 <div class="panel-body">
                         <form action="/Lab/Count" method="post">
                             <div class="selectSizeTable">
+                                <label for="sizeTable"> @Model </label>
+                                <br />
                                 <label for="sizeTable"> Виберіть кількість рядків таблиці</label>
                                 <select id="sizeTable">
                                     <option value="1">1</option>

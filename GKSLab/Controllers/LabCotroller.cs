@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
@@ -35,19 +34,23 @@ namespace GKSLab.Controllers
         {
             ComparationResult result;
             var matrix = new InputMatrixViewModel();
+            matrix.MatrixList = new List<RowItem>();
             int i = 0;
             foreach (var rowItem in model.MatrixList)
             {
                 //matrix.MatrixList = new List<RowItem>();
-                var rowlist = new  RowItem();
+                var rowlist = new RowItem();
+                rowlist.Row = new List<string>();
                 foreach (var item in rowItem.Row)
                 {
                     if (String.IsNullOrWhiteSpace(item))
                         continue;
-                    else
+                    if (rowlist.Row.Contains(item))
                     {
-                        rowlist.Row.Add(item);
+                        var Message = "Були найдені повторювані операції в одному з рядків";
+                        return View("Lab1", Message);
                     }
+                    rowlist.Row.Add(item);
                 }
                 matrix.MatrixList.Add(rowlist);
             }
@@ -55,7 +58,8 @@ namespace GKSLab.Controllers
             try
             {
                 //var inputData = ExcelReader.Read(fileUpload);
-                //result = ComparisonManager.CompareDetails(inputData);
+                result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
+
             }
             catch (Exception e)
             {
@@ -64,10 +68,9 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            //return View("Result", result);
-            return null;
+            return View("Result", result);
         }
     }
 
-   
+
 }
