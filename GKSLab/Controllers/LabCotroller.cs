@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
+using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 
 namespace GKSLab.Controllers
@@ -18,25 +19,43 @@ namespace GKSLab.Controllers
             return View();
         }
 
+        // ти що вибирав, синхронізацію чи  sync зараз я спробую щось в себе мб змінити спробуй ще раз синхронізувати
         ///TODO: angular . async update of container
         /// <summary>
         /// CreateExamFromFile method. Is called after HttpPost request
         /// </summary>
-        /// <param name="fileUpload">
+        /// <param name="model">
         /// File loading
         /// </param>
         /// <returns>
         /// 
         /// </returns>
         [HttpPost]
-        public ActionResult Count(HttpPostedFileBase fileUpload)
+        public ActionResult Count(InputMatrixViewModel model)
         {
             ComparationResult result;
+            var matrix = new InputMatrixViewModel();
+            int i = 0;
+            foreach (var rowItem in model.MatrixList)
+            {
+                //matrix.MatrixList = new List<RowItem>();
+                var rowlist = new  RowItem();
+                foreach (var item in rowItem.Row)
+                {
+                    if (String.IsNullOrWhiteSpace(item))
+                        continue;
+                    else
+                    {
+                        rowlist.Row.Add(item);
+                    }
+                }
+                matrix.MatrixList.Add(rowlist);
+            }
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                var inputData = ExcelReader.Read(fileUpload);
-                result = ComparisonManager.CompareDetails(inputData);
+                //var inputData = ExcelReader.Read(fileUpload);
+                //result = ComparisonManager.CompareDetails(inputData);
             }
             catch (Exception e)
             {
@@ -45,9 +64,10 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            return View("Result", result);
+            //return View("Result", result);
+            return null;
         }
     }
 
-
+   
 }
