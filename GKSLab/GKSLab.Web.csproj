@@ -195,6 +195,7 @@
     <None Include="Properties\PublishProfiles\GKC-Lab - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\GKC-Lab - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dynamicTable.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -224,9 +225,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Lab\Lab1.cshtml" />
     <Content Include="Views\Lab\_ResultTable.cshtml" />
     <Content Include="Views\Lab\Result.cshtml" />
+    <Content Include="Views\Lab\Lab1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

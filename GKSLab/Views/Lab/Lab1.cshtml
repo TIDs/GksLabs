@@ -1,0 +1,88 @@
+﻿
+@{
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTIPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Введення початкових даних</title>
+   <script>
+        function setupTable(tableId, selectId) {
+    var htmlBody = document.getElementById(tableId),
+    htmlSelect = document.getElementById(selectId),
+    rowTpl = document.createElement("tr");
+
+    htmlSelect.onchange = function (e) {
+        var fields = htmlSelect.options[htmlSelect.selectedIndex].value;
+        while (rowTpl.firstChild) rowTpl.removeChild(rowTpl.firstChild);
+        for (var i = 0; i < fields; i++) {
+            var td = document.createElement("td");
+            input = document.createElement("input");
+            input.name = i;
+            input.size = 5;
+            td.appendChild(input);
+            rowTpl.appendChild(td);
+        }
+
+
+        var numRows = htmlSelect.options[htmlSelect.selectedIndex].value;
+        while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
+        for (var i = 0; i < numRows; i++) {
+            htmlBody.appendChild(rowTpl.cloneNode(true));
+        }
+    }
+}</script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <!-- header-->
+                <div class="panel-heading">
+                    <h1 class="panel-title">
+                        Введення вхідних даних
+                    </h1>
+                </div>
+                <!-- end header -->
+                <!-- content -->
+                <div class="panel-body">
+                        <form action="/Lab/Count" method="post">
+                            <div class="selectSizeTable">
+                                <label for="sizeTable"> Виберіть кількість рядків таблиці</label>
+                                <select id="sizeTable">
+                                    <option role="presentation" value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                </select>
+                            </div>
+                            <table class="table table-bordered" >
+                               <tbody id="dynamic"></tbody>
+                            </table>
+                            <div class="submitButton">
+                                <button type="submit" class="btn-lg btn-primary"> Порахувати</button>
+                            </div>
+                        </form>
+                    </div>
+                <!-- end content-->
+            </div>
+        </div>
+    </div>
+<script> new setupTable("dynamic", "sizeTable")</script>                   
+</body>
+</html>
+

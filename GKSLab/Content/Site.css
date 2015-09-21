@@ -22,3 +22,21 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.panel-primary{
+    margin-top: 150px;
+}
+
+.selectSizeTable{
+    text-align: center;
+    margin-bottom: 20px;
+}
+ #dynamic td {
+    text-align:center;
+}
+
+.submitButton{
+    margin-top: 20px;
+    text-align:right;
+}
+
