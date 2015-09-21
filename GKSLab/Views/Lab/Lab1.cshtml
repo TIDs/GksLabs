@@ -20,7 +20,7 @@
         while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
 
         for (var i = 0; i < numRows; i++) {
-            rowTpl = document.createElement("tr");
+           rowTpl = document.createElement("tr");
             for (var j = 0; j < fields; j++) {
                 var td = document.createElement("td");
                 input = document.createElement("input");
@@ -30,7 +30,7 @@
                 td.appendChild(input);
                 rowTpl.appendChild(td);
             }
-            htmlBody.appendChild(rowTpl)
+          htmlBody.appendChild(rowTpl)
         }
         
     }
