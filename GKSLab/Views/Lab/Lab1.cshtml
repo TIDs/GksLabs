@@ -1,41 +1,48 @@
 ﻿@model string
 @{
-   Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
 
+</script>
 <!DOCTIPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Введення початкових даних</title>
-<script>
-    function setupTable(tableId, selectId) {
-        var htmlBody = document.getElementById(tableId),
-        htmlSelect = document.getElementById(selectId);
+    <script>
+        function setupTable(tableId, selectId) {
+            var htmlBody = document.getElementById(tableId),
+            htmlSelect = document.getElementById(selectId);
 
-        htmlSelect.onchange = function (e) {
-        var fields = htmlSelect.options[htmlSelect.selectedIndex].value;
-        var numRows = htmlSelect.options[htmlSelect.selectedIndex].value;
+            htmlSelect.onchange = function (e) {
+                var fields = htmlSelect.options[htmlSelect.selectedIndex].value;
+                var numRows = htmlSelect.options[htmlSelect.selectedIndex].value;
 
-        while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
+                while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
 
-        for (var i = 0; i < numRows; i++) {
-           rowTpl = document.createElement("tr");
-            for (var j = 0; j < fields; j++) {
-                var td = document.createElement("td");
-                input = document.createElement("input");
-                input.name = 'MatrixList['+ i +'].Row[' + j + ']';
-                input.placeholder = (i + 1) + '.' + (j + 1);
-                input.size = 3;
-                td.appendChild(input);
-                rowTpl.appendChild(td);
+                for (var i = 0; i < numRows; i++) {
+                    rowTpl = document.createElement("tr");
+                    for (var j = 0; j < fields; j++) {
+                        var td = document.createElement("td");
+                        input = document.createElement("input");
+                        input.name = 'MatrixList[' + i + '].Row[' + j + ']';
+                        input.placeholder = (i + 1) + '.' + (j + 1);
+                        input.size = 3;
+                        td.appendChild(input);
+                        rowTpl.appendChild(td);
+                    }
+                    htmlBody.appendChild(rowTpl)
+                }
+
             }
-          htmlBody.appendChild(rowTpl)
         }
-        
-    }
-}
-</script>
+    </script>
 </head>
 <body>
     <div class="container">
@@ -46,47 +53,30 @@
                     <h1 class="panel-title">
                         Введення вхідних даних
                     </h1>
+
                 </div>
+                <h1 style="text-align: center;color:red">@ViewBag.Message</h1>
                 <!-- end header -->
                 <!-- content -->
-                <div class="panel-body">
-                        <form action="/Lab/Count" method="post">
-                            <div class="selectSizeTable">
-                                <label for="sizeTable"> @Model </label>
-                                <br />
-                                <label for="sizeTable"> Виберіть кількість рядків таблиці</label>
-                                <select id="sizeTable">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                </select>
-                            </div>
-                            <table class="table table-bordered" >
-                               <tbody id="dynamic"></tbody>
-                            </table>
-                            <div class="submitButton">
-                                <button type="submit" class="btn-lg btn-primary"> Порахувати</button>
-                            </div>
-                        </form>
+                <div id="tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tabs-1">Считать из файла</a></li>
+                        <li><a data-toggle="tab" href="#tabs-2">Ввести</a></li>
+                    </ul>
+                    <div class="tab-pane fade in active" id="tabs-1">
+                        @Html.Partial("_InputHand")
                     </div>
+                    <div class="tab-pane fade" id="tabs-2">
+                        @Html.Partial("_ReadFromFile");
+                    </div>
+                </div>
+
                 <!-- end content-->
             </div>
         </div>
     </div>
-<script> new setupTable("dynamic", "sizeTable")</script>                   
 </body>
 </html>
-
+<script>
+    new setupTable("dynamic", "sizeTable");
+</script>

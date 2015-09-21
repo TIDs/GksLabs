@@ -8,7 +8,6 @@ namespace GKSLab.Models.ViewModels
     {
         public List<RowItem> MatrixList { get; set; }
         public string Message { get; set; }
-        public HttpPostedFileBase PosteFileBase { get; set; }
     }
 
     public class RowItem

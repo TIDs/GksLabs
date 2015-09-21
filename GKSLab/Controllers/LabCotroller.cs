@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
@@ -13,7 +14,7 @@ namespace GKSLab.Controllers
     public class LabController : Controller
     {
         // GET: Application
-        public ActionResult Lab1()
+        public ActionResult Lab1(string id)
         {
             return View();
         }
@@ -47,8 +48,8 @@ namespace GKSLab.Controllers
                         continue;
                     if (rowlist.Row.Contains(item))
                     {
-                        var Message = "Були найдені повторювані операції в одному з рядків";
-                        return View("Lab1", Message);
+                        ViewBag.Message = "Були найдені повторювані операції в одному з рядків";
+                        return View("Lab1");
                     }
                     rowlist.Row.Add(item);
                 }
@@ -60,6 +61,25 @@ namespace GKSLab.Controllers
                 //var inputData = ExcelReader.Read(fileUpload);
                 result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
 
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                Debug.Write(e.Message);
+                return View(error);
+            }
+            //returning partial view
+            return View("Result", result);
+        }
+        [HttpPost]
+        public ActionResult FileRead(HttpPostedFileBase file)
+        {
+            ComparationResult result;
+            //HttpPostedFileBase file = HttpContext.Request.Files[0];
+            try
+            {
+                var inputData = ExcelReader.Read(file);
+                result = ComparisonManager.CompareDetails(inputData);
             }
             catch (Exception e)
             {
