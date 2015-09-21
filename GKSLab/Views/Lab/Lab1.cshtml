@@ -8,32 +8,34 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Введення початкових даних</title>
-   <script>
-        function setupTable(tableId, selectId) {
-    var htmlBody = document.getElementById(tableId),
-    htmlSelect = document.getElementById(selectId),
-    rowTpl = document.createElement("tr");
+<script>
+    function setupTable(tableId, selectId) {
+        var htmlBody = document.getElementById(tableId),
+        htmlSelect = document.getElementById(selectId);
 
-    htmlSelect.onchange = function (e) {
+        htmlSelect.onchange = function (e) {
         var fields = htmlSelect.options[htmlSelect.selectedIndex].value;
-        while (rowTpl.firstChild) rowTpl.removeChild(rowTpl.firstChild);
-        for (var i = 0; i < fields; i++) {
-            var td = document.createElement("td");
-            input = document.createElement("input");
-            input.name = i;
-            input.size = 5;
-            td.appendChild(input);
-            rowTpl.appendChild(td);
-        }
-
-
         var numRows = htmlSelect.options[htmlSelect.selectedIndex].value;
+
         while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
+
         for (var i = 0; i < numRows; i++) {
-            htmlBody.appendChild(rowTpl.cloneNode(true));
+            rowTpl = document.createElement("tr");
+            for (var j = 0; j < fields; j++) {
+                var td = document.createElement("td");
+                input = document.createElement("input");
+                input.name = 'val' + (i + 1) + (j + 1);
+                input.placeholder = (i + 1) + '.' + (j + 1);
+                input.size = 5;
+                td.appendChild(input);
+                rowTpl.appendChild(td);
+            }
+            htmlBody.appendChild(rowTpl)
         }
+        
     }
-}</script>
+}
+</script>
 </head>
 <body>
     <div class="container">
