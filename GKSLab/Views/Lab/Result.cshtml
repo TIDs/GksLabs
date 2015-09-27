@@ -4,19 +4,31 @@
 }
 
 <a href="@Url.Action("Lab1", "Lab")">Посчитать еще</a>
-<br />
-<h2> Результат</h2>
-<div class="rezultaty">
-    <table>
-        @foreach (var item in Model.ResultingMatrix)
-        {
-            <tr>
-                @for (int i = 0; i < Model.ResultingMatrix.Count; i++)
-                {
-                    <td>@item[i]</td>
-                }
-            </tr>
-        }
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <!-- header-->
+            <div class="panel-heading">
+                <h1 style="text-align: center" class="panel-title">
+                    Результат
+                </h1>
+            </div>
+            <!-- end header -->
+            <!-- content -->
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    @foreach (var item in Model.ResultingMatrix)
+                    {
+                        <tr>
+                            @for (int i = 0; i < Model.ResultingMatrix.Count; i++)
+                            {
+                                <td style="text-align:center">@item[i]</td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+            <!-- end content-->
+        </div>
+    </div>
 </div>
-
