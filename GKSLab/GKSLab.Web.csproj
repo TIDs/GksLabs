@@ -225,7 +225,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="App_Data\labTest1.xlsx" />
     <None Include="Properties\PublishProfiles\GKC-Lab - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\GKC-Lab - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -267,7 +266,9 @@
     <Content Include="Views\Lab\_ReadFromFile.cshtml" />
     <Content Include="Views\Lab\_InputHand.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
