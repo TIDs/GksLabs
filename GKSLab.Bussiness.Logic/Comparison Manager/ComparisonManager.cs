@@ -26,15 +26,7 @@ namespace GKSLab.Bussiness.Logic.Comparison_Manager
                     result.ResultingMatrix[i][j] = (uniqueElementsAmount - uniqueElements.Count);
                 }
             }
-            for (int i = 0; i < inputData.Count; i++)
-            {
-                for (int j = 0; j < inputData.Count; j++)
-                {
-                    if (i == j)
-                        continue;
-                    
-                }
-            }
+         
             return result;
         }
     }
