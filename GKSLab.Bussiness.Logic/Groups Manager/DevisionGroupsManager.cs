@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
 using GKSLab.Bussiness.Entities;
 
-namespace GKSLab.Bussiness.Logic.DevisionGroups_Manager
+namespace GKSLab.Bussiness.Logic.Groups_Manager
 {
     public static class DevisionGroupsManager
     {
@@ -79,6 +79,5 @@ namespace GKSLab.Bussiness.Logic.DevisionGroups_Manager
             }
                 return groups;
         }
-
     }
 }

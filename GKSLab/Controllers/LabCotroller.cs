@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
-using GKSLab.Bussiness.Logic.DevisionGroups_Manager;
+using GKSLab.Bussiness.Logic.Groups_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 
