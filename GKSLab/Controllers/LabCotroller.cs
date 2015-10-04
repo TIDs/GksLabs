@@ -34,6 +34,7 @@ namespace GKSLab.Controllers
         public ActionResult Count(InputMatrixViewModel model)
         {
             ComparationResult result;
+            var uniqueElements = 0;
             var matrix = new InputMatrixViewModel();
             matrix.MatrixList = new List<RowItem>();
             int i = 0;
@@ -59,6 +60,7 @@ namespace GKSLab.Controllers
             try
             {
                 //var inputData = ExcelReader.Read(fileUpload);
+                uniqueElements = ComparisonManager.UniqueElementsAmount(matrix.MatrixList.Select(item => item.Row).ToList());
                 result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
 
             }
@@ -69,6 +71,7 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
+            ViewBag.Unique = uniqueElements;
             return View("Result", result);
         }
         [HttpPost]
