@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
+using GKSLab.Bussiness.Logic.DevisionGroups_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 
@@ -35,6 +36,7 @@ namespace GKSLab.Controllers
         {
             ComparationResult result;
             var uniqueElements = 0;
+            List<List<int>> groups = new List<List<int>>();
             var matrix = new InputMatrixViewModel();
             matrix.MatrixList = new List<RowItem>();
             int i = 0;
@@ -59,10 +61,9 @@ namespace GKSLab.Controllers
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                //var inputData = ExcelReader.Read(fileUpload);
                 uniqueElements = ComparisonManager.UniqueElementsAmount(matrix.MatrixList.Select(item => item.Row).ToList());
                 result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
-
+                groups = DevisionGroupsManager.CreateGroups(result);
             }
             catch (Exception e)
             {
@@ -72,17 +73,23 @@ namespace GKSLab.Controllers
             }
             //returning partial view
             ViewBag.Unique = uniqueElements;
+            ViewBag.Groups = groups;
             return View("Result", result);
         }
         [HttpPost]
         public ActionResult FileRead(HttpPostedFileBase file)
         {
+            
             ComparationResult result;
+            var uniqueElements = 0;
+            List<List<int>> groups = new List<List<int>>();
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
                 var inputData = ExcelReader.Read(file);
+                uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
                 result = ComparisonManager.CompareDetails(inputData);
+                groups = DevisionGroupsManager.CreateGroups(result);
             }
             catch (Exception e)
             {
@@ -91,6 +98,8 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
+            ViewBag.Unique = uniqueElements;
+            ViewBag.Groups = groups;
             return View("Result", result);
         }
     }

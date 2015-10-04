@@ -31,7 +31,19 @@
                             }
                         </table>
                     </div>
-                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <table class="table table-bordered">
+                            @foreach (var item in @ViewBag.Groups)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < @item.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
                 </div>
             </div>
             <!-- end content-->
