@@ -37,6 +37,7 @@ namespace GKSLab.Controllers
             ComparationResult result;
             var uniqueElements = 0;
             List<List<int>> groups = new List<List<int>>();
+            List<List<int>> redistributionsGroup = new List<List<int>>();
             var matrix = new InputMatrixViewModel();
             matrix.MatrixList = new List<RowItem>();
             int i = 0;
@@ -64,6 +65,7 @@ namespace GKSLab.Controllers
                 uniqueElements = ComparisonManager.UniqueElementsAmount(matrix.MatrixList.Select(item => item.Row).ToList());
                 result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
                 groups = DevisionGroupsManager.CreateGroups(result);
+
             }
             catch (Exception e)
             {
@@ -82,14 +84,19 @@ namespace GKSLab.Controllers
             
             ComparationResult result;
             var uniqueElements = 0;
+            List<List<string>> inputData = new List<List<string>>();
             List<List<int>> groups = new List<List<int>>();
+            List<List<int>> redistributionsGroup = new List<List<int>>();
+            List<HashSet<string>> groupsWithStringElement;
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                var inputData = ExcelReader.Read(file);
+                inputData = ExcelReader.Read(file);
                 uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
                 result = ComparisonManager.CompareDetails(inputData);
                 groups = DevisionGroupsManager.CreateGroups(result);
+                groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
+                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groups,groupsWithStringElement);
             }
             catch (Exception e)
             {
@@ -100,6 +107,8 @@ namespace GKSLab.Controllers
             //returning partial view
             ViewBag.Unique = uniqueElements;
             ViewBag.Groups = groups;
+            ViewBag.InputData = inputData;
+            ViewBag.GroupString = groupsWithStringElement;
             return View("Result", result);
         }
     }
