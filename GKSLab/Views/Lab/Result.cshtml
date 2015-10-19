@@ -14,7 +14,7 @@
             <!-- end header -->
             <!-- content -->
             <div class="panel-body">
-                <div class="row">
+                <div class="row" style="margin-bottom: 40px !important">
                     <div class="col-lg-6">
                         <p> Введені дані </p>
                         <table class="table table-bordered">
@@ -44,21 +44,21 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-bottom: 40px !important">
                     <div class="col-lg-6">
-                            <p>Результат поділу на групи</p>
-                            <table class="table table-bordered">
-                                @foreach (var item in @ViewBag.Groups)
-                                {
-                                    <tr>
-                                        @for (int i = 0; i < @item.Count; i++)
-                                        {
-                                            <td style="text-align:center">@item[i]</td>
-                                        }
-                                    </tr>
-                                }
-                            </table>
-                        </div>
+                        <p>Результат поділу на групи</p>
+                        <table class="table table-bordered">
+                            @foreach (var item in @ViewBag.Groups)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < @item.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
                     <div class="col-lg-6">
                         <p>Групи із набором операцій</p>
                         <table class="table table-bordered">
@@ -74,11 +74,24 @@
                         </table>
 
                     </div>
-                 </div>
+                </div>
+
                  <div class="row">
                      <div class="col-lg-6">
                          <p>Перерозподіл груп</p>
-                         <table class="table table-bordered"></table>
+                         <table class="table table-bordered">
+                             @foreach (var item in @ViewBag.RedistributedGroups)
+                             {
+                                 <tr>
+                                     @for (int i = 0; i < @item.Count; i++)
+                                     {
+                                         <td style="text-align:center">@item[i]</td>
+                                     }
+                                 </tr>
+                             }
+                         </table>
+
+                         </table>
                      </div>
                  </div>
                 <div class="submitButton">

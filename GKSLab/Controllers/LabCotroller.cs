@@ -36,11 +36,12 @@ namespace GKSLab.Controllers
         {
             ComparationResult result;
             var uniqueElements = 0;
+            List<List<string>> inputData;
             List<List<int>> groups = new List<List<int>>();
             List<List<int>> redistributionsGroup = new List<List<int>>();
+            List<HashSet<string>> groupsWithStringElement;
             var matrix = new InputMatrixViewModel();
             matrix.MatrixList = new List<RowItem>();
-            int i = 0;
             foreach (var rowItem in model.MatrixList)
             {
                 //matrix.MatrixList = new List<RowItem>();
@@ -62,10 +63,14 @@ namespace GKSLab.Controllers
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
-                uniqueElements = ComparisonManager.UniqueElementsAmount(matrix.MatrixList.Select(item => item.Row).ToList());
+                inputData = new List<List<string>>(matrix.MatrixList.Select(item => item.Row).ToList());
+                uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
                 result = ComparisonManager.CompareDetails(matrix.MatrixList.Select(item => item.Row).ToList());
                 groups = DevisionGroupsManager.CreateGroups(result);
-
+                groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
+                var groupForRedistributions = new List<List<int>>();
+                groups.ForEach(x => groupForRedistributions.Add(x));
+                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groupForRedistributions, groupsWithStringElement);
             }
             catch (Exception e)
             {
@@ -74,8 +79,11 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
+            ViewBag.InputData = inputData;
             ViewBag.Unique = uniqueElements;
             ViewBag.Groups = groups;
+            ViewBag.GroupString = groupsWithStringElement;
+            ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
         }
         [HttpPost]
@@ -96,7 +104,10 @@ namespace GKSLab.Controllers
                 result = ComparisonManager.CompareDetails(inputData);
                 groups = DevisionGroupsManager.CreateGroups(result);
                 groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
-                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groups,groupsWithStringElement);
+                var groupWithString = new List<HashSet<string>>(groupsWithStringElement);
+                var groupForRedistributions = new List<List<int>>();
+                groups.ForEach(x => groupForRedistributions.Add(x));
+                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groupForRedistributions, groupWithString);
             }
             catch (Exception e)
             {
@@ -105,10 +116,11 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
+            ViewBag.InputData = inputData;
             ViewBag.Unique = uniqueElements;
             ViewBag.Groups = groups;
-            ViewBag.InputData = inputData;
             ViewBag.GroupString = groupsWithStringElement;
+            ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
         }
     }
