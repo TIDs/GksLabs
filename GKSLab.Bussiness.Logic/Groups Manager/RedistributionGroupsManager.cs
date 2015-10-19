@@ -14,6 +14,21 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
              HashSet<int> uniqueElements = new HashSet<int>();
  
              SortGroupsWithStringElementAndInt(groups, GropsWithStringElement);
+
+            // redistributionGroups
+             for (int i = 0; i < GropsWithStringElement.Count; i++)
+            {
+                 test.Add(OverlappingGroups(uniqueElements, i + 1, primaryDate, groups[i], GropsWithStringElement[i], GropsWithStringElement, groups));
+                if ( test[i].Count < 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    redistributionGroups.Add(test[i]);
+                }
+                 
+            }
               
              return redistributionGroups;
         }
@@ -73,6 +88,74 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
             return unsortedGroup;
         }
 
+
+        public static List<int> OverlappingGroups(HashSet<int> uniqueElement, int counter, List<List<string>> inputDate, List<int> fixedGroupWithInt, HashSet<string> fixedGroupWithString, List<HashSet<string>> groupsWithString, List<List<int>> groupsWithInt)
+        {
+            List<int> result = new List<int>();
+            HashSet<string> temp;
+
+            for (int i = 0; i < fixedGroupWithInt.Count; i++)
+            {
+                if (uniqueElement.Contains(fixedGroupWithInt[i]))
+                {
+                    continue;
+                }
+                else
+                {
+                    result.Add(fixedGroupWithInt[i]);
+                    uniqueElement.Add(fixedGroupWithInt[i]);
+                }
+            }
+
+            if (result.Count == 0)
+            {
+                return null;
+            }
+
+            for (int j = counter; j < groupsWithString.Count; j++)
+            {
+                temp = new HashSet<string>(groupsWithString[j]);
+                temp.ExceptWith(fixedGroupWithString);
+                if (temp.Count == 0)
+                {
+                    foreach (var i in groupsWithInt[j])
+                    {
+                        result.Add(i);
+                        uniqueElement.Add(i);
+                    }
+                }
+                else
+                {
+                    if (groupsWithInt[j].Count > 1)
+                        for (int k = 0; k < groupsWithInt[j].Count; k++)
+                        {
+                            var newElementInGroup = OverlappingElement(inputDate, fixedGroupWithString, groupsWithString[j], groupsWithInt[j][k]);
+                            if (newElementInGroup != 0)
+                            {
+                                result.Add(newElementInGroup);
+                                uniqueElement.Add(newElementInGroup);
+                            }
+                        }
+                }
+            }
+            return result;
+        }
+
+        public static int OverlappingElement(List<List<string>> inputDate, HashSet<string> fixedGroupString, HashSet<string> checkedGroupString, int checkedIntElement)
+        {
+            HashSet<string> checkedStringElement;
+            int result = 0;
+            checkedStringElement = new HashSet<string>(inputDate[checkedIntElement - 1]);
+            checkedStringElement.ExceptWith(fixedGroupString);
+            if (checkedStringElement.Count == 0)
+            {
+                result = checkedIntElement;
+            }
+
+            return result;
+        }
+
     }
 }
  
+
