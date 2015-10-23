@@ -27,6 +27,14 @@ textarea {
     margin-top: 150px;
 }
 
+p{
+    text-align: center;
+}
+
+.row {
+    margin:auto !important;
+}
+
 .selectSizeTable{
     text-align: center;
     margin-bottom: 20px;

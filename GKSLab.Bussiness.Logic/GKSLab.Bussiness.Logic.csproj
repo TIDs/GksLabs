@@ -43,6 +43,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Comparison Manager\ComparisonManager.cs" />
     <Compile Include="Groups Manager\DevisionGroupsManager.cs" />
+    <Compile Include="Groups Manager\RedistributionGroupsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
