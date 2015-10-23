@@ -31,7 +31,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                  for (int i = 0; i < GropsWithStringElement.Count; i++)
                  {
                      test.Add(OverlappingGroups(uniqueElements, i + 1, primaryDate, groups[i], GropsWithStringElement[i], GropsWithStringElement, groups));
-                     if (test[i].Count < 1)
+                     if (test[i] == null)
                      {
                          continue;
                      }

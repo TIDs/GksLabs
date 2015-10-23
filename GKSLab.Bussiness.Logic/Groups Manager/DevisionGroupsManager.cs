@@ -12,6 +12,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
         public static List<List<int>> CreateGroups(ComparationResult dataForCreateGroups)
         {
             var elementInGroup = new HashSet<int>();
+            var uniqueElement = new HashSet<int>();
             var maxElement = 0;
             var size = dataForCreateGroups.ResultingMatrix.Count();
             List<List<int>> groups = new List<List<int>>();
@@ -38,10 +39,11 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                             position.Add(i+1);
                         }
                     }
-
                     groups.Add(position);
                     break;
                 }
+
+                uniqueElement.Clear();
 
                 for (int i = 0; i < size; i++ )
                 {
@@ -55,13 +57,15 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                                 position.Add(j + 1);
                                 elementInGroup.Add(i+1);
                                 elementInGroup.Add(j+1);
+                                uniqueElement.Add(i + 1);
+                                uniqueElement.Add(j + 1);
                             }
-                            else if (elementInGroup.Contains(i+1) && !elementInGroup.Contains(j+1) && position.Count() > 0)
+                            else if (uniqueElement.Contains(i + 1) && !uniqueElement.Contains(j + 1) && position.Count() > 0)
                             {
                                 position.Add(j + 1);
                                 elementInGroup.Add(j+1);
                             }
-                            else if(!elementInGroup.Contains(i+1) && elementInGroup.Contains(j+1) && position.Count()> 0)
+                            else if (!uniqueElement.Contains(i + 1) && uniqueElement.Contains(j + 1) && position.Count() > 0)
                             {
                                 position.Add(i + 1);
                                 elementInGroup.Add(i+1);
