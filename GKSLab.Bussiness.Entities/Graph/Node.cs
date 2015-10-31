@@ -5,14 +5,15 @@ namespace GKSLab.Bussiness.Entities.Graph
 {
     public class Node<T>
     {
-        public IList<Node<T>> Children { get; } = new List<Node<T>>();
-        public IList<Node<T>> Parents { get; } = new List<Node<T>>();
+        public List<Node<T>> Children { get; set; } = new List<Node<T>>();
+        public List<Node<T>> Parents { get; set; } = new List<Node<T>>();
         public bool HasChildren => Children.FirstOrDefault() != null;
         public bool HasParrents => Parents.FirstOrDefault() != null;
         public T Value { get; set; }
         public NodeType Type { get; set; }
-        public Node(IList<Node<T>> children = null,IList<Node<T>> parents = null)
+        public Node(T value,List<Node<T>> children = null,List<Node<T>> parents = null)
         {
+            Value = value;
             Children = children;
             Parents = parents;
         }
