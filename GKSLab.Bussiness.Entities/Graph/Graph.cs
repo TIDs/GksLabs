@@ -72,7 +72,6 @@ namespace GKSLab.Bussiness.Entities.Graph
         public void UpdateNode(string value, params Node<string>[] children)
         {
         }
-        //public void CreateModule()
 
     }
 }

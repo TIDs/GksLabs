@@ -29,8 +29,8 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// <summary>
         /// Create graph. Return implementation of Graph
         /// </summary>
-        /// <param name="groups">Array of operation numbers. [1,2,5,4]</param>
-        /// <param name="operations">Arrays List of operations</param>
+        /// <param name="groups">Array of operation numbers.For example [1,2,5,4]</param>
+        /// <param name="operations">Arrays of operations</param>
         /// <returns>Return implementation of class Graph</returns>
         public static Graph Create(List<int> groups, List<List<string>> operations)
         {

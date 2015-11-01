@@ -26,7 +26,6 @@ namespace GKSLab.Controllers
             return View();
         }
 
-        // ти що вибирав, синхронізацію чи  sync зараз я спробую щось в себе мб змінити спробуй ще раз синхронізувати
         ///TODO: angular . async update of container
         /// <summary>
         /// CreateExamFromFile method. Is called after HttpPost request
