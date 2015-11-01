@@ -16,10 +16,6 @@ namespace GKSLab.Controllers
 {
     public class LabController : Controller
     {
-        public ActionResult Die()
-        {
-            return View();
-        }
         // GET: Application
         public ActionResult Lab1(string id)
         {
@@ -129,7 +125,11 @@ namespace GKSLab.Controllers
             return View("Result", result);
         }
 
-
+        /// <summary>
+        /// Test Method for LAB 4
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public ActionResult Test(HttpPostedFileBase file)
         {
             ComparationResult result;

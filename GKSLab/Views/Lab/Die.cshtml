@@ -2,25 +2,6 @@
 
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script>
-    $(document).ready(function() {
-        $(function() {
-            do {
-                i = 0;
-                $.ajax({
-                    url: 'http://www.bodydiet.ru/Response/LeaveReply',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { response_AuthorName: "Auth", articleId: "66", response_Text: "saadd" },
-                    contentType: 'application/json; charset=utf-8',
-                    success: function(data) {
-                        // get the result and do some magic with it
-
-                    }
-                });
-            } while (i != 100)
-        });
-    });
-
 </script>
 @{
     ViewBag.Title = "title";

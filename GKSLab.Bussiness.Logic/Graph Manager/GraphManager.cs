@@ -22,7 +22,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             string childValue;
             if (elementPosition >= row.Count - 1)
                 childValue = string.Empty;
-            else
+            else// It's obviously that last element in row doesn't have child
                 childValue = row.ElementAt(elementPosition + 1);
             return graph.Find(childValue);
         }
