@@ -245,6 +245,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\network-min.js" />
+    <Content Include="Scripts\network.js" />
     <Content Include="Scripts\post-file.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -269,6 +271,7 @@
     <Content Include="Views\Lab\Lab1.cshtml" />
     <Content Include="Views\Lab\_ReadFromFile.cshtml" />
     <Content Include="Views\Lab\_InputHand.cshtml" />
+    <None Include="Views\Lab\Die.cshtml" />
     <None Include="Views\Lab\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>

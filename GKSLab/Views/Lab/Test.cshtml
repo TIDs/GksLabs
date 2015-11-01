@@ -1,8 +1,35 @@
-﻿@model dynamic
-
+﻿@model string
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = null;
 }
+<title>Directed Graph</title>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/network.js"></script>
+<style type="text/css">
+    #network {
+        width: 50%;
+        height: 100%;
+        padding: 50px;
+        margin: 50px;
+    }
+</style>
+<body>
+    <div class="clearfix"></div>
+    <div id="network"></div>
+    <script type="text/javascript">
+        // create a network view
+        var network = new links.Network(document.getElementById('network'));
+        // parse data in DOT-notation
+        var dot = 'digraph {node[shape=rectangle];@Html.Raw(Model)}'; //razor will encode model, for disable this - Html.Raw(string)
+        var data = links.Network.util.DOTToNetwork(dot);
 
-<h2>title</h2>
+        // draw the data
+        network.draw(data.nodes, data.edges, data.options);
+
+        // resize the network when window resizes
+        window.onresize = function () {
+            network.redraw();
+        };
+    </script>
+
+</body>
