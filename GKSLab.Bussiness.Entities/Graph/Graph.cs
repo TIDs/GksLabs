@@ -8,10 +8,14 @@ namespace GKSLab.Bussiness.Entities.Graph
 {
     public class Graph
     {
+        public Graph()
+        {
+            Roots = new List<Node<string>>();
+        }
         /// <summary>
         /// List of graph nodes 
         /// </summary>
-        public List<Node<string>> Roots { get; } = new List<Node<string>>();
+        public List<Node<string>> Roots { get; private set; }
         /// <summary>
         /// Find node by value
         /// </summary>
@@ -54,13 +58,13 @@ namespace GKSLab.Bussiness.Entities.Graph
                     {
                         node.Children.Add(child);
                         var a = node.Children.Find(x => x.Value == child.Value);
-                        node.Children.Find(x=>x.Value==child.Value).Parents.Add(node);
+                        node.Children.Find(x => x.Value == child.Value).Parents.Add(node);
                     }
                 }
             }
             else // node exist
             {
-                var newNode = new Node<string>(value:value,children: children.ToList(), parents: new List<Node<string>>());
+                var newNode = new Node<string>(value: value, children: children.ToList(), parents: new List<Node<string>>());
                 Roots.Add(newNode);
             }
         }
