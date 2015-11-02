@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
+using GKSLab.Bussiness.Logic.Graph_Manager;
 using GKSLab.Bussiness.Logic.Groups_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
@@ -20,7 +22,6 @@ namespace GKSLab.Controllers
             return View();
         }
 
-        // ти що вибирав, синхронізацію чи  sync зараз я спробую щось в себе мб змінити спробуй ще раз синхронізувати
         ///TODO: angular . async update of container
         /// <summary>
         /// CreateExamFromFile method. Is called after HttpPost request
@@ -89,7 +90,7 @@ namespace GKSLab.Controllers
         [HttpPost]
         public ActionResult FileRead(HttpPostedFileBase file)
         {
-            
+
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
@@ -122,6 +123,45 @@ namespace GKSLab.Controllers
             ViewBag.GroupString = groupsWithStringElement;
             ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
+        }
+
+        /// <summary>
+        /// Test Method for LAB 4
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public ActionResult Test(HttpPostedFileBase file)
+        {
+            ComparationResult result;
+            var uniqueElements = 0;
+            List<List<string>> inputData = new List<List<string>>();
+            List<List<int>> groups = new List<List<int>>();
+            List<List<int>> redistributionsGroup = new List<List<int>>();
+
+            //JUST TEST DATA
+            inputData.Add(new List<string>(7) { "T1", "T2", "C1", "F1", "F2", "T3", "T4" });
+            inputData.Add(new List<string>(4) { "T2", "T1", "C1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "F1", "T1", "T2", "C1", "F2" });
+            inputData.Add(new List<string>(3) { "T2", "T1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "F1", "T1", "T2", "C1", "F2" });
+            inputData.Add(new List<string>(5) { "T3", "F2", "T1", "T2", "C1" });
+            inputData.Add(new List<string>(4) { "T4", "T2", "T3", "C1" });
+            groups.Add(new List<int>() { 0, 1, 2, 3 });
+
+            //creating graph
+            var graph = GraphManager.Create(groups[0], inputData);
+
+            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
+            var simplifiedGraphModel  = new HashSet<string>();
+            foreach (var item in graph.Roots)
+            {
+                foreach (var child in item.Children)
+                {
+                    simplifiedGraphModel.Add(item.Value + " "+ "->" + " " + child.Value);
+                }
+            }
+            string joinedModel = string.Join(";", simplifiedGraphModel);
+            return View("Test",model:joinedModel);
         }
     }
 
