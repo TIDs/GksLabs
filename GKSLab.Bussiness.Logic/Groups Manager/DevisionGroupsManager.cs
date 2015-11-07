@@ -60,7 +60,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                                 uniqueElement.Add(i + 1);
                                 uniqueElement.Add(j + 1);
                             }
-                            else if (uniqueElement.Contains(i + 1) && !uniqueElement.Contains(j + 1)&& !elementInGroup.Contains(j+1) && position.Count() > 0)
+                            else if (uniqueElement.Contains(i + 1) && !uniqueElement.Contains(j + 1) && !elementInGroup.Contains(j+1) && position.Count() > 0)
                             {
                                 position.Add(j + 1);
                                 elementInGroup.Add(j+1);
