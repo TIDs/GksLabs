@@ -137,7 +137,7 @@ namespace GKSLab.Controllers
             List<List<string>> inputData = new List<List<string>>();
             List<List<int>> groups = new List<List<int>>();
             List<List<int>> redistributionsGroup = new List<List<int>>();
-
+            
             //JUST TEST DATA
             inputData.Add(new List<string>(7) { "T1", "T2", "C1", "F1", "F2", "T3", "T4" });
             inputData.Add(new List<string>(4) { "T2", "T1", "C1", "F2" });
