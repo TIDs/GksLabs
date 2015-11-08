@@ -12,6 +12,20 @@ namespace GKSLab.Bussiness.Entities.Graph
         {
             Roots = new List<Node<string>>();
         }
+
+        public override string ToString()
+        {
+            var simplifiedGraphModel = new HashSet<string>();
+            foreach (var item in this.Roots)
+            {
+                foreach (var child in item.Children)
+                {
+                    simplifiedGraphModel.Add(item.Value + " "+ "->" + " " + child.Value);
+                }
+            }
+            return string.Join(";", simplifiedGraphModel);
+        }
+
         /// <summary>
         /// List of graph nodes 
         /// </summary>

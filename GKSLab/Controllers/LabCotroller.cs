@@ -139,10 +139,10 @@ namespace GKSLab.Controllers
             List<List<int>> redistributionsGroup = new List<List<int>>();
 
             //JUST TEST DATA
-            inputData.Add(new List<string>(7) { "T1", "T2", "C1", "F1", "F2", "T3", "T4" });
-            inputData.Add(new List<string>(4) { "T2", "T1", "C1", "F2" });
-            inputData.Add(new List<string>(6) { "T4", "F1", "T1", "T2", "C1", "F2" });
-            inputData.Add(new List<string>(3) { "T2", "T1", "F2" });
+            inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
+            inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "F1",  "F2" });
+            inputData.Add(new List<string>(3) {  "T1", "F2" });
             inputData.Add(new List<string>(6) { "T4", "F1", "T1", "T2", "C1", "F2" });
             inputData.Add(new List<string>(5) { "T3", "F2", "T1", "T2", "C1" });
             inputData.Add(new List<string>(4) { "T4", "T2", "T3", "C1" });
@@ -150,18 +150,10 @@ namespace GKSLab.Controllers
 
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            var simplifiedGraphModel  = new HashSet<string>();
-            foreach (var item in graph.Roots)
-            {
-                foreach (var child in item.Children)
-                {
-                    simplifiedGraphModel.Add(item.Value + " "+ "->" + " " + child.Value);
-                }
-            }
-            string joinedModel = string.Join(";", simplifiedGraphModel);
-            return View("Test",model:joinedModel);
+            var joinedModel = graph.ToString();
+            GraphManager.FirstCasePack(graph);
+            return View("Test", model: joinedModel);
         }
     }
 
