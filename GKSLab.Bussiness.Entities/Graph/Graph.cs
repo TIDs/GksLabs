@@ -11,7 +11,12 @@ namespace GKSLab.Bussiness.Entities.Graph
         /// <summary>
         /// List of graph nodes 
         /// </summary>
-        public List<Node<string>> Roots { get; } = new List<Node<string>>();
+       public Graph()
+       {
+           Roots = new List<Node<string>>();
+       }
+
+       public List<Node<string>> Roots { get; private set; }
         /// <summary>
         /// Find node by value
         /// </summary>
