@@ -8,15 +8,28 @@ namespace GKSLab.Bussiness.Entities.Graph
 {
     public class Graph
     {
+        public Graph()
+        {
+            Roots = new List<Node<string>>();
+        }
+
+        public override string ToString()
+        {
+            var simplifiedGraphModel = new HashSet<string>();
+            foreach (var item in this.Roots)
+            {
+                foreach (var child in item.Children)
+                {
+                    simplifiedGraphModel.Add(item.Value + " "+ "->" + " " + child.Value);
+                }
+            }
+            return string.Join(";", simplifiedGraphModel);
+        }
+
         /// <summary>
         /// List of graph nodes 
         /// </summary>
-       public Graph()
-       {
-           Roots = new List<Node<string>>();
-       }
-
-       public List<Node<string>> Roots { get; private set; }
+        public List<Node<string>> Roots { get; private set; }
         /// <summary>
         /// Find node by value
         /// </summary>
@@ -59,13 +72,13 @@ namespace GKSLab.Bussiness.Entities.Graph
                     {
                         node.Children.Add(child);
                         var a = node.Children.Find(x => x.Value == child.Value);
-                        node.Children.Find(x=>x.Value==child.Value).Parents.Add(node);
+                        node.Children.Find(x => x.Value == child.Value).Parents.Add(node);
                     }
                 }
             }
             else // node exist
             {
-                var newNode = new Node<string>(value:value,children: children.ToList(), parents: new List<Node<string>>());
+                var newNode = new Node<string>(value: value, children: children.ToList(), parents: new List<Node<string>>());
                 Roots.Add(newNode);
             }
         }

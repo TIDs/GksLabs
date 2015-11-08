@@ -31,8 +31,8 @@ namespace GKSLab.Bussiness.Logic.Comparison_Manager
         {
             var row = new HashSet<string>();
             data.ForEach(x => x.ForEach(elem => row.Add(elem)));
-            var  uniqueElementsAmount  = row.Count;
-            
+            var uniqueElementsAmount = row.Count;
+
             return uniqueElementsAmount;
         }
     }

@@ -55,5 +55,22 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
             return graph;
         }
+        
+        public static void FirstCasePack( Graph graph)
+        {
+            foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
+            {
+                item.Type = NodeType.Module;
+            }
+        }
+
+        public static void SecondPack(Graph graph)
+        {
+            foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
+            {
+                item.Type = NodeType.Module;
+            }
+        }
+
     }
 }
