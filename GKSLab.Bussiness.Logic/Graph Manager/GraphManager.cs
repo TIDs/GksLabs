@@ -71,5 +71,6 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 item.Type = NodeType.Module;
             }
         }
+
     }
 }
