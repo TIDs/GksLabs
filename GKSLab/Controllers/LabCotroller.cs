@@ -159,7 +159,7 @@ namespace GKSLab.Controllers
 
         public ActionResult Lab5()
         {
-            List<List<string>> simplifyModules = new List<List<string>>();
+            List<HashSet<string>> simplifyModules = new List<HashSet<string>>();
 
             // primary data
             // first groups with modules
@@ -185,7 +185,7 @@ namespace GKSLab.Controllers
             groupsWithModules.Add(secondGroups);
             groupsWithModules.Add(thirdGroups);
 
-            //simplifyModules = SimplifyModulesManager.DeleteModules(groupsWithModules);
+            simplifyModules = SimplifyModulesManager.SimplifyModules(groupsWithModules);
 
             ViewBag.PrimaryData = groupsWithModules;
             return View("Lab5", simplifyModules);
