@@ -87,8 +87,9 @@ namespace GKSLab.Bussiness.Entities.Graph
         /// </summary>
         /// <param name="value"></param>
         /// <param name="children"></param>
-        public void UpdateNode(string value, params Node<string>[] children)
+        public void UpdateNode(Node<string> firstNode, Node<string> secondNode)
         {
+
         }
 
     }

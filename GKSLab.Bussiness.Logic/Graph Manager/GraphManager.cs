@@ -81,7 +81,23 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
 
         private static void StrongConnection(Graph graph)
         {
+            List<Node<string>> StrongConnectNodes = new List<Node<string>>();
             
+            //find all nodes that have equal element in childrens and parents
+            foreach (var item in graph.Roots.Where(item => item.HasChildren && item.HasParrents))
+            {
+                var findNode = item.Parents.Find(x => item.Children.Contains(x));
+                if (findNode != null) StrongConnectNodes.Add(findNode);
+            }
+
+            // finds nodes between exist strong connection 
+            for(int i = 0; i < StrongConnectNodes.Count - 1; i++)
+            {
+                if(StrongConnectNodes[i].Parents.Contains(StrongConnectNodes[i + 1]))
+                {
+                    graph.UpdateNode(StrongConnectNodes[i], StrongConnectNodes[i+1]);
+                }
+            }
         }
     }
 }
