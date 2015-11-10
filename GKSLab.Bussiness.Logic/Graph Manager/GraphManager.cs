@@ -56,7 +56,14 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             return graph;
         }
         
-        public static void FirstCasePack( Graph graph)
+        public static void CreateModules(Graph graph)
+        {
+           FirstCasePack(graph);
+           SecondPack(graph);
+           StrongConnection(graph);
+        }
+
+        private static void FirstCasePack( Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
             {
@@ -64,7 +71,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
-        public static void SecondPack(Graph graph)
+        private static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
             {
@@ -72,5 +79,9 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        private static void StrongConnection(Graph graph)
+        {
+            
+        }
     }
 }
