@@ -9,6 +9,7 @@ using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
 using GKSLab.Bussiness.Logic.Graph_Manager;
 using GKSLab.Bussiness.Logic.Groups_Manager;
+using GKSLab.Bussiness.Logic.Modules_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 
@@ -155,7 +156,40 @@ namespace GKSLab.Controllers
             GraphManager.FirstCasePack(graph);
             return View("Test", model: joinedModel);
         }
+
+        public ActionResult Lab5()
+        {
+            List<List<string>> simplifyModules = new List<List<string>>();
+
+            // primary data
+            // first groups with modules
+            List<List<List<string>>> groupsWithModules = new List<List<List<string>>>();
+            List<List<string>> firstGroups = new List<List<string>>();
+            firstGroups.Add(new List<string> { "T1", "T2", "C1" });
+            firstGroups.Add(new List<string> { "T1" });
+            firstGroups.Add(new List<string> { "C1" });
+
+            // second groups with modules
+            List<List<string>> secondGroups = new List<List<string>>();
+            secondGroups.Add(new List<string> { "T3", "T4", "T2", "C2" });
+            secondGroups.Add(new List<string> { "T1", "C1" });
+            secondGroups.Add(new List<string> { "C3" });
+
+            //third groups with modules
+            List<List<string>> thirdGroups = new List<List<string>>();
+            thirdGroups.Add(new List<string> { "T1" });
+            thirdGroups.Add(new List<string> { "T3" });
+            thirdGroups.Add(new List<string> { "C2" });
+
+            groupsWithModules.Add(firstGroups);
+            groupsWithModules.Add(secondGroups);
+            groupsWithModules.Add(thirdGroups);
+
+            //simplifyModules = SimplifyModulesManager.DeleteModules(groupsWithModules);
+
+            ViewBag.PrimaryData = groupsWithModules;
+            return View("Lab5", simplifyModules);
+        }
+
     }
-
-
 }
