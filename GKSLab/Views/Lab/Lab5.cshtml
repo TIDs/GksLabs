@@ -40,9 +40,17 @@
                         </table>
                     </div>
                     <div class="col-lg-6">
-                        
+                        <p>Спрощені модулі</p>
                         <table class="table table-bordered">
-                           
+                           @for (int i = 0; i < Model.Count; i++ )
+                           { 
+                               <tr>
+                                   @foreach (var item in Model[i])
+                                   {
+                                       <td style="text-align:center">@item</td>
+                                   }
+                               </tr>
+                           }
                         </table>
                     </div>
                 </div>
