@@ -42,7 +42,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 //just adding all nodes 
                 foreach (var item in itemList)
                 {
-                    graph.Add(item);
+                    graph.AddNode(item);
                 }
                 //Updating all nodes. Adding children to existing nodes
                 foreach (var item in itemList)
@@ -50,7 +50,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                     //item is parent node, childNode - it's child node
                     var childNode = FindChildNodeInRow(graph, itemList, item);
                     if (childNode != null)
-                        graph.Add(item, childNode);
+                        graph.AddChildrens(item, childNode);
                 }
             }
             return graph;
@@ -95,7 +95,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             {
                 if(StrongConnectNodes[i].Parents.Contains(StrongConnectNodes[i + 1]))
                 {
-                    graph.UpdateNode(StrongConnectNodes[i], StrongConnectNodes[i+1]);
+                    graph.UpdateGraph(graph, StrongConnectNodes[i], StrongConnectNodes[i + 1]);
                 }
             }
         }

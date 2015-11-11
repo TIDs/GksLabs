@@ -59,38 +59,71 @@ namespace GKSLab.Bussiness.Entities.Graph
         /// </summary>
         /// <param name="value">Value of the node.</param>
         /// <param name="children">Children of a tree</param>
-        public void Add(string value, params Node<string>[] children)
+        public void AddNode(string value)
         {
             var node = Find(value);
-            //if node exist -> don't create it
-            if (node != null)
+            //if node dont exist -> create it
+            if (node == null)
             {
-                foreach (var child in children)
+                var newNode = new Node<string>(value: value, children: new List<Node<string>>(), parents: new List<Node<string>>());
+                Roots.Add(newNode);
+            }
+        }
+
+        /// <summary>
+        /// Add childrens to node
+        /// </summary>
+        /// <param name="value">Value of the node</param>
+        /// <param name="children">Children of a tree</param>
+        public void AddChildrens(string value, params Node<string>[] children)
+        {
+            var node = Find(value);
+
+            if(node != null)
+            {
+             foreach (var child in children)
                 {
                     //if node contain this Child we will not add child to current node
                     if (node.Children.FirstOrDefault(x => x.Value == child.Value) == null)
                     {
                         node.Children.Add(child);
-                        var a = node.Children.Find(x => x.Value == child.Value);
                         node.Children.Find(x => x.Value == child.Value).Parents.Add(node);
                     }
                 }
-            }
-            else // node exist
-            {
-                var newNode = new Node<string>(value: value, children: children.ToList(), parents: new List<Node<string>>());
-                Roots.Add(newNode);
+            }  
+        }
+
+        /// <summary>
+        /// Add parents to node
+        /// </summary>
+        /// <param name="value">Value of the node</param>
+        /// <param name="parents">Parent of a tree</param>
+        public void AddParents(string value, params Node<string>[] parents)
+        {
+            var node = Find(value);
+            if(node != null)
+            { 
+             foreach(var parent in parents)
+                {
+                    //if node contain this Parent we will not add Parent to current node
+                    if (node.Children.FirstOrDefault(x => x.Value == parent.Value) == null)
+                    {
+                        node.Parents.Add(parent);
+                        node.Parents.Find(x => x.Value == parent.Value).Children.Add(node);
+                    }
+                }
             }
         }
+
+
         /// <summary>
-        /// 
+        /// Update graph
         /// </summary>
         /// <param name="value"></param>
         /// <param name="children"></param>
-        public void UpdateNode(Node<string> firstNode, Node<string> secondNode)
+        public void UpdateGraph(Graph graph, Node<string> firstNode, Node<string> secondNode)
         {
-
+            
         }
-
     }
 }
