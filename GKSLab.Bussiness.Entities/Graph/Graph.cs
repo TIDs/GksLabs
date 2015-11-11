@@ -123,7 +123,45 @@ namespace GKSLab.Bussiness.Entities.Graph
         /// <param name="children"></param>
         public void UpdateGraph(Graph graph, Node<string> firstNode, Node<string> secondNode)
         {
-            
+            // check amount of relations for nodes and choose node with less amount relations
+            if (firstNode.Parents.Count + firstNode.Children.Count < secondNode.Parents.Count + secondNode.Children.Count) 
+                DeleteNode( graph, secondNode, firstNode);
+            else
+                DeleteNode(graph, firstNode, secondNode);
+        }
+
+        /// <summary>
+        /// Deleting node
+        /// </summary>
+        /// <param name="graph">Grap with nodex</param>
+        /// <param name="unionNode">Node that union</param>
+        /// <param name="deletingNode">Node that deleting</param>
+        public void DeleteNode(Graph graph, Node<string> unionNode, Node<string> deletingNode )
+        {
+            List<Node<string>> parents = new List<Node<string>>();
+            List<Node<string>> childrens = new List<Node<string>>();
+
+            // save relations(parent, children) for node, that deleting 
+            // not including relations that follow to union node
+            parents = deletingNode.Parents.FindAll(per => per.Value != unionNode.Value);
+            childrens = deletingNode.Children.FindAll(per => per.Value != unionNode.Value);
+
+            //delete all childrens and parents with nodes that inculude deleting node
+            graph.Roots.ForEach(x => x.Parents.Remove(deletingNode));
+            graph.Roots.ForEach(x => x.Children.Remove(deletingNode));
+
+            //union deleting node and union node
+            unionNode.Value += deletingNode.Value;
+
+            //Counting union for nodes
+            unionNode.CountUnion++;
+
+            // deleting node
+            graph.Roots.Remove(deletingNode);
+
+            // add new relations to union node
+            childrens.ForEach(x => AddChildrens(unionNode.Value, x));
+            parents.ForEach(x => AddParents(unionNode.Value, x));
         }
     }
 }

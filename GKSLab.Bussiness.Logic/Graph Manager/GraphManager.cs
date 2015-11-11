@@ -63,7 +63,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
            StrongConnection(graph);
         }
 
-        private static void FirstCasePack( Graph graph)
+        private static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
             {
@@ -93,7 +93,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             // finds nodes between exist strong connection 
             for(int i = 0; i < StrongConnectNodes.Count - 1; i++)
             {
-                if(StrongConnectNodes[i].Parents.Contains(StrongConnectNodes[i + 1]))
+                if(StrongConnectNodes[i].Parents.Contains(StrongConnectNodes[i + 1]) && StrongConnectNodes[i].Children.Contains(StrongConnectNodes[i+1]))
                 {
                     graph.UpdateGraph(graph, StrongConnectNodes[i], StrongConnectNodes[i + 1]);
                 }
