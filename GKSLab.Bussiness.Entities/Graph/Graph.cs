@@ -140,6 +140,12 @@ namespace GKSLab.Bussiness.Entities.Graph
         {
             List<Node<string>> parents = new List<Node<string>>();
             List<Node<string>> childrens = new List<Node<string>>();
+            
+            //check amount elements in modules that can been less than five
+            if (unionNode.CountUnion >= 5 || (unionNode.CountUnion += deletingNode.CountUnion) >=5) return;
+            
+            //Counting union for nodes
+            unionNode.CountUnion += deletingNode.CountUnion;
 
             // save relations(parent, children) for node, that deleting 
             // not including relations that follow to union node
@@ -152,9 +158,6 @@ namespace GKSLab.Bussiness.Entities.Graph
 
             //union deleting node and union node
             unionNode.Value += deletingNode.Value;
-
-            //Counting union for nodes
-            unionNode.CountUnion++;
 
             // deleting node
             graph.Roots.Remove(deletingNode);

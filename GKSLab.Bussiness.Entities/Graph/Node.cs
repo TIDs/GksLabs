@@ -42,7 +42,7 @@ namespace GKSLab.Bussiness.Entities.Graph
             Value = value;
             Children = children;
             Parents = parents;
-            CountUnion = 0;
+            CountUnion = 1;
         }
     }
 }
