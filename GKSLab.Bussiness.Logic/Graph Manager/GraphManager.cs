@@ -69,7 +69,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
 
             //FindCycleInGraph(graph);
         }
-
+        /// <summary>
+        /// Find the node that don't have any Parrent
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
@@ -77,7 +80,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 item.Type = NodeType.Module;
             }
         }
-
+        /// <summary>
+        /// Find the node that don't have any Child
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
