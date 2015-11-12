@@ -147,26 +147,24 @@ namespace GKSLab.Controllers
             ////second test data
             //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
             //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "F1", "F2" });
+            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
             //inputData.Add(new List<string>(3) { "C1", "T1" });
 
-            //third test data
-            inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            inputData.Add(new List<string>(3) { "C1", "T1" });
+            //test data for find graph
+            inputData.Add(new List<string>(7) { "T1", "C1", "F1"});
+            inputData.Add(new List<string>(4) { "F1", "F2"});
+            inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
+            inputData.Add(new List<string>(3) { "F1", "P1" });
+
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
 
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            // var joinedModel = graph.ToString();
             GraphManager.CreateModules(graph);
+            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             var joinedModel = graph.ToString();
             return View("Test", model: joinedModel);
         }
     }
-
-
 }

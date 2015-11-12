@@ -66,6 +66,8 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 SecondPack(graph);
                 StrongConnection(graph);
             } while (amountNodesGraph != graph.Roots.Count);
+
+            //FindCycleInGraph(graph);
         }
 
         private static void FirstCasePack(Graph graph)
@@ -94,6 +96,33 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 { 
                     graph.UpdateGraph(graph, findNode, item);
                     break;
+                }
+            }
+        }
+
+        public static void FindCycleInGraph(Graph graph)
+        {
+            List<string> elementInCycle;
+
+            for(int i = 0; i < graph.Roots.Count; i++)
+            {
+                elementInCycle = new List<string>();
+                elementInCycle.Add(graph.Roots[i].Value);
+                DFSCycle(graph.Roots[i], graph.Roots[i], graph, graph.Roots[i], elementInCycle);
+            }
+        }
+
+        private static void DFSCycle(Node<string> currentNode, Node<string> endNode, Graph graph, Node<string> unavalibleNode, List<string> cycle )
+        {
+            if (currentNode != endNode) currentNode.colorNode = 2;
+            else if (cycle.Count >= 5) return;
+
+            for(int i = 0; i < currentNode.Children.Count; i++)
+            {
+                if (currentNode.Children[i] == unavalibleNode) continue;
+                if(currentNode.Children[i].colorNode == 1)
+                {
+
                 }
             }
         }
