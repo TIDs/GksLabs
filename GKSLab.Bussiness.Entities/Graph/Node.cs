@@ -24,6 +24,16 @@ namespace GKSLab.Bussiness.Entities.Graph
         /// </summary>
         public T Value { get; set; }
         /// <summary>
+        /// Counting number union for node 
+        /// </summary>
+        public int CountUnion { get; set; }
+        
+        /// <summary>
+        /// Color node, using for find cycles
+        /// </summary>
+        public int colorNode { get; set; }
+
+        /// <summary>
         /// Allow to determine type of graph node (it's module or not)
         /// </summary>
         public NodeType Type { get; set; }
@@ -37,6 +47,8 @@ namespace GKSLab.Bussiness.Entities.Graph
             Value = value;
             Children = children;
             Parents = parents;
+            CountUnion = 1;
+            colorNode = 1;
         }
     }
 }

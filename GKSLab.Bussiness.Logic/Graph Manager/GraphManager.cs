@@ -42,7 +42,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 //just adding all nodes 
                 foreach (var item in itemList)
                 {
-                    graph.Add(item);
+                    graph.AddNode(item);
                 }
                 //Updating all nodes. Adding children to existing nodes
                 foreach (var item in itemList)
@@ -50,13 +50,27 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                     //item is parent node, childNode - it's child node
                     var childNode = FindChildNodeInRow(graph, itemList, item);
                     if (childNode != null)
-                        graph.Add(item, childNode);
+                        graph.AddChildrens(item, childNode);
                 }
             }
             return graph;
         }
         
-        public static void FirstCasePack( Graph graph)
+        public static void CreateModules(Graph graph)
+        {
+            int amountNodesGraph;
+            do
+            {
+                amountNodesGraph = graph.Roots.Count;
+                FirstCasePack(graph);
+                SecondPack(graph);
+                StrongConnection(graph);
+            } while (amountNodesGraph != graph.Roots.Count);
+
+            //FindCycleInGraph(graph);
+        }
+
+        private static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
             {
@@ -64,7 +78,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
-        public static void SecondPack(Graph graph)
+        private static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
             {
@@ -72,5 +86,45 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        private static void StrongConnection(Graph graph)
+        {
+            //find all nodes that have equal element in childrens and parents
+            foreach (var item in graph.Roots.Where(item => item.HasChildren && item.HasParrents))
+            {
+                var findNode = item.Parents.Find(x => item.Children.Contains(x));
+                if (findNode != null)
+                { 
+                    graph.UpdateGraph(graph, findNode, item);
+                    break;
+                }
+            }
+        }
+
+        public static void FindCycleInGraph(Graph graph)
+        {
+            List<string> elementInCycle;
+
+            for(int i = 0; i < graph.Roots.Count; i++)
+            {
+                elementInCycle = new List<string>();
+                elementInCycle.Add(graph.Roots[i].Value);
+                DFSCycle(graph.Roots[i], graph.Roots[i], graph, graph.Roots[i], elementInCycle);
+            }
+        }
+
+        private static void DFSCycle(Node<string> currentNode, Node<string> endNode, Graph graph, Node<string> unavalibleNode, List<string> cycle )
+        {
+            if (currentNode != endNode) currentNode.colorNode = 2;
+            else if (cycle.Count >= 5) return;
+
+            for(int i = 0; i < currentNode.Children.Count; i++)
+            {
+                if (currentNode.Children[i] == unavalibleNode) continue;
+                if(currentNode.Children[i].colorNode == 1)
+                {
+
+                }
+            }
+        }
     }
 }
