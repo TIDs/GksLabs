@@ -124,28 +124,24 @@ namespace GKSLab.Bussiness.Entities.Graph
         public void UpdateGraph(Graph graph, Node<string> firstNode, Node<string> secondNode)
         {
             // check amount of relations for nodes and choose node with less amount relations
-            if (firstNode.Parents.Count + firstNode.Children.Count < secondNode.Parents.Count + secondNode.Children.Count) 
-                DeleteNode( graph, secondNode, firstNode);
+            if (firstNode.Parents.Count + firstNode.Children.Count < secondNode.Parents.Count + secondNode.Children.Count)
+                UnionNodes(graph, secondNode, firstNode);
             else
-                DeleteNode(graph, firstNode, secondNode);
+                UnionNodes(graph, firstNode, secondNode);
         }
-
         /// <summary>
         /// Deleting node
         /// </summary>
         /// <param name="graph">Grap with nodex</param>
         /// <param name="unionNode">Node that union</param>
         /// <param name="deletingNode">Node that deleting</param>
-        public void DeleteNode(Graph graph, Node<string> unionNode, Node<string> deletingNode )
+        public void UnionNodes(Graph graph, Node<string> unionNode, Node<string> deletingNode )
         {
             List<Node<string>> parents = new List<Node<string>>();
             List<Node<string>> childrens = new List<Node<string>>();
             
             //check amount elements in modules that can been less than five
-            if (unionNode.CountUnion >= 5 || (unionNode.CountUnion += deletingNode.CountUnion) >=5) return;
-            
-            //Counting union for nodes
-            unionNode.CountUnion += deletingNode.CountUnion;
+            if (unionNode.CountUnion >= 6 || (unionNode.CountUnion += deletingNode.CountUnion) >= 6) return;
 
             // save relations(parent, children) for node, that deleting 
             // not including relations that follow to union node

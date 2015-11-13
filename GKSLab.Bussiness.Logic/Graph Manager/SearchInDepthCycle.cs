@@ -10,7 +10,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
     class SearchInDepthCycle
     {
         /// <summary>
-        /// All finded cycles in graph
+        /// First finded cycle in graph with amount elements less than 6
         /// </summary>
         private static List<Node<string>> findedCycles = new List<Node<string>>();
 

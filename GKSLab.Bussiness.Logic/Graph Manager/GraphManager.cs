@@ -69,9 +69,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 FirstCasePack(graph);
                 SecondPack(graph);
                 StrongConnection(graph);
-                FindCycleInGraph(graph);
-                FindFifthCaseInGraph(graph);
             } while (amountNodesGraph != graph.Roots.Count);
+
+            //FindCycleInGraph(graph);
+            FindFifthCaseInGraph(graph);
         }
 
         /// <summary>
@@ -125,6 +126,12 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             List<Node<string>> catalogeCycle = new List<Node<string>>();
             SearchInDepthCycle searchCycle = new SearchInDepthCycle();
             catalogeCycle = searchCycle.FindCycle(graph);
+
+            // Count-2 because final element in cycle is a first element
+            for(int i = 0; i < catalogeCycle.Count-2; i++)
+            {
+                graph.UnionNodes(graph, catalogeCycle[0], catalogeCycle[i + 1]);
+            }
         }
 
         /// <summary>
@@ -136,6 +143,11 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             List<Node<string>> catalogeFifthCase = new List<Node<string>>();
             SearchInDepthFifthCase fifthCase = new SearchInDepthFifthCase();
             catalogeFifthCase = fifthCase.FindFifthCase(graph);
+
+            for (int i = 0; i < catalogeFifthCase.Count - 1; i++)
+            {
+                graph.UnionNodes(graph, catalogeFifthCase[0], catalogeFifthCase[i + 1]);
+            }
         }
     }
 }

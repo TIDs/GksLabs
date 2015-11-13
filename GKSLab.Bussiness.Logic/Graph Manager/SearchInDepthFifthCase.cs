@@ -10,7 +10,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
     class SearchInDepthFifthCase
     {
         /// <summary>
-        /// All fifth cases in graph
+        /// Find first fifth cases in graph
         /// </summary>
         private static List<Node<string>> findedFifthCase = new List<Node<string>>();
 
