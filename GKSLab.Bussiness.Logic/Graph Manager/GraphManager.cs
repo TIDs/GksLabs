@@ -56,6 +56,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             return graph;
         }
         
+        /// <summary>
+        /// Create modules in graph
+        /// </summary>
+        /// <param name="graph"></param>
         public static void CreateModules(Graph graph)
         {
             int amountNodesGraph;
@@ -70,6 +74,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             } while (amountNodesGraph != graph.Roots.Count);
         }
 
+        /// <summary>
+        /// Find node that don`t have any Parents
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
@@ -78,6 +86,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find node that don`t have any Children
+        /// </summary>
+        /// <param name="graph">Implementation of class graph<</param>
         private static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
@@ -86,6 +98,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find strong connection  between nodes in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void StrongConnection(Graph graph)
         {
             //find all nodes that have equal element in childrens and parents
@@ -100,6 +116,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find cycle in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void FindCycleInGraph(Graph graph)
         {
             List<Node<string>> catalogeCycle = new List<Node<string>>();
@@ -107,6 +127,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             catalogeCycle = searchCycle.FindCycle(graph);
         }
 
+        /// <summary>
+        /// Find fifth case in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void FindFifthCaseInGraph(Graph graph)
         {
             List<Node<string>> catalogeFifthCase = new List<Node<string>>();
