@@ -14,9 +14,14 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// </summary>
         private static List<Node<string>> findedFifthCase = new List<Node<string>>();
 
+        static SearchInDepthFifthCase()
+        {
+            findedFifthCase.Clear();
+        }
         public List<Node<string>> FindFifthCase(Graph graph)
         {
             List<Node<string>> elementInCycle;
+            findedFifthCase.Clear();
 
             for (int i = 0; i < graph.Roots.Count; i++)
             {
@@ -38,8 +43,8 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             else if (currentNode != firstNode && currentNode.Children.Count > 1) return;
 
             if (currentNode != firstNode) currentNode.colorNode = 2;
-            
-            if(currentNode != firstNode && currentNode.Parents.Contains(firstNode) && cycle.Count >=3) 
+
+            if (currentNode != firstNode && currentNode.Parents.Contains(firstNode) && cycle.Count >= 3)
             {
                 cycle.ForEach(x => findedFifthCase.Add(x));
                 return;

@@ -79,7 +79,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Find node that don`t have any Parents
         /// </summary>
         /// <param name="graph">Implementation of class graph</param>
-        private static void FirstCasePack(Graph graph)
+        public static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
             {
@@ -91,7 +91,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Find node that don`t have any Children
         /// </summary>
         /// <param name="graph">Implementation of class graph<</param>
-        private static void SecondPack(Graph graph)
+        public static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
             {
@@ -103,7 +103,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Find strong connection  between nodes in graph
         /// </summary>
         /// <param name="graph">Implementation of class graph</param>
-        private static void StrongConnection(Graph graph)
+        public static void StrongConnection(Graph graph)
         {
             //find all nodes that have equal element in childrens and parents
             foreach (var item in graph.Roots.Where(item => item.HasChildren && item.HasParrents))
@@ -138,7 +138,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Find fifth case in graph
         /// </summary>
         /// <param name="graph">Implementation of class graph</param>
-        private static void FindFifthCaseInGraph(Graph graph)
+        public static void FindFifthCaseInGraph(Graph graph)
         {
             List<Node<string>> catalogeFifthCase = new List<Node<string>>();
             SearchInDepthFifthCase fifthCase = new SearchInDepthFifthCase();

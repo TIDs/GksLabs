@@ -37,3 +37,4 @@ namespace GKSLab.Bussiness.Logic.Comparison_Manager
         }
     }
 }
+

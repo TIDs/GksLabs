@@ -1,10 +1,11 @@
-﻿@model string
+﻿@model List<string>
 @{
     Layout = null;
 }
 <title>Directed Graph</title>
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/network.js"></script>
+<script src="~/Scripts/angular.js"></script>
 <style type="text/css">
     #network {
         width: 50%;
@@ -13,23 +14,58 @@
         margin: 50px;
     }
 </style>
-<body>
+<script>
+    angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
+        $scope.current = model[model.length - 1];
+        $scope.modelStates = [];
+        $scope.modelStates = model;
+
+        $scope.draw = function () {
+            // create a network view
+            var network = new links.Network(document.getElementById('network'));
+            var dot = 'digraph {node[shape=rectangle];' + $scope.current + '}'; //razor will encode model, for disable this - Html.Raw(string)
+            var data = links.Network.util.DOTToNetwork(dot);
+            // draw the data
+            network.draw(data.nodes, data.edges, data.options);
+            // resize the network when window resizes
+            window.onresize = function () {
+                network.redraw();
+            };
+        }
+        $scope.nextState = function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (!(typeof $scope.modelStates[i + 1] === 'undefined')) {
+                $scope.current = $scope.modelStates[i + 1];
+            }
+            $scope.draw();
+        }
+        $scope.prevState = function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (i > 0 && !(typeof $scope.modelStates[i - 1] === 'undefined')) {
+                $scope.current = $scope.modelStates[i - 1];
+            }
+            $scope.draw();
+        }
+    });
+</script>
+<body ng-app="sampleApp">
     <div class="clearfix"></div>
-    <div id="network"></div>
+    <div ng-controller="defaultCtrl">
+        <button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>
+        <button type="button" value="Следующий" ng-click="nextState()">Следующий</button>
+        <button type="button" value="Предыдущий" ng-click="prevState()">Предыдущий</button>
+        <div id="network">
+        </div>
+    </div>
     <script type="text/javascript">
-        // create a network view
-        var network = new links.Network(document.getElementById('network'));
+
         // parse data in DOT-notation
-        var dot = 'digraph {node[shape=rectangle];@Html.Raw(Model)}'; //razor will encode model, for disable this - Html.Raw(string)
-        var data = links.Network.util.DOTToNetwork(dot);
-
-        // draw the data
-        network.draw(data.nodes, data.edges, data.options);
-
-        // resize the network when window resizes
-        window.onresize = function () {
-            network.redraw();
-        };
+        var model = [];
+        @foreach(var item in Model){
+             @:model.push("@Html.Raw(item)");
+                          }
+        for (var i = 0; i < model.length; i++) {
+            alert(model[i]);
+        }
     </script>
-
 </body>

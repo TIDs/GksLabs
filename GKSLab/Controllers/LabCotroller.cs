@@ -137,7 +137,7 @@ namespace GKSLab.Controllers
             List<List<string>> inputData = new List<List<string>>();
             List<List<int>> groups = new List<List<int>>();
             List<List<int>> redistributionsGroup = new List<List<int>>();
-            
+
             ////First TEST DATA
             //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
             //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
@@ -158,13 +158,34 @@ namespace GKSLab.Controllers
 
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
-
+            HashSet<string> model = new HashSet<string>();
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-            GraphManager.CreateModules(graph);
+            model.Add(graph.ToString());
+        
+
+            int amountNodesGraph;
+            do
+            {
+                amountNodesGraph = graph.Roots.Count;
+                GraphManager.FirstCasePack(graph);
+                model.Add(graph.ToString());
+
+                GraphManager.SecondPack(graph);
+                model.Add(graph.ToString());
+
+                GraphManager.StrongConnection(graph);
+                model.Add(graph.ToString());
+
+            } while (amountNodesGraph != graph.Roots.Count);
+
+            //FindCycleInGraph(graph);
+            GraphManager.FindFifthCaseInGraph(graph);
+            model.Add(graph.ToString());
+            //wi'll take only not the same elements
+            
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            var joinedModel = graph.ToString();
-            return View("Test", model: joinedModel);
+            return View("Test", model: model.ToList());
         }
     }
 }
