@@ -151,8 +151,8 @@ namespace GKSLab.Controllers
             //inputData.Add(new List<string>(3) { "C1", "T1" });
 
             //test data for find graph
-            inputData.Add(new List<string>(7) { "T1", "C1", "F1"});
-            inputData.Add(new List<string>(4) { "F1", "F2"});
+            inputData.Add(new List<string>(7) { "T1", "C1", "F1" });
+            inputData.Add(new List<string>(4) { "F1", "F2" });
             inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
             inputData.Add(new List<string>(3) { "F1", "P1" });
 

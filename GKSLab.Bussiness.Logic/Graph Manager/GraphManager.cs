@@ -56,6 +56,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             return graph;
         }
         
+        /// <summary>
+        /// Create modules in graph
+        /// </summary>
+        /// <param name="graph"></param>
         public static void CreateModules(Graph graph)
         {
             int amountNodesGraph;
@@ -68,9 +72,11 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             } while (amountNodesGraph != graph.Roots.Count);
 
             //FindCycleInGraph(graph);
+            FindFifthCaseInGraph(graph);
         }
+
         /// <summary>
-        /// Find the node that don't have any Parrent
+        /// Find node that don`t have any Parents
         /// </summary>
         /// <param name="graph">Implementation of class graph</param>
         private static void FirstCasePack(Graph graph)
@@ -80,10 +86,11 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 item.Type = NodeType.Module;
             }
         }
+
         /// <summary>
-        /// Find the node that don't have any Child
+        /// Find node that don`t have any Children
         /// </summary>
-        /// <param name="graph">Implementation of class graph</param>
+        /// <param name="graph">Implementation of class graph<</param>
         private static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
@@ -92,6 +99,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find strong connection  between nodes in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
         private static void StrongConnection(Graph graph)
         {
             //find all nodes that have equal element in childrens and parents
@@ -106,30 +117,36 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
-        public static void FindCycleInGraph(Graph graph)
+        /// <summary>
+        /// Find cycle in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        private static void FindCycleInGraph(Graph graph)
         {
-            List<string> elementInCycle;
+            List<Node<string>> catalogeCycle = new List<Node<string>>();
+            SearchInDepthCycle searchCycle = new SearchInDepthCycle();
+            catalogeCycle = searchCycle.FindCycle(graph);
 
-            for(int i = 0; i < graph.Roots.Count; i++)
+            // Count-2 because final element in cycle is a first element
+            for(int i = 0; i < catalogeCycle.Count-2; i++)
             {
-                elementInCycle = new List<string>();
-                elementInCycle.Add(graph.Roots[i].Value);
-                DFSCycle(graph.Roots[i], graph.Roots[i], graph, graph.Roots[i], elementInCycle);
+                graph.UnionNodes(graph, catalogeCycle[0], catalogeCycle[i + 1]);
             }
         }
 
-        private static void DFSCycle(Node<string> currentNode, Node<string> endNode, Graph graph, Node<string> unavalibleNode, List<string> cycle )
+        /// <summary>
+        /// Find fifth case in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        private static void FindFifthCaseInGraph(Graph graph)
         {
-            if (currentNode != endNode) currentNode.colorNode = 2;
-            else if (cycle.Count >= 5) return;
+            List<Node<string>> catalogeFifthCase = new List<Node<string>>();
+            SearchInDepthFifthCase fifthCase = new SearchInDepthFifthCase();
+            catalogeFifthCase = fifthCase.FindFifthCase(graph);
 
-            for(int i = 0; i < currentNode.Children.Count; i++)
+            for (int i = 0; i < catalogeFifthCase.Count - 1; i++)
             {
-                if (currentNode.Children[i] == unavalibleNode) continue;
-                if(currentNode.Children[i].colorNode == 1)
-                {
-
-                }
+                graph.UnionNodes(graph, catalogeFifthCase[0], catalogeFifthCase[i + 1]);
             }
         }
     }
