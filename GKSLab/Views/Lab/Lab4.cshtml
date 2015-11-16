@@ -1,0 +1,84 @@
+﻿@model string
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+</script>
+<!DOCTIPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Введення початкових даних</title>
+    <script>
+        function setupTable(tableId, selectId) {
+            var htmlBody = document.getElementById(tableId),
+            htmlSelect = document.getElementById(selectId);
+
+            htmlSelect.onchange = function (e) {
+                var fields = htmlSelect.options[htmlSelect.selectedIndex].value;
+                var numRows = htmlSelect.options[htmlSelect.selectedIndex].value;
+
+                while (htmlBody.firstChild) htmlBody.removeChild(htmlBody.firstChild);
+
+                for (var i = 0; i < numRows; i++) {
+                    rowTpl = document.createElement("tr");
+                    for (var j = 0; j < fields; j++) {
+                        var td = document.createElement("td");
+                        input = document.createElement("input");
+                        input.name = 'MatrixList[' + i + '].Row[' + j + ']';
+                        input.placeholder = (i + 1) + '.' + (j + 1);
+                        input.size = 3;
+                        td.appendChild(input);
+                        rowTpl.appendChild(td);
+                    }
+                    htmlBody.appendChild(rowTpl)
+                }
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <!-- header-->
+                <div class="panel-heading">
+                    <h1 class="panel-title">
+                        Введення вхідних даних
+                    </h1>
+
+                </div>
+                <h1 style="text-align: center;color:red">@ViewBag.Message</h1>
+                <!-- end header -->
+                <!-- content -->
+                @using (Html.BeginForm("Test", "Lab", FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-4"></div>
+                            <input type="file" name="file" class="btn-lg btn-default">
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2"></div>
+                            <button type="submit" class="btn-lg btn-primary">Порахувати</button>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                }
+                <!-- end content-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    new setupTable("dynamic", "sizeTable");
+</script>

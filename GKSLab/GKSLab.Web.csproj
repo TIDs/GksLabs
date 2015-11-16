@@ -1056,6 +1056,7 @@
     <Content Include="Views\Lab\_InputHand.cshtml" />
     <Content Include="Scripts\version.json" />
     <None Include="Views\Lab\Die.cshtml" />
+    <None Include="Views\Lab\Lab4.cshtml" />
     <None Include="Views\Lab\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -125,6 +125,11 @@ namespace GKSLab.Controllers
             return View("Result", result);
         }
 
+
+        public ActionResult Lab4()
+        {
+            return View();
+        }
         /// <summary>
         /// Test Method for LAB 4
         /// </summary>
@@ -132,6 +137,7 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult Test(HttpPostedFileBase file)
         {
+
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
@@ -184,6 +190,67 @@ namespace GKSLab.Controllers
             model.Add(graph.ToString());
             //wi'll take only not the same elements
             
+            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
+            return View("Test", model: model.ToList());
+        }
+
+        public ActionResult TestFile(HttpPostedFileBase file)
+        {
+            ComparationResult result;
+            var uniqueElements = 0;
+            List<List<string>> inputData = new List<List<string>>();
+            List<List<int>> groups = new List<List<int>>();
+            List<List<int>> redistributionsGroup = new List<List<int>>();
+            List<HashSet<string>> groupsWithStringElement;
+            //HttpPostedFileBase file = HttpContext.Request.Files[0];
+            try
+            {
+                inputData = ExcelReader.Read(file);
+                uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
+                result = ComparisonManager.CompareDetails(inputData);
+                groups = DevisionGroupsManager.CreateGroups(result);
+                groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
+                var groupWithString = new List<HashSet<string>>(groupsWithStringElement);
+                var groupForRedistributions = new List<List<int>>();
+                groups.ForEach(x => groupForRedistributions.Add(x));
+                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groupForRedistributions, groupWithString);
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                Debug.Write(e.Message);
+                return View(error);
+            }
+            ////TODO just do this 
+
+
+            groups.Add(new List<int>() { 0, 1, 2, 3 });
+            HashSet<string> model = new HashSet<string>();
+            //creating graph
+            var graph = GraphManager.Create(groups[0], inputData);
+            model.Add(graph.ToString());
+
+
+            int amountNodesGraph;
+            do
+            {
+                amountNodesGraph = graph.Roots.Count;
+                GraphManager.FirstCasePack(graph);
+                model.Add(graph.ToString());
+
+                GraphManager.SecondPack(graph);
+                model.Add(graph.ToString());
+
+                GraphManager.StrongConnection(graph);
+                model.Add(graph.ToString());
+
+            } while (amountNodesGraph != graph.Roots.Count);
+
+            //FindCycleInGraph(graph);
+            GraphManager.FindFifthCaseInGraph(graph);
+            model.Add(graph.ToString());
+            //wi'll take only not the same elements
+
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
         }
