@@ -1,0 +1,5 @@
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Release\GKSLab.Bussiness.Entities.csprojResolveAssemblyReference.cache
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\bin\Release\GKSLab.Bussiness.Entities.dll
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\bin\Release\GKSLab.Bussiness.Entities.pdb
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Release\GKSLab.Bussiness.Entities.dll
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Release\GKSLab.Bussiness.Entities.pdb

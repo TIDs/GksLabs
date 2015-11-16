@@ -1,0 +1,104 @@
+﻿@model GKSLab.Bussiness.Entities.ComparationResult
+@{
+    ViewBag.Title = "Result";
+}
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <!-- header-->
+            <div class="panel-heading">
+                <h1 style="text-align: center" class="panel-title">
+                    Результат
+                </h1>
+            </div>
+            <!-- end header -->
+            <!-- content -->
+            <div class="panel-body">
+                <div class="row" style="margin-bottom: 40px !important">
+                    <div class="col-lg-6">
+                        <p> Введені дані </p>
+                        <table class="table table-bordered">
+                            @foreach (var item in @ViewBag.InputData)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < @item.Count; i++)
+                                    {
+                                       <td style="text-align:center">@item[i]</td> 
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <p> Кількість унікальних елементів @ViewBag.Unique</p>
+                        <table class="table table-bordered">
+                            @foreach (var item in Model.ResultingMatrix)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < Model.ResultingMatrix.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 40px !important">
+                    <div class="col-lg-6">
+                        <p>Результат поділу на групи</p>
+                        <table class="table table-bordered">
+                            @foreach (var item in @ViewBag.Groups)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < @item.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>Групи із набором операцій</p>
+                        <table class="table table-bordered">
+                            @foreach (var item in @ViewBag.GroupString)
+                            {
+                                <tr>
+                                    @foreach (string i in @item)
+                                    {
+                                        <td style="text-align:center">@i</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+
+                 <div class="row">
+                     <div class="col-lg-6">
+                         <p>Перерозподіл груп</p>
+                         <table class="table table-bordered">
+                             @foreach (var item in @ViewBag.RedistributedGroups)
+                             {
+                                 <tr>
+                                     @for (int i = 0; i < @item.Count; i++)
+                                     {
+                                         <td style="text-align:center">@item[i]</td>
+                                     }
+                                 </tr>
+                             }
+                         </table>
+
+                         </table>
+                     </div>
+                 </div>
+                <div class="submitButton">
+                    <button class="btn-lg btn-primary"><a id="Return" href="@Url.Action("Lab1", "Lab")">Порахувати ще раз</a></button>
+                </div>
+            <!-- end content-->
+        </div>
+    </div>
+</div>
+</div>
