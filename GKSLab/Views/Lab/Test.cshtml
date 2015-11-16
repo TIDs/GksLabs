@@ -1,4 +1,4 @@
-@model List<string>
+@model List<HashSet<string>>
 @{
     Layout = null;
 }
@@ -18,10 +18,18 @@
     }
 </style>
 <script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+<script>
     angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
-        $scope.current = model[model.length - 1];
+
         $scope.modelStates = [];
+        $scope.current = model[0];
         $scope.modelStates = model;
+        $scope.nextClass = 'btn btn-primary';
+        $scope.prevClass = 'disabled-btn';
 
         $scope.draw = function () {
             // create a network view
@@ -49,11 +57,10 @@
             }
             $scope.draw();
         }
-        $scope.nextClass = 'btn btn-primary';
-        $scope.prevClass = 'disabled-btn';
+     
         $scope.$watch("current", function () {
             var i = $scope.modelStates.indexOf($scope.current);
-            if (i === model.length - 1) {
+            if (i <= model.length - 1) {
                 $scope.nextClass = 'disabled-btn';
                 $scope.prevClass = 'btn btn-primary';
 
@@ -69,20 +76,31 @@
         <div class="panel-body">
             <div ng-controller="defaultCtrl" data-ng-init="draw()">
                 <div class="row">
-                    <div class="col-xs-2">
-                        <div class="well">
-                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Previous</button>
-                        </div>
+                    <div id="tabs">
+                        <ul>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <li><a href="#tab_@i"></a>Tab @i</li>
+                            }
+                        </ul>
                     </div>
-                    <div class="col-xs-8">
-                        <div id="network">
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <div class="col-xs-2">
+                            <div class="well">
+                                <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Previous</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="well">
-                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Next</button>
+                        <div class="col-xs-8">
+                            <div id="network">
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-xs-2">
+                            <div class="well">
+                                <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Next</button>
+                            </div>
+                        </div>
+                    }
                 </div>
                 @*<button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>*@
             </div>
@@ -97,7 +115,7 @@
         @foreach (var item in Model)
     {
         @:model.push("@Html.Raw(item)");
-                                                                                    }
+                                                                                            }
 
     </script>
 </body>

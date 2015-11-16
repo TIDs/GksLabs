@@ -23,7 +23,6 @@ namespace GKSLab.Controllers
             return View();
         }
 
-        ///TODO: angular . async update of container
         /// <summary>
         /// CreateExamFromFile method. Is called after HttpPost request
         /// </summary>
@@ -153,16 +152,16 @@ namespace GKSLab.Controllers
             //inputData.Add(new List<string>(3) {  "T1", "F2" });
 
             ////second test data
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            //inputData.Add(new List<string>(3) { "C1", "T1" });
+            inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
+            inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
+            inputData.Add(new List<string>(3) { "C1", "T1" });
 
             //test data for find graph
-            inputData.Add(new List<string>(7) { "T1", "C1", "F1" });
-            inputData.Add(new List<string>(4) { "F1", "F2" });
-            inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
-            inputData.Add(new List<string>(3) { "F1", "P1" });
+            //inputData.Add(new List<string>(7) { "T1", "C1", "F1" });
+            //inputData.Add(new List<string>(4) { "F1", "F2" });
+            //inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
+            //inputData.Add(new List<string>(3) { "F1", "P1" });
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
             HashSet<string> model = new HashSet<string>();
@@ -201,36 +200,30 @@ namespace GKSLab.Controllers
                 Debug.Write(e.Message);
                 return View(error);
             }
-            ////TODO just do this 
-
+            //returning partial view
+            ViewBag.InputData = inputData;
+            ViewBag.Unique = uniqueElements;
+            ViewBag.Groups = groups;
+            ViewBag.GroupString = groupsWithStringElement;
+            ViewBag.RedistributedGroups = redistributionsGroup;
+            
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
-            HashSet<string> model = new HashSet<string>();
+            var model = new List<HashSet<string>>();
             //creating graph
-            var graph = GraphManager.Create(groups[0], inputData);
-
-            model.Add(graph.ToString());
-
-
-            int amountNodesGraph;
-            do
+            //changing index for 0-based array
+            for (int index = 0; index < redistributionsGroup[0].Count; index++)
             {
-                amountNodesGraph = graph.Roots.Count;
-                GraphManager.FirstCasePack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.SecondPack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.StrongConnection(graph);
-                model.Add(graph.ToString());
-
-            } while (amountNodesGraph != graph.Roots.Count);
-
-            //FindCycleInGraph(graph);
-            GraphManager.FindFifthCaseInGraph(graph);
-            model.Add(graph.ToString());
-            //wi'll take only not the same elements
+                redistributionsGroup[0][index] -= 1; 
+            }
+            var graphs = new List<Graph>();
+            foreach (var redistrItem in redistributionsGroup)
+            {
+                var list = new HashSet<string>();
+                var graph = GraphManager.Create(redistrItem, inputData);
+                list = GraphManager.CreateModules(graph, list);
+                model.Add(list);
+            }
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
