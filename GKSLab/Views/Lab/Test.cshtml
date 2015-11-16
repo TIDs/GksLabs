@@ -7,12 +7,12 @@
 <script src="~/Scripts/network.js"></script>
 <script src="~/Scripts/angular.js"></script>
 <style type="text/css">
-    #network {
+    /*#network {
         width: 50%;
         height: 100%;
         padding: 50px;
         margin: 50px;
-    }
+    }*/
 </style>
 <script>
     angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
@@ -49,21 +49,40 @@
     });
 </script>
 <body ng-app="sampleApp">
-    <div class="clearfix"></div>
-    <div ng-controller="defaultCtrl">
-        <button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>
-        <button type="button" value="Следующий" ng-click="nextState()">Следующий</button>
-        <button type="button" value="Предыдущий" ng-click="prevState()">Предыдущий</button>
-        <div id="network">
+    <div class="panel panel-default">
+        <div class="panel-heading">Графы</div>
+        <div class="panel-body">
+            <div ng-controller="defaultCtrl">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="well">
+                            <button type="button" value="Предыдущий" ng-click="prevState()">Предыдущий</button>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div id="network">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="well">
+                            <button type="button" value="Следующий" ng-click="nextState()">Следующий</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>
+            </div>
         </div>
     </div>
+    <div class="clearfix"></div>
+
     <script type="text/javascript">
 
         // parse data in DOT-notation
         var model = [];
-        @foreach(var item in Model){
-             @:model.push("@Html.Raw(item)");
-                          }
+        @foreach (var item in Model)
+    {
+        @:model.push("@Html.Raw(item)");
+                    }
         for (var i = 0; i < model.length; i++) {
             alert(model[i]);
         }
