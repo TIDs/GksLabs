@@ -13,6 +13,9 @@
         padding: 50px;
         margin: 50px;
     }*/
+    .disabled-btn {
+        display: none;
+    }
 </style>
 <script>
     angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
@@ -46,17 +49,29 @@
             }
             $scope.draw();
         }
+        $scope.nextClass = 'btn btn-primary';
+        $scope.prevClass = 'disabled-btn';
+        $scope.$watch("current", function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (i === model.length - 1) {
+                $scope.nextClass = 'disabled-btn';
+                $scope.prevClass = 'btn btn-primary';
+
+            } else
+                $scope.prevClass = 'disabled-btn';
+            $scope.nextClass = 'btn btn-success';
+        });
     });
 </script>
 <body ng-app="sampleApp">
     <div class="panel panel-default">
         <div class="panel-heading">Графы</div>
         <div class="panel-body">
-            <div ng-controller="defaultCtrl">
+            <div ng-controller="defaultCtrl" data-ng-init="draw()">
                 <div class="row">
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" value="Предыдущий" ng-click="prevState()">Предыдущий</button>
+                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Предыдущий</button>
                         </div>
                     </div>
                     <div class="col-xs-8">
@@ -65,11 +80,11 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" value="Следующий" ng-click="nextState()">Следующий</button>
+                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Следующий</button>
                         </div>
                     </div>
                 </div>
-                <button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>
+                @*<button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>*@
             </div>
         </div>
     </div>
@@ -82,9 +97,7 @@
         @foreach (var item in Model)
     {
         @:model.push("@Html.Raw(item)");
-                    }
-        for (var i = 0; i < model.length; i++) {
-            alert(model[i]);
-        }
+                                                                                    }
+
     </script>
 </body>
