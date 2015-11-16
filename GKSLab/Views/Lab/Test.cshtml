@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@model string
 @{
     Layout = null;
@@ -35,3 +36,108 @@
     </script>
 
 </body>
+=======
+﻿@model List<string>
+@{
+    Layout = null;
+}
+<title>Directed Graph</title>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/network.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<style type="text/css">
+    /*#network {
+        width: 50%;
+        height: 100%;
+        padding: 50px;
+        margin: 50px;
+    }*/
+    .disabled-btn {
+        display: none;
+    }
+</style>
+<script>
+    angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
+        $scope.current = model[model.length - 1];
+        $scope.modelStates = [];
+        $scope.modelStates = model;
+
+        $scope.draw = function () {
+            // create a network view
+            var network = new links.Network(document.getElementById('network'));
+            var dot = 'digraph {node[shape=rectangle];' + $scope.current + '}'; //razor will encode model, for disable this - Html.Raw(string)
+            var data = links.Network.util.DOTToNetwork(dot);
+            // draw the data
+            network.draw(data.nodes, data.edges, data.options);
+            // resize the network when window resizes
+            window.onresize = function () {
+                network.redraw();
+            };
+        }
+        $scope.nextState = function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (!(typeof $scope.modelStates[i + 1] === 'undefined')) {
+                $scope.current = $scope.modelStates[i + 1];
+            }
+            $scope.draw();
+        }
+        $scope.prevState = function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (i > 0 && !(typeof $scope.modelStates[i - 1] === 'undefined')) {
+                $scope.current = $scope.modelStates[i - 1];
+            }
+            $scope.draw();
+        }
+        $scope.nextClass = 'btn btn-primary';
+        $scope.prevClass = 'disabled-btn';
+        $scope.$watch("current", function () {
+            var i = $scope.modelStates.indexOf($scope.current);
+            if (i === model.length - 1) {
+                $scope.nextClass = 'disabled-btn';
+                $scope.prevClass = 'btn btn-primary';
+
+            } else
+                $scope.prevClass = 'disabled-btn';
+            $scope.nextClass = 'btn btn-success';
+        });
+    });
+</script>
+<body ng-app="sampleApp">
+    <div class="panel panel-default">
+        <div class="panel-heading">Графы</div>
+        <div class="panel-body">
+            <div ng-controller="defaultCtrl" data-ng-init="draw()">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="well">
+                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Предыдущий</button>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div id="network">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="well">
+                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Следующий</button>
+                        </div>
+                    </div>
+                </div>
+                @*<button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>*@
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <script type="text/javascript">
+
+        // parse data in DOT-notation
+        var model = [];
+        @foreach (var item in Model)
+    {
+        @:model.push("@Html.Raw(item)");
+                                                                                    }
+
+    </script>
+</body>
+>>>>>>> 68547f47f3c24e0b4f25ca40ae669dc2fb130235
