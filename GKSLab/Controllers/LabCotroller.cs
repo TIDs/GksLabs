@@ -127,12 +127,10 @@ namespace GKSLab.Controllers
             return View("Result", result);
         }
 
-
         public ActionResult Lab4()
         {
             return View();
         }
-
 
         /// <summary>
         /// Test Method for LAB 4
@@ -141,7 +139,6 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult CreateGraph()
         {
-
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
