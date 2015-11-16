@@ -1,43 +1,4 @@
-<<<<<<< HEAD
-﻿@model string
-@{
-    Layout = null;
-}
-<title>Directed Graph</title>
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<script src="~/Scripts/network.js"></script>
-<style type="text/css">
-    #network {
-        width: 50%;
-        height: 100%;
-        padding: 50px;
-        margin: 50px;
-    }
-</style>
-<body>
-    <div class="clearfix"></div>
-    <div id="network"></div>
-    <script type="text/javascript">
-             // create a network view
-        var network = new links.Network(document.getElementById('network'));
-        // parse data in DOT-notation
-        var dot = 'digraph {node[shape=rectangle]; @Html.Raw(Model)}'; //razor will encode model, for disable this - Html.Raw(string)
-        var data = links.Network.util.DOTToNetwork(dot);
-
-        // draw the data
-        network.draw(data.nodes, data.edges, data.options);
-
-        // resize the network when window resizes
-        window.onresize = function () {
-            network.redraw();
-        };
-       
-       
-    </script>
-
-</body>
-=======
-﻿@model List<string>
+@model List<string>
 @{
     Layout = null;
 }
@@ -104,13 +65,13 @@
 </script>
 <body ng-app="sampleApp">
     <div class="panel panel-default">
-        <div class="panel-heading">Графы</div>
+        <div class="panel-heading">Graphs</div>
         <div class="panel-body">
             <div ng-controller="defaultCtrl" data-ng-init="draw()">
                 <div class="row">
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Предыдущий</button>
+                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Previous</button>
                         </div>
                     </div>
                     <div class="col-xs-8">
@@ -119,7 +80,7 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Следующий</button>
+                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Next</button>
                         </div>
                     </div>
                 </div>

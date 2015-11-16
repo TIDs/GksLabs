@@ -228,13 +228,7 @@ namespace GKSLab.Controllers
             HashSet<string> model = new HashSet<string>();
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-<<<<<<< HEAD
-            //GraphManager.CreateModules(graph);
-            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            var joinModel = graph.ToString();
 
-            return View("Test", model: joinModel);
-=======
             model.Add(graph.ToString());
 
 
@@ -260,7 +254,6 @@ namespace GKSLab.Controllers
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
->>>>>>> 68547f47f3c24e0b4f25ca40ae669dc2fb130235
         }
     }
 }
