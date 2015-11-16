@@ -1,4 +1,4 @@
-﻿@model List<string>
+@model List<string>
 @{
     Layout = null;
 }
@@ -65,13 +65,13 @@
 </script>
 <body ng-app="sampleApp">
     <div class="panel panel-default">
-        <div class="panel-heading">Графы</div>
+        <div class="panel-heading">Graphs</div>
         <div class="panel-body">
             <div ng-controller="defaultCtrl" data-ng-init="draw()">
                 <div class="row">
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Предыдущий</button>
+                            <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Previous</button>
                         </div>
                     </div>
                     <div class="col-xs-8">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="well">
-                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Следующий</button>
+                            <button type="button" ng-class="nextClass" value="" ng-click="nextState()">Next</button>
                         </div>
                     </div>
                 </div>
@@ -101,3 +101,4 @@
 
     </script>
 </body>
+>>>>>>> 68547f47f3c24e0b4f25ca40ae669dc2fb130235

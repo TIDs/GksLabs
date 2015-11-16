@@ -252,6 +252,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\GKC-Lab - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\GKC-Lab - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\GKC-Lab - Web Deploy %282%29.pubxml" />
