@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Northwoods.GoJS</id>
+    <version>1.5.10</version>
+    <title>GoJS for HTML</title>
+    <authors>Northwoods Software</authors>
+    <owners>Northwoods Software</owners>
+    <licenseUrl>http://www.nwoods.com/Sales/Info/LicensesAll/SoftwareLicenseAgreement20130315.pdf</licenseUrl>
+    <projectUrl>http://www.nwoods.com/products/gojs/index.html</projectUrl>
+    <iconUrl>http://www.nwoods.com/images/GoJSlogo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Use GoJS to create directed and undirected graphs, network diagrams, flowcharts, workflow diagrams, entity relationship diagrams, BPMN and BPEL applications, organization charts, circuit diagrams, tree diagrams (e.g. syntax trees, sitemaps), data flow diagrams, mindmaps, SCADA diagrams, smart grid applications, planogram tools, UML diagrams and much more. Also supports JSON save and restore, popular automatic graph layout algorithms (tree, layered digraph and force directed), a Palette control for drag and drop of visual components and an Overview control for large diagrams.  
+
+This full featured evaluation does not have a time limit, but there is a watermark in the view.  Purchasing a license is required for deployment.</description>
+    <summary>GoJS is a fast and powerful JavaScript library for implementing interactive diagrams in HTML web applications.</summary>
+    <copyright>Copyright 1998-2015 by Northwoods Software Corporation</copyright>
+    <tags>JavaScript library html5 canvas html diagram flowchart orgchart tree graph mindmap workflow network gantt dataflow fishbone UML BPMN</tags>
+  </metadata>
+</package>
