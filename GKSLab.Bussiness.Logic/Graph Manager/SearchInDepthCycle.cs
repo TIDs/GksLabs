@@ -16,6 +16,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
 
         public List<Node<string>> FindCycle(Graph graph)
         {
+            findedCycles.Clear();
             List<Node<string>> elementInCycle;
 
             for (int i = 0; i < graph.Roots.Count; i++)

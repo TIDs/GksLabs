@@ -61,19 +61,34 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Create modules in graph
         /// </summary>
         /// <param name="graph"></param>
-        public static void CreateModules(Graph graph)
+        public static HashSet<string> CreateModules(Graph graph, HashSet<string> model)
         {
             int amountNodesGraph;
+            model.Add(graph.ToString());
+            //wi'll take only not the same elements
+
             do
             {
                 amountNodesGraph = graph.Roots.Count;
+                
                 FirstCasePack(graph);
+                model.Add(graph.ToString());
+
                 SecondPack(graph);
+                model.Add(graph.ToString());
+
                 StrongConnection(graph);
+                model.Add(graph.ToString());
+
+                FindCycleInGraph(graph);
+                model.Add(graph.ToString());
+
+                FindFifthCaseInGraph(graph);
+                model.Add(graph.ToString());
+
             } while (amountNodesGraph != graph.Roots.Count);
 
-            FindCycleInGraph(graph);
-            FindFifthCaseInGraph(graph);
+            return model;
         }
 
         /// <summary>
@@ -122,7 +137,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         /// Find cycle in graph
         /// </summary>
         /// <param name="graph">Implementation of class graph</param>
-        private static void FindCycleInGraph(Graph graph)
+        public static void FindCycleInGraph(Graph graph)
         {
             List<Node<string>> catalogeCycle = new List<Node<string>>();
             SearchInDepthCycle searchCycle = new SearchInDepthCycle();

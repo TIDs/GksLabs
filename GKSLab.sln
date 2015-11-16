@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Web", "GKSLab\GKSLab.Web.csproj", "{8D9294CF-6841-479E-8A35-B380EFF012AF}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Bussiness.Entities", "GKSLab.Bussiness.Entities\GKSLab.Bussiness.Entities.csproj", "{B8A44661-DFAA-477A-AC37-C80AE5D9E172}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Tests", "GKSLab.Tests\GKSLab.Tests.csproj", "{E3E10A0F-78CE-498F-A66F-F5FAD9199D32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pind-Pong", "..\..\C#\КР\Ping_Pong\Pind-Pong\Pind-Pong\Pind-Pong.csproj", "{255399E1-09F0-4FFC-A8EB-54ABA173A99F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E3E10A0F-78CE-498F-A66F-F5FAD9199D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E10A0F-78CE-498F-A66F-F5FAD9199D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E10A0F-78CE-498F-A66F-F5FAD9199D32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

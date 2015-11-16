@@ -88,6 +88,7 @@ namespace GKSLab.Controllers
             ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
         }
+
         [HttpPost]
         public ActionResult FileRead(HttpPostedFileBase file)
         {
@@ -167,28 +168,7 @@ namespace GKSLab.Controllers
             HashSet<string> model = new HashSet<string>();
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-            model.Add(graph.ToString());
-        
-
-            int amountNodesGraph;
-            do
-            {
-                amountNodesGraph = graph.Roots.Count;
-                GraphManager.FirstCasePack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.SecondPack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.StrongConnection(graph);
-                model.Add(graph.ToString());
-
-            } while (amountNodesGraph != graph.Roots.Count);
-
-            //FindCycleInGraph(graph);
-            GraphManager.FindFifthCaseInGraph(graph);
-            model.Add(graph.ToString());
-            //wi'll take only not the same elements
+            model = GraphManager.CreateModules(graph, model);
             
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
