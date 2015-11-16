@@ -11,6 +11,7 @@ using GKSLab.Bussiness.Logic.Graph_Manager;
 using GKSLab.Bussiness.Logic.Groups_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
+using GKSLab.Bussiness.Entities.Graph;
 
 namespace GKSLab.Controllers
 {
@@ -161,10 +162,11 @@ namespace GKSLab.Controllers
 
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-            GraphManager.CreateModules(graph);
+            //GraphManager.CreateModules(graph);
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            var joinedModel = graph.ToString();
-            return View("Test", model: joinedModel);
+            var joinModel = graph.ToString();
+
+            return View("Test", model: joinModel);
         }
     }
 }

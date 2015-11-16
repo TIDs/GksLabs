@@ -17,10 +17,10 @@
     <div class="clearfix"></div>
     <div id="network"></div>
     <script type="text/javascript">
-        // create a network view
+             // create a network view
         var network = new links.Network(document.getElementById('network'));
         // parse data in DOT-notation
-        var dot = 'digraph {node[shape=rectangle];@Html.Raw(Model)}'; //razor will encode model, for disable this - Html.Raw(string)
+        var dot = 'digraph {node[shape=rectangle]; @Html.Raw(Model)}'; //razor will encode model, for disable this - Html.Raw(string)
         var data = links.Network.util.DOTToNetwork(dot);
 
         // draw the data
@@ -30,6 +30,8 @@
         window.onresize = function () {
             network.redraw();
         };
+       
+       
     </script>
 
 </body>

@@ -26,6 +26,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 childValue = row.ElementAt(elementPosition + 1);
             return graph.Find(childValue);
         }
+
         /// <summary>
         /// Create graph. Return implementation of Graph
         /// </summary>
@@ -71,7 +72,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 StrongConnection(graph);
             } while (amountNodesGraph != graph.Roots.Count);
 
-            //FindCycleInGraph(graph);
+            FindCycleInGraph(graph);
             FindFifthCaseInGraph(graph);
         }
 
