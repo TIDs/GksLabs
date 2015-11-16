@@ -132,12 +132,14 @@ namespace GKSLab.Controllers
         {
             return View();
         }
+
+
         /// <summary>
         /// Test Method for LAB 4
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public ActionResult Test(HttpPostedFileBase file)
+        public ActionResult CreateGraph()
         {
 
             ComparationResult result;

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GKSLab.Tests", "GKSLab.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pind-Pong", "..\..\C#\КР\Ping_Pong\Pind-Pong\Pind-Pong\Pind-Pong.csproj", "{255399E1-09F0-4FFC-A8EB-54ABA173A99F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC1", "..\..\C#\Лаби\MVC\1\MVC1\MVC1\MVC1.csproj", "{875A7FD7-9982-49D3-90AB-328F45BA1901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255399E1-09F0-4FFC-A8EB-54ABA173A99F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{875A7FD7-9982-49D3-90AB-328F45BA1901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{875A7FD7-9982-49D3-90AB-328F45BA1901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{875A7FD7-9982-49D3-90AB-328F45BA1901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{875A7FD7-9982-49D3-90AB-328F45BA1901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
