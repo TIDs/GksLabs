@@ -157,7 +157,6 @@ namespace GKSLab.Controllers
             inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
             inputData.Add(new List<string>(3) { "F1", "P1" });
 
-
             groups.Add(new List<int>() { 0, 1, 2, 3 });
 
             //creating graph
