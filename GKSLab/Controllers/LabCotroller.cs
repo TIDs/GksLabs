@@ -164,10 +164,20 @@ namespace GKSLab.Controllers
             //inputData.Add(new List<string>(3) { "F1", "P1" });
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
-            HashSet<string> model = new HashSet<string>();
+            groups.Add(new List<int>() { 1, 2 });
+            groups.Add(new List<int>() { 3,0 });
+
+            var model = new List<HashSet<string>>();
             //creating graph
-            var graph = GraphManager.Create(groups[0], inputData);
-            model = GraphManager.CreateModules(graph, model);
+            var graphs = new List<Graph>();
+            foreach (var redistrItem in groups)
+            {
+                var list = new HashSet<string>();
+                var graph = GraphManager.Create(redistrItem, inputData);
+                list = GraphManager.CreateModules(graph, list);
+                model.Add(list);
+            }
+
             
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
