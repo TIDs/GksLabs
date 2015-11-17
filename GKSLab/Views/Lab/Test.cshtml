@@ -28,12 +28,14 @@
 <script>
     angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
         $scope.currentGraphTabIndex = 0;
+        var isInit = false;
 
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.graphArray = new Array();
             for (var i = 0; i < model.length; i++) {
                 $scope.graphArray.push(new graphModel(model[i]));
             }
+            isInit = true;
         }
         $scope.draw = function () {
             // create a network view
@@ -50,19 +52,22 @@
 
         $scope.$watchCollection("graphArray.modelState", function () {
             //finding current slider position
-            var i = $scope.graphArray[$scope.currentGraphTabIndex].graphModel.indexOf($scope.current);
-            if (i <= model.length - 1) {
-                $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'disabled-btn';
-                $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'btn btn-primary';
-            } else
-                $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'disabled-btn';
-            $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'btn btn-success';
+            $scope.draw();
+            if (isInit) {
+                var i = $scope.graphArray[$scope.currentGraphTabIndex].graphModel.index();
+                if (index <= $scope.graphArray[$scope.currentGraphTabIndex].length - 1) {
+                    $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'disabled-btn';
+                    $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'btn btn-primary';
+                } else
+                    $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'disabled-btn';
+                $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'btn btn-success';
+            }
         }, true);
-        $scope.prevState = function() {
-            $scope.graphArray[$scope.currentGraphTabIndex].prev();
+        $scope.prevState = function () {
+            $scope.graphArray[$scope.currentGraphTabIndex].prevState();
         }
         $scope.nextState = function () {
-            $scope.graphArray[$scope.currentGraphTabIndex].next();
+            $scope.graphArray[$scope.currentGraphTabIndex].nextState();
         }
 
     });
@@ -116,11 +121,11 @@
         @foreach (var item in Model)
         {
            @:strArray = new Array();
-                           foreach (var str in item){
+                                           foreach (var str in item){
                 @:strArray.push("@Html.Raw(str)");
-                             }
+                                             }
         @:model.push(strArray);
-      }
+                      }
 
     </script>
 </body>

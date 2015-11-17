@@ -3,10 +3,11 @@ var graphModel = (function () {
         this.nextClass = 'btn btn-primary';
         this.prevClass = 'disabled-btn';
         this.modelStates = modelStates;
-        this.prev = this.prevState();
-        this.next = this.nextState();
         this.current = modelStates[0];
     }
+    graphModel.prototype.index = function () {
+        return this.modelStates.indexOf(this.current);
+    };
     graphModel.prototype.nextState = function () {
         this.current === 'undefined' ? this.current = this.modelStates[0] : '';
         var i = this.modelStates.indexOf(this.current);
