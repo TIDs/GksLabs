@@ -9,9 +9,9 @@ using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
 using GKSLab.Bussiness.Logic.Graph_Manager;
 using GKSLab.Bussiness.Logic.Groups_Manager;
+using GKSLab.Bussiness.Logic.Modules_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
-using GKSLab.Bussiness.Entities.Graph;
 
 namespace GKSLab.Controllers
 {
@@ -88,7 +88,6 @@ namespace GKSLab.Controllers
             ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
         }
-
         [HttpPost]
         public ActionResult FileRead(HttpPostedFileBase file)
         {
@@ -127,11 +126,6 @@ namespace GKSLab.Controllers
             return View("Result", result);
         }
 
-
-        public ActionResult Lab4()
-        {
-            return View();
-        }
         /// <summary>
         /// Test Method for LAB 4
         /// </summary>
@@ -139,101 +133,63 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult Test(HttpPostedFileBase file)
         {
-
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
             List<List<int>> groups = new List<List<int>>();
             List<List<int>> redistributionsGroup = new List<List<int>>();
-
-            ////First TEST DATA
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "F1",  "F2" });
-            //inputData.Add(new List<string>(3) {  "T1", "F2" });
-
-            ////second test data
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            //inputData.Add(new List<string>(3) { "C1", "T1" });
-
-            //test data for find graph
-            inputData.Add(new List<string>(7) { "T1", "C1", "F1" });
-            inputData.Add(new List<string>(4) { "F1", "F2" });
-            inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
-            inputData.Add(new List<string>(3) { "F1", "P1" });
-
-            groups.Add(new List<int>() { 0, 1, 2, 3 });
-            HashSet<string> model = new HashSet<string>();
-            //creating graph
-            var graph = GraphManager.Create(groups[0], inputData);
-            model = GraphManager.CreateModules(graph, model);
             
-            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            return View("Test", model: model.ToList());
-        }
-
-        public ActionResult TestFile(HttpPostedFileBase file)
-        {
-            ComparationResult result;
-            var uniqueElements = 0;
-            List<List<string>> inputData = new List<List<string>>();
-            List<List<int>> groups = new List<List<int>>();
-            List<List<int>> redistributionsGroup = new List<List<int>>();
-            List<HashSet<string>> groupsWithStringElement;
-            //HttpPostedFileBase file = HttpContext.Request.Files[0];
-            try
-            {
-                inputData = ExcelReader.Read(file);
-                uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
-                result = ComparisonManager.CompareDetails(inputData);
-                groups = DevisionGroupsManager.CreateGroups(result);
-                groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
-                var groupWithString = new List<HashSet<string>>(groupsWithStringElement);
-                var groupForRedistributions = new List<List<int>>();
-                groups.ForEach(x => groupForRedistributions.Add(x));
-                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groupForRedistributions, groupWithString);
-            }
-            catch (Exception e)
-            {
-                string error = e.Message;
-                Debug.Write(e.Message);
-                return View(error);
-            }
-            ////TODO just do this 
-
-
+            //JUST TEST DATA
+            inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
+            inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "F1",  "F2" });
+            inputData.Add(new List<string>(3) {  "T1", "F2" });
+            inputData.Add(new List<string>(6) { "T4", "F1", "T1", "T2", "C1", "F2" });
+            inputData.Add(new List<string>(5) { "T3", "F2", "T1", "T2", "C1" });
+            inputData.Add(new List<string>(4) { "T4", "T2", "T3", "C1" });
             groups.Add(new List<int>() { 0, 1, 2, 3 });
-            HashSet<string> model = new HashSet<string>();
+
             //creating graph
             var graph = GraphManager.Create(groups[0], inputData);
-
-            model.Add(graph.ToString());
-
-
-            int amountNodesGraph;
-            do
-            {
-                amountNodesGraph = graph.Roots.Count;
-                GraphManager.FirstCasePack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.SecondPack(graph);
-                model.Add(graph.ToString());
-
-                GraphManager.StrongConnection(graph);
-                model.Add(graph.ToString());
-
-            } while (amountNodesGraph != graph.Roots.Count);
-
-            //FindCycleInGraph(graph);
-            GraphManager.FindFifthCaseInGraph(graph);
-            model.Add(graph.ToString());
-            //wi'll take only not the same elements
-
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            return View("Test", model: model.ToList());
+            var joinedModel = graph.ToString();
+            GraphManager.FirstCasePack(graph);
+            return View("Test", model: joinedModel);
         }
+
+        public ActionResult Lab5()
+        {
+            List<HashSet<string>> simplifyModules = new List<HashSet<string>>();
+
+            // primary data
+            // first groups with modules
+            List<List<List<string>>> groupsWithModules = new List<List<List<string>>>();
+            List<List<string>> firstGroups = new List<List<string>>();
+            firstGroups.Add(new List<string> { "T1", "T2", "C1" });
+            firstGroups.Add(new List<string> { "T1" });
+            firstGroups.Add(new List<string> { "C1" });
+
+            // second groups with modules
+            List<List<string>> secondGroups = new List<List<string>>();
+            secondGroups.Add(new List<string> { "T3", "T4", "T2", "C2" });
+            secondGroups.Add(new List<string> { "T1", "C1" });
+            secondGroups.Add(new List<string> { "C3" });
+
+            //third groups with modules
+            List<List<string>> thirdGroups = new List<List<string>>();
+            thirdGroups.Add(new List<string> { "T1" });
+            thirdGroups.Add(new List<string> { "T3" });
+            thirdGroups.Add(new List<string> { "C2" });
+
+            groupsWithModules.Add(firstGroups);
+            groupsWithModules.Add(secondGroups);
+            groupsWithModules.Add(thirdGroups);
+
+            simplifyModules = SimplifyModulesManager.SimplifyModules(groupsWithModules);
+
+            ViewBag.PrimaryData = groupsWithModules;
+            return View("Lab5", simplifyModules);
+        }
+
     }
 }

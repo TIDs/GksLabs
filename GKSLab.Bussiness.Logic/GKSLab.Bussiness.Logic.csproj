@@ -46,6 +46,7 @@
     <Compile Include="Graph Manager\SearchInDepthFifthCase.cs" />
     <Compile Include="Groups Manager\DevisionGroupsManager.cs" />
     <Compile Include="Groups Manager\RedistributionGroupsManager.cs" />
+    <Compile Include="Modules_Manager\SimplifyModulesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

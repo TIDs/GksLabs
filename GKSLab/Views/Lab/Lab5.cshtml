@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Result";
+}
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <!-- header-->
+            <div class="panel-heading">
+                <h1 style="text-align: center" class="panel-title">
+                    Результат
+                </h1>
+            </div>
+            <!-- end header -->
+            <!-- content -->
+            <div class="panel-body">
+                <div class="row" style="margin-bottom: 40px !important">
+                    <div class="col-lg-6">
+                        <p> Початкові модулі </p>
+                        <table class="table table-bordered">
+                          @foreach (var arrays in @ViewBag.PrimaryData)
+                          {
+                              <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                              </tr>
+                              
+                                foreach (var item in arrays)
+                                {
+                                <tr>
+                                    @for (int i = 0; i < @item.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                                }
+                          }
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>Спрощені модулі</p>
+                        <table class="table table-bordered">
+                           @for (int i = 0; i < Model.Count; i++ )
+                           { 
+                               <tr>
+                                   @foreach (var item in Model[i])
+                                   {
+                                       <td style="text-align:center">@item</td>
+                                   }
+                               </tr>
+                           }
+                        </table>
+                    </div>
+                </div>
+                <div class="submitButton">
+                    <button class="btn-lg btn-primary"><a id="Return" href="@Url.Action("Lab5", "Lab")">Порахувати ще раз</a></button>
+                </div>
+                <!-- end content-->
+            </div>
+        </div>
+    </div>
+</div>
