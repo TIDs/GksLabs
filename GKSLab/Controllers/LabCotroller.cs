@@ -190,6 +190,5 @@ namespace GKSLab.Controllers
             ViewBag.PrimaryData = groupsWithModules;
             return View("Lab5", simplifyModules);
         }
-
     }
 }
