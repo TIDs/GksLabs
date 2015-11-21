@@ -277,6 +277,7 @@
     <Content Include="Views\Lab\_InputHand.cshtml" />
     <None Include="Views\Lab\Die.cshtml" />
     <None Include="Views\Lab\Lab4.cshtml" />
+    <Content Include="Views\Lab\Lab6.cshtml" />
     <None Include="Views\Lab\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>

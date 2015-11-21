@@ -13,6 +13,8 @@ using GKSLab.Bussiness.Logic.Modules_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 using GKSLab.Bussiness.Entities.Graph;
+using GKSLab.Bussiness.Logic.FinishStructure_Manager;
+
 
 namespace GKSLab.Controllers
 {
@@ -136,7 +138,7 @@ namespace GKSLab.Controllers
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
-            List<List<int>> groups = new List<List<int>>();
+            List<int> groups = new List<int>();
             List<List<int>> redistributionsGroup = new List<List<int>>();
 
             ////First TEST DATA
@@ -157,23 +159,27 @@ namespace GKSLab.Controllers
             //inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
             //inputData.Add(new List<string>(3) { "F1", "P1" });
 
-            groups.Add(new List<int>() { 0, 1, 2, 3 });
+            groups.Add(0);
+            groups.Add(1);
+            groups.Add(2);
+            groups.Add(3);
 
             var model = new List<HashSet<string>>();
             //creating graph
             //changing index for 0-based array
-            for (int index = 0; index < redistributionsGroup[0].Count; index++)
-            {
-                redistributionsGroup[0][index] -= 1;
-            }
-            var graphs = new List<Graph>();
-            foreach (var redistrItem in redistributionsGroup)
-            {
+            //for (int index = 0; index < redistributionsGroup[0].Count; index++)
+            //{
+            //    redistributionsGroup[0][index] -= 1;
+            //}
+            //var graphs = new List<Graph>();
+
+            //foreach (var redistrItem in redistributionsGroup)
+            //{
                 var list = new HashSet<string>();
-                var graph = GraphManager.Create(redistrItem, inputData);
+                var graph = GraphManager.Create(groups, inputData);
                 list = GraphManager.CreateModules(graph, list);
                 model.Add(list);
-            }
+            //}
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
@@ -212,6 +218,31 @@ namespace GKSLab.Controllers
             ViewBag.PrimaryData = groupsWithModules;
 
             return View("Lab5", simplifyModules);
+        }
+
+        public ActionResult Lab6()
+        {
+            // tests data
+            // simplifyModules
+            List<string> simplifyModules = new List<string>();
+            simplifyModules.Add("F1F2T4");
+            simplifyModules.Add("C1C2P2");
+            simplifyModules.Add("T1T2T3");
+            simplifyModules.Add("C3");
+
+            //primaryData
+            List<string> primaryData = new List<string>();
+            primaryData.Add("T1T2T3F2C1C2P2");
+            primaryData.Add("T1C1C2P2T4");
+            primaryData.Add("T1C3T2T3C1C2P2");
+            primaryData.Add("T2T3C1C2P2F1F2");
+            primaryData.Add("T3C1C2P2F1T4");
+            primaryData.Add("T2C3F1F2C1C2P2T4");
+            primaryData.Add("T1C3T3C1C2P2F1F2");
+
+            FinishStructureManager.CreateFinishStructure(simplifyModules, primaryData);
+
+            return View();
         }
     }
 }
