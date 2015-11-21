@@ -103,11 +103,14 @@ namespace GKSLab.Controllers
             //HttpPostedFileBase file = HttpContext.Request.Files[0];
             try
             {
+                // first lab
                 inputData = ExcelReader.Read(file);
                 uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
                 result = ComparisonManager.CompareDetails(inputData);
+                // second lab
                 groups = DevisionGroupsManager.CreateGroups(result);
                 groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
+                //third lab
                 var groupWithString = new List<HashSet<string>>(groupsWithStringElement);
                 var groupForRedistributions = new List<List<int>>();
                 groups.ForEach(x => groupForRedistributions.Add(x));
@@ -181,6 +184,7 @@ namespace GKSLab.Controllers
                 model.Add(list);
             //}
 
+
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
         }
@@ -222,6 +226,8 @@ namespace GKSLab.Controllers
 
         public ActionResult Lab6()
         {
+            var model = new List<HashSet<string>>();
+
             // tests data
             // simplifyModules
             List<string> simplifyModules = new List<string>();
@@ -239,10 +245,10 @@ namespace GKSLab.Controllers
             primaryData.Add("T3C1C2P2F1T4");
             primaryData.Add("T2C3F1F2C1C2P2T4");
             primaryData.Add("T1C3T3C1C2P2F1F2");
+            
+            model = FinishStructureManager.CreateFinishStructure(simplifyModules, primaryData);
 
-            FinishStructureManager.CreateFinishStructure(simplifyModules, primaryData);
-
-            return View();
+            return View("Test", model: model.ToList());
         }
     }
 }
