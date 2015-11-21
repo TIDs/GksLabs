@@ -178,7 +178,6 @@ namespace GKSLab.Controllers
                 model.Add(list);
             }
 
-            
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
         }

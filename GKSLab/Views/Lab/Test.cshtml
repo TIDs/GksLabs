@@ -50,7 +50,7 @@
             };
         }
 
-        $scope.$watchCollection("graphArray.modelState", function () {
+        $scope.$watchCollection("graphArray.modelState[currentGraphTabIndex]", function () {
             //finding current slider position
             $scope.draw();
             if (isInit) {
