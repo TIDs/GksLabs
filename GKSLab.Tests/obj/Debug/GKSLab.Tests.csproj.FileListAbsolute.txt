@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Tests\obj\Debug\GKSLab.Tests.csprojResolveAssemblyReference.cache
-=======
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\roslyn\csc.exe
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -47,7 +44,6 @@ E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\Microsoft.Owin.xml
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\System.Web.Optimization.xml
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\bin\Debug\Excel.pdb
-E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\obj\Debug\GKSLab.Tests.csprojResolveAssemblyReference.cache
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\obj\Debug\GKSLab.Tests.dll
 E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\obj\Debug\GKSLab.Tests.pdb
->>>>>>> d6c4f5a441229320c966e3769edf77a3a1814d8d
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Tests\obj\Debug\GKSLab.Tests.csprojResolveAssemblyReference.cache

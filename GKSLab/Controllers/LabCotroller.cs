@@ -9,10 +9,10 @@ using GKSLab.Bussiness.Entities;
 using GKSLab.Bussiness.Logic.Comparison_Manager;
 using GKSLab.Bussiness.Logic.Graph_Manager;
 using GKSLab.Bussiness.Logic.Groups_Manager;
-using GKSLab.Bussiness.Logic.Modules_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 using GKSLab.Bussiness.Entities.Graph;
+using GKSLab.fonts.Helpers.ExcelIO_Manager;
 
 namespace GKSLab.Controllers
 {
@@ -88,6 +88,7 @@ namespace GKSLab.Controllers
             ViewBag.RedistributedGroups = redistributionsGroup;
             return View("Result", result);
         }
+
         [HttpPost]
         public ActionResult FileRead(HttpPostedFileBase file)
         {
@@ -126,6 +127,11 @@ namespace GKSLab.Controllers
             return View("Result", result);
         }
 
+
+        public ActionResult Lab4()
+        {
+            return View();
+        }
         /// <summary>
         /// Test Method for LAB 4
         /// </summary>
@@ -133,6 +139,7 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult Test(HttpPostedFileBase file)
         {
+
             ComparationResult result;
             var uniqueElements = 0;
             List<List<string>> inputData = new List<List<string>>();
@@ -158,13 +165,75 @@ namespace GKSLab.Controllers
             //inputData.Add(new List<string>(3) { "F1", "P1" });
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
+            groups.Add(new List<int>() { 1, 2 });
+            groups.Add(new List<int>() { 3,0 });
 
+            redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
+            redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
+            redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
+
+
+            var model = new List<HashSet<string>>();
+            //creating graph
+            var graphs = new List<Graph>();
+            foreach (var redistrItem in groups)
+            {
+                var list = new HashSet<string>();
+                var graph = GraphManager.Create(redistrItem, inputData);
+                list = GraphManager.CreateModules(graph, list);
+                model.Add(list);
+            }
+
+            List<List<string>> groupStr = redistributionsGroup.Select(redItem => redItem.ConvertAll(i => i.ToString())).ToList();
+            ExcelWriter.Write("InputData", inputData, @"D:\InputData.xlsx");
+            ExcelWriter.Write("RedistrGroup", groupStr, @"D:\RedistrGroup.xlsx");
+
+            //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
+            return View("Test", model: model.ToList());
+        }
+
+        public ActionResult TestFile(HttpPostedFileBase file)
+        {
+            ComparationResult result;
+            var uniqueElements = 0;
+            List<List<string>> inputData = new List<List<string>>();
+            List<List<int>> groups = new List<List<int>>();
+            List<List<int>> redistributionsGroup = new List<List<int>>();
+            List<HashSet<string>> groupsWithStringElement;
+            //HttpPostedFileBase file = HttpContext.Request.Files[0];
+            try
+            {
+                inputData = ExcelReader.Read(file);
+                uniqueElements = ComparisonManager.UniqueElementsAmount(inputData);
+                result = ComparisonManager.CompareDetails(inputData);
+                groups = DevisionGroupsManager.CreateGroups(result);
+                groupsWithStringElement = RedistributionGroupsManager.CreateGroupsWithStringElement(inputData, groups);
+                var groupWithString = new List<HashSet<string>>(groupsWithStringElement);
+                var groupForRedistributions = new List<List<int>>();
+                groups.ForEach(x => groupForRedistributions.Add(x));
+                redistributionsGroup = RedistributionGroupsManager.RedistributionGroups(inputData, groupForRedistributions, groupWithString);
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                Debug.Write(e.Message);
+                return View(error);
+            }
+            //returning partial view
+            ViewBag.InputData = inputData;
+            ViewBag.Unique = uniqueElements;
+            ViewBag.Groups = groups;
+            ViewBag.GroupString = groupsWithStringElement;
+            ViewBag.RedistributedGroups = redistributionsGroup;
+            
+
+            groups.Add(new List<int>() { 0, 1, 2, 3 });
             var model = new List<HashSet<string>>();
             //creating graph
             //changing index for 0-based array
             for (int index = 0; index < redistributionsGroup[0].Count; index++)
             {
-                redistributionsGroup[0][index] -= 1;
+                redistributionsGroup[0][index] -= 1; 
             }
             var graphs = new List<Graph>();
             foreach (var redistrItem in redistributionsGroup)
@@ -177,41 +246,6 @@ namespace GKSLab.Controllers
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
-        }
-
-        public ActionResult Lab5()
-        {
-            List<HashSet<string>> simplifyModules = new List<HashSet<string>>();
-
-            // primary data
-            // first groups with modules
-            List<List<List<string>>> groupsWithModules = new List<List<List<string>>>();
-            List<List<string>> firstGroups = new List<List<string>>();
-            firstGroups.Add(new List<string> { "T1", "T2", "C1" });
-            firstGroups.Add(new List<string> { "T1" });
-            firstGroups.Add(new List<string> { "C1" });
-
-            // second groups with modules
-            List<List<string>> secondGroups = new List<List<string>>();
-            secondGroups.Add(new List<string> { "T3", "T4", "T2", "C2" });
-            secondGroups.Add(new List<string> { "T1", "C1" });
-            secondGroups.Add(new List<string> { "C3" });
-
-            //third groups with modules
-            List<List<string>> thirdGroups = new List<List<string>>();
-            thirdGroups.Add(new List<string> { "T1" });
-            thirdGroups.Add(new List<string> { "T3" });
-            thirdGroups.Add(new List<string> { "C2" });
-
-            groupsWithModules.Add(firstGroups);
-            groupsWithModules.Add(secondGroups);
-            groupsWithModules.Add(thirdGroups);
-
-            simplifyModules = SimplifyModulesManager.SimplifyModules(groupsWithModules);
-
-            ViewBag.PrimaryData = groupsWithModules;
-
-            return View("Lab5", simplifyModules);
         }
     }
 }

@@ -177,6 +177,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LabCotroller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="fonts\Helpers\ExcelIO Manager\Class1.cs" />
+    <Compile Include="fonts\Helpers\ExcelIO Manager\ExcelWriter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +239,7 @@
     <Content Include="Scripts\dynamicTable.js" />
     <Content Include="Scripts\go-1.5.10-debug.js" />
     <Content Include="Scripts\go-1.5.10.js" />
+    <Content Include="Scripts\graph\graphModel.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -301,7 +304,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\graphModel.ts" />
+    <TypeScriptCompile Include="Scripts\graph\graphModel.ts" />
     <TypeScriptCompile Include="Scripts\typings\gojs\goJS-1.5.10.d.ts" />
   </ItemGroup>
   <ItemGroup>
