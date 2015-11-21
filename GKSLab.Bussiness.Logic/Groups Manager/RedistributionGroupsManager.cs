@@ -7,19 +7,20 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
 {
     public static class  RedistributionGroupsManager
     {
-        public static List<List<int>> RedistributionGroups(List<List<string>> primaryDate, List<List<int>> groups, List<HashSet<string>> GropsWithStringElement)
+        public static List<List<int>> RedistributionGroups(List<List<string>> primaryDate, List<List<int>> groups, List<HashSet<string>> GropsWithOperations)
         {
              List<List<int>> redistributionGroupsFirst = new List<List<int>>();
              List<List<int>> redistributionGroupsSecond = new List<List<int>>();
              List<List<int>> test = new List<List<int>>();
-             int MaxCount;
+             int MaxCount = GropsWithOperations[0].Count;
              Boolean twoEqualsString = false; 
              HashSet<int> uniqueElements = new HashSet<int>();
- 
-             MaxCount = SortGroupsWithStringElementAndInt(groups, GropsWithStringElement);
-             for (int i = 1; i < GropsWithStringElement.Count; i++)
+
+             SortGroupsWithStringElementAndInt(groups, GropsWithOperations);
+
+             for (int i = 1; i < GropsWithOperations.Count; i++)
              {
-                 if(MaxCount == GropsWithStringElement[i].Count)
+                 if (MaxCount == GropsWithOperations[i].Count)
                  {
                      twoEqualsString = true;
                  }
@@ -28,9 +29,9 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
             while(redistributionGroupsFirst.Count < 1)
             {
                  // redistributionGroups
-                 for (int i = 0; i < GropsWithStringElement.Count; i++)
+                for (int i = 0; i < GropsWithOperations.Count; i++)
                  {
-                     test.Add(OverlappingGroups(uniqueElements, i + 1, primaryDate, groups[i], GropsWithStringElement[i], GropsWithStringElement, groups));
+                     test.Add(OverlappingGroups(uniqueElements, i + 1, primaryDate, groups[i], GropsWithOperations[i], GropsWithOperations, groups));
                      if (test[i] == null)
                      {
                          continue;
@@ -82,7 +83,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
             return result;
         }
 
-        public static int SortGroupsWithStringElementAndInt(List<List<int>> unsortedGroupsWitnInt, List<HashSet<string>> unsortedGroupsWithString)
+        public static void SortGroupsWithStringElementAndInt(List<List<int>> unsortedGroupsWitnInt, List<HashSet<string>> unsortedGroupsWithString)
         {
             for (int i = 0; i < unsortedGroupsWithString.Count; i++)
             {
@@ -98,7 +99,6 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                     }
                 }
             }
-            return unsortedGroupsWithString[0].Count;
         }
 
         public static List<HashSet<string>> wrapString(List<HashSet<string>> unsortedGroup, int firstList, int MaxList)
