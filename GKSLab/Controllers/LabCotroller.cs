@@ -12,6 +12,7 @@ using GKSLab.Bussiness.Logic.Groups_Manager;
 using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 using GKSLab.Bussiness.Entities.Graph;
+using GKSLab.fonts.Helpers.ExcelIO_Manager;
 
 namespace GKSLab.Controllers
 {
@@ -167,6 +168,11 @@ namespace GKSLab.Controllers
             groups.Add(new List<int>() { 1, 2 });
             groups.Add(new List<int>() { 3,0 });
 
+            redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
+            redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
+            redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
+
+
             var model = new List<HashSet<string>>();
             //creating graph
             var graphs = new List<Graph>();
@@ -177,6 +183,10 @@ namespace GKSLab.Controllers
                 list = GraphManager.CreateModules(graph, list);
                 model.Add(list);
             }
+
+            List<List<string>> groupStr = redistributionsGroup.Select(redItem => redItem.ConvertAll(i => i.ToString())).ToList();
+            ExcelWriter.Write("InputData", inputData, @"D:\InputData.xlsx");
+            ExcelWriter.Write("RedistrGroup", groupStr, @"D:\RedistrGroup.xlsx");
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
