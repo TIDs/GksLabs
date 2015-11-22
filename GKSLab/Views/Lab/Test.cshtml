@@ -9,6 +9,10 @@
 <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/graph/graphModel.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <style type="text/css">
     /*#network {
         width: 50%;
@@ -19,11 +23,27 @@
     .disabled-btn {
         display: none;
     }
+       
 </style>
 <script>
-    $(function () {
-        $("#tabs").tabs();
+    $(document).ready(function () {
+        $(function () {
+            $("#tabs").tabs();
+        });
+        //$(function () {
+        //    var tabContainers = $('div.tabs > div'); // получаем массив контейнеров
+        //    tabContainers.hide().filter(':first').show(); // прячем все, кроме первого
+        //    // далее обрабатывается клик по вкладке
+        //    $('div.tabs ul.tabNavigation a').click(function () {
+        //        tabContainers.hide(); // прячем все табы
+        //        tabContainers.filter(this.hash).show(); // показываем содержимое текущего
+        //        $('div.tabs ul.tabNavigation a').removeClass('selected'); // у всех убираем класс 'selected'
+        //        $(this).addClass('selected'); // текушей вкладке добавляем класс 'selected'
+        //        return false;
+        //    }).filter(':first').click();
+        //});
     });
+
 </script>
 <script>
     angular.module("sampleApp", []).controller("defaultCtrl", function ($scope) {
@@ -36,11 +56,15 @@
                 $scope.graphArray.push(new graphModel(model[i]));
             }
             isInit = true;
+            $scope.draw();
         }
         $scope.draw = function () {
             // create a network view
-            var network = new links.Network(document.getElementById('network'));
-            var dot = 'digraph {node[shape=rectangle];' + $scope.graphArray[$scope.currentGraphTabIndex].current + '}'; //razor will encode model, for disable this - Html.Raw(string)
+            var networkId = 'network' + $scope.currentGraphTabIndex;
+            var network = new links.Network(document.getElementById(networkId));
+            var temp = $scope.graphArray[$scope.currentGraphTabIndex].current;
+            var tempArr = $scope.graphArray[$scope.currentGraphTabIndex];
+            var dot = 'digraph {node[shape=rectangle];' + temp + '}'; //razor will encode model, for disable this - Html.Raw(string)
             var data = links.Network.util.DOTToNetwork(dot);
             // draw the data
             network.draw(data.nodes, data.edges, data.options);
@@ -50,26 +74,30 @@
             };
         }
 
-        $scope.$watchCollection("graphArray.modelState[currentGraphTabIndex]", function () {
-            //finding current slider position
-            $scope.draw();
-            if (isInit) {
-                var i = $scope.graphArray[$scope.currentGraphTabIndex].graphModel.index();
-                if (index <= $scope.graphArray[$scope.currentGraphTabIndex].length - 1) {
-                    $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'disabled-btn';
-                    $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'btn btn-primary';
-                } else
-                    $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'disabled-btn';
-                $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'btn btn-success';
-            }
-        }, true);
+        //$scope.$watchCollection("graphArray.modelState[currentGraphTabIndex]", function () {
+        //    //finding current slider position
+        //    $scope.draw();
+        //    if (isInit) {
+        //        var i = $scope.graphArray[$scope.currentGraphTabIndex].graphModel.index();
+        //        if (index <= $scope.graphArray[$scope.currentGraphTabIndex].length - 1) {
+        //            $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'disabled-btn';
+        //            $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'btn btn-primary';
+        //        } else
+        //            $scope.graphArray[$scope.currentGraphTabIndex].prevClass = 'disabled-btn';
+        //        $scope.graphArray[$scope.currentGraphTabIndex].nextClass = 'btn btn-success';
+        //    }
+        //}, true);
         $scope.prevState = function () {
             $scope.graphArray[$scope.currentGraphTabIndex].prevState();
+            $scope.draw();
         }
         $scope.nextState = function () {
             $scope.graphArray[$scope.currentGraphTabIndex].nextState();
+            $scope.draw();
+        };
+        $scope.changeGraph = function () {
+            $scope.draw();
         }
-
     });
 </script>
 <body ng-app="sampleApp">
@@ -77,25 +105,26 @@
         <div class="panel-heading">Graphs</div>
         <div class="panel-body">
             <div ng-controller="defaultCtrl" ng-init="init()" data-ng-init="draw()">
-                <div class="row">
-                    <div id="tabs">
-                        <ul>
-                            @for (int i = 0; i < Model.Count; i++)
-                            {
-                                <li><a ng-click="currentGraph = @i" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
-                            }
-                        </ul>
-
-                        @for (var i = 0; i < Model.Count; i++)
+                <div id="tabs">
+                    <ul>
+                        @for (int i = 0; i < Model.Count; i++)
                         {
-                            <div id="@String.Format("tab{0}",i)">
+                            <li><a ng-click="currentGraphTabIndex = @i; changeGraph()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
+                        }
+                    </ul>
+
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <div id="@String.Format("tab{0}", i)">
+                            <div class="row">
+
                                 <div class="col-xs-2">
                                     <div class="well">
                                         <button type="button" ng-class="prevClass" value="" ng-click="prevState()">Previous</button>
                                     </div>
                                 </div>
                                 <div class="col-xs-8">
-                                    <div id="network">
+                                    <div id="@String.Format("network{0}", i)">
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
@@ -104,8 +133,8 @@
                                     </div>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
 
                 @*<button type="button" value="Рисовать" ng-click="draw()">Рисовать</button>*@
@@ -121,11 +150,11 @@
         @foreach (var item in Model)
         {
            @:strArray = new Array();
-                                           foreach (var str in item){
+                                                                           foreach (var str in item){
                 @:strArray.push("@Html.Raw(str)");
-                                             }
+                                                                             }
         @:model.push(strArray);
-                      }
+                                                      }
 
     </script>
 </body>

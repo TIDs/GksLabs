@@ -23,7 +23,7 @@ namespace GKSLab.Bussiness.Entities
                 }
             }
         }
-
+        
         public int? UniqueElementsAmount { get; set; }
         public List<List<int>> ResultingMatrix { get; set; }
     }

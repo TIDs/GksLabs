@@ -81,12 +81,20 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            ViewBag.InputData = inputData;
-            ViewBag.Unique = uniqueElements;
-            ViewBag.Groups = groups;
-            ViewBag.GroupString = groupsWithStringElement;
-            ViewBag.RedistributedGroups = redistributionsGroup;
-            return View("Result", result);
+            //ViewBag.InputData = inputData;
+            //ViewBag.Unique = uniqueElements;
+            //ViewBag.Groups = groups;
+            //ViewBag.GroupString = groupsWithStringElement;
+            //ViewBag.RedistributedGroups = redistributionsGroup;
+
+            var graphModel = new GraphLabViewModel();
+            graphModel.ResultingMatrix = result.ResultingMatrix;
+            graphModel.InputData = inputData;
+            graphModel.Unique = uniqueElements;
+            graphModel.Groups = groups;
+            graphModel.GroupString = groupsWithStringElement;
+            graphModel.RedistributedGroups = redistributionsGroup;
+            return View("Result", graphModel);
         }
 
         [HttpPost]
@@ -119,14 +127,30 @@ namespace GKSLab.Controllers
                 return View(error);
             }
             //returning partial view
-            ViewBag.InputData = inputData;
-            ViewBag.Unique = uniqueElements;
-            ViewBag.Groups = groups;
-            ViewBag.GroupString = groupsWithStringElement;
-            ViewBag.RedistributedGroups = redistributionsGroup;
-            return View("Result", result);
+
+            //ViewBag.InputData = inputData;
+            //ViewBag.Unique = uniqueElements;
+            //ViewBag.Groups = groups;
+            //ViewBag.GroupString = groupsWithStringElement;
+            //ViewBag.RedistributedGroups = redistributionsGroup;
+
+            var graphModel = new GraphLabViewModel();
+            graphModel.ResultingMatrix = result.ResultingMatrix;
+            graphModel.InputData = inputData;
+            graphModel.Unique = uniqueElements;
+            graphModel.Groups = groups;
+            graphModel.GroupString = groupsWithStringElement;
+            graphModel.RedistributedGroups = redistributionsGroup;
+            _currentGraph = new СreationGraphModel()
+            {
+                Groups = groups,
+                InputData = inputData,
+                RedistributedGroups = redistributionsGroup
+            };
+            return View("Result", graphModel);
         }
 
+        private static СreationGraphModel _currentGraph;
 
         public ActionResult Lab4()
         {
@@ -135,61 +159,51 @@ namespace GKSLab.Controllers
         /// <summary>
         /// Test Method for LAB 4
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="mdoel"></param>
         /// <returns></returns>
-        public ActionResult Test(HttpPostedFileBase file)
+        public ActionResult Test()
         {
 
-            ComparationResult result;
-            var uniqueElements = 0;
-            List<List<string>> inputData = new List<List<string>>();
-            List<List<int>> groups = new List<List<int>>();
-            List<List<int>> redistributionsGroup = new List<List<int>>();
-
-            ////First TEST DATA
+            ////second test data
             //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
             //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "F1",  "F2" });
-            //inputData.Add(new List<string>(3) {  "T1", "F2" });
-
-            ////second test data
-            inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            inputData.Add(new List<string>(3) { "C1", "T1" });
-
-            //test data for find graph
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1" });
-            //inputData.Add(new List<string>(4) { "F1", "F2" });
-            //inputData.Add(new List<string>(6) { "F2", "P1", "C1" });
-            //inputData.Add(new List<string>(3) { "F1", "P1" });
-
-            groups.Add(new List<int>() { 0, 1, 2, 3 });
-            groups.Add(new List<int>() { 1, 2 });
-            groups.Add(new List<int>() { 3,0 });
-
-            redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
-            redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
-            redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
+            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
+            //inputData.Add(new List<string>(3) { "C1", "T1" });
 
 
-            var model = new List<HashSet<string>>();
+            //groups.Add(new List<int>() { 0, 1, 2, 3 });
+            //groups.Add(new List<int>() { 1, 2 });
+            //groups.Add(new List<int>() { 3,0 });
+
+            //redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
+            //redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
+            //redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
+
+
+            var graphModel = new List<HashSet<string>>();
             //creating graph
-            var graphs = new List<Graph>();
-            foreach (var redistrItem in groups)
+            for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
+            {
+                for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
+                {
+                    _currentGraph.RedistributedGroups[0][index] -= 1;
+                }
+            }
+           
+            foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();
-                var graph = GraphManager.Create(redistrItem, inputData);
+                //creating graph
+                //changing index for 0-based array
+               
+                var graph = GraphManager.Create(redistrItem, _currentGraph.InputData);
                 list = GraphManager.CreateModules(graph, list);
-                model.Add(list);
+                graphModel.Add(list);
             }
 
-            List<List<string>> groupStr = redistributionsGroup.Select(redItem => redItem.ConvertAll(i => i.ToString())).ToList();
-            ExcelWriter.Write("InputData", inputData, @"D:\InputData.xlsx");
-            ExcelWriter.Write("RedistrGroup", groupStr, @"D:\RedistrGroup.xlsx");
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            return View("Test", model: model.ToList());
+            return View("Test", model: graphModel.ToList());
         }
 
         public ActionResult TestFile(HttpPostedFileBase file)
