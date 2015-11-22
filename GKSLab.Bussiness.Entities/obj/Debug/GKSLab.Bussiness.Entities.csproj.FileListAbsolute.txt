@@ -2,3 +2,8 @@ C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаб�
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Entities\bin\Debug\GKSLab.Bussiness.Entities.pdb
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Entities\obj\Debug\GKSLab.Bussiness.Entities.dll
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Entities\obj\Debug\GKSLab.Bussiness.Entities.pdb
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\bin\Debug\GKSLab.Bussiness.Entities.dll
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\bin\Debug\GKSLab.Bussiness.Entities.pdb
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Debug\GKSLab.Bussiness.Entities.csprojResolveAssemblyReference.cache
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Debug\GKSLab.Bussiness.Entities.dll
+E:\KPI\KPI-5\GCS\Lab\GKSLab.Bussiness.Entities\obj\Debug\GKSLab.Bussiness.Entities.pdb
