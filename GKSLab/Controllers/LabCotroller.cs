@@ -189,7 +189,7 @@ namespace GKSLab.Controllers
                     _currentGraph.RedistributedGroups[0][index] -= 1;
                 }
             }
-           
+
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();
