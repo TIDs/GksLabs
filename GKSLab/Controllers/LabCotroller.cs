@@ -164,29 +164,13 @@ namespace GKSLab.Controllers
         public ActionResult Test()
         {
 
-            ////second test data
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            //inputData.Add(new List<string>(3) { "C1", "T1" });
-
-
-            //groups.Add(new List<int>() { 0, 1, 2, 3 });
-            //groups.Add(new List<int>() { 1, 2 });
-            //groups.Add(new List<int>() { 3,0 });
-
-            //redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
-            //redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
-            //redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
-
-
             var graphModel = new List<HashSet<string>>();
             //creating graph
             for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             {
                 for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
                 {
-                    _currentGraph.RedistributedGroups[0][index] -= 1;
+                    _currentGraph.RedistributedGroups[i][index] -= 1;
                 }
             }
 
@@ -195,7 +179,7 @@ namespace GKSLab.Controllers
                 var list = new HashSet<string>();
                 //creating graph
                 //changing index for 0-based array
-               
+
                 var graph = GraphManager.Create(redistrItem, _currentGraph.InputData);
                 list = GraphManager.CreateModules(graph, list);
                 graphModel.Add(list);
@@ -239,7 +223,7 @@ namespace GKSLab.Controllers
             ViewBag.Groups = groups;
             ViewBag.GroupString = groupsWithStringElement;
             ViewBag.RedistributedGroups = redistributionsGroup;
-            
+
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
             var model = new List<HashSet<string>>();
@@ -247,7 +231,7 @@ namespace GKSLab.Controllers
             //changing index for 0-based array
             for (int index = 0; index < redistributionsGroup[0].Count; index++)
             {
-                redistributionsGroup[0][index] -= 1; 
+                redistributionsGroup[0][index] -= 1;
             }
             var graphs = new List<Graph>();
             foreach (var redistrItem in redistributionsGroup)
