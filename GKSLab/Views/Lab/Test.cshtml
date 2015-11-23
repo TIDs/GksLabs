@@ -6,11 +6,9 @@
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/network.js"></script>
 <script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/graph/graphModel.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <style type="text/css">
@@ -23,7 +21,6 @@
     .disabled-btn {
         display: none;
     }
-       
 </style>
 <script>
     $(document).ready(function () {
@@ -67,6 +64,7 @@
             var dot = 'digraph {node[shape=rectangle];' + temp + '}'; //razor will encode model, for disable this - Html.Raw(string)
             var data = links.Network.util.DOTToNetwork(dot);
             // draw the data
+
             network.draw(data.nodes, data.edges, data.options);
             // resize the network when window resizes
             window.onresize = function () {
@@ -95,6 +93,7 @@
             $scope.graphArray[$scope.currentGraphTabIndex].nextState();
             $scope.draw();
         };
+
         $scope.changeGraph = function () {
             $scope.draw();
         }
@@ -150,11 +149,11 @@
         @foreach (var item in Model)
         {
            @:strArray = new Array();
-                                                                           foreach (var str in item){
+                  foreach (var str in item){
                 @:strArray.push("@Html.Raw(str)");
-                                                                             }
+              }
         @:model.push(strArray);
-                                                      }
+                   }
 
     </script>
 </body>

@@ -147,11 +147,12 @@ namespace GKSLab.Controllers
                 InputData = inputData,
                 RedistributedGroups = redistributionsGroup
             };
+            _init = false;
             return View("Result", graphModel);
         }
 
         private static СreationGraphModel _currentGraph;
-
+        private static bool _init;
         public ActionResult Lab4()
         {
             return View();
@@ -164,6 +165,7 @@ namespace GKSLab.Controllers
         public ActionResult Test()
         {
 
+<<<<<<< HEAD
             ////second test data
             //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
             //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
@@ -183,6 +185,10 @@ namespace GKSLab.Controllers
             //var graphModel = new List<HashSet<string>>();
             //creating graph
             
+=======
+            var graphModel = new List<HashSet<string>>();
+            //creating graph
+>>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             //{
             //    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
@@ -190,6 +196,7 @@ namespace GKSLab.Controllers
             //        _currentGraph.RedistributedGroups[0][index] -= 1;
             //    }
             //}
+<<<<<<< HEAD
            
             //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             //{
@@ -202,13 +209,26 @@ namespace GKSLab.Controllers
             var graphModel = new List<HashSet<string>>();
             //creating graph
             for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
+=======
+            if (!_init)
+>>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             {
-                for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
+                for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
                 {
+<<<<<<< HEAD
                     _currentGraph.RedistributedGroups[i][index] -= 1;
                 }
             }
 
+=======
+                    for (int index = 0; index < _currentGraph.RedistributedGroups[i].Count; index++)
+                    {
+                        _currentGraph.RedistributedGroups[i][index] -= 1;
+                    }
+                    _init = true;
+                }
+            }
+>>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();
@@ -257,7 +277,7 @@ namespace GKSLab.Controllers
             ViewBag.Groups = groups;
             ViewBag.GroupString = groupsWithStringElement;
             ViewBag.RedistributedGroups = redistributionsGroup;
-            
+
 
             groups.Add(new List<int>() { 0, 1, 2, 3 });
             var model = new List<HashSet<string>>();
@@ -265,7 +285,7 @@ namespace GKSLab.Controllers
             //changing index for 0-based array
             for (int index = 0; index < redistributionsGroup[0].Count; index++)
             {
-                redistributionsGroup[0][index] -= 1; 
+                redistributionsGroup[0][index] -= 1;
             }
             var graphs = new List<Graph>();
             foreach (var redistrItem in redistributionsGroup)
