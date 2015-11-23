@@ -135,7 +135,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// Convert string with a lot of element to string with consits is array with one element
         /// </summary>
         /// <param name="prData">Primary data</param>
-        private static Dictionary<int, List<string>> ConvertString(List<string> prData)
+        public static Dictionary<int, List<string>> ConvertString(List<string> prData)
         {
             List<string> devisionOperations;
 

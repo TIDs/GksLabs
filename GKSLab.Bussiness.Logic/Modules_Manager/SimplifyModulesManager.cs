@@ -8,27 +8,40 @@ namespace GKSLab.Bussiness.Logic.Modules_Manager
 {
     public static class SimplifyModulesManager
     {
-        public static List<HashSet<string>> SimplifyModules(List<List<List<string>>> primaryModules)
+        public static List<HashSet<string>> SimplifyModules(List<HashSet<string>> primaryModules)
         {
             List<HashSet<string>> unionModules = new List<HashSet<string>>();
             List<HashSet<string>> result = new List<HashSet<string>>();
             HashSet<string> temp;
             HashSet<string> repetedElement = new HashSet<string>();
-            unionModules = UnionModulesToOneList(primaryModules);
-            
-            unionModules.Sort(delegate(HashSet<string> a, HashSet<string> b)
-            {
-                if (a.Count > b.Count) return 1;
-                else return -1;
-            });
+            //unionModules = UnionModulesToOneList(primaryModules);
 
-            for (int i = 0; i < unionModules.Count; i++)
+            //primaryModules.Sort(delegate(HashSet<string> a, HashSet<string> b)
+            //{
+            //    if (a.Count > b.Count) return 1;
+            //    else return -1;
+            //});
+
+            for (int i = 0; i < primaryModules.Count; i++ )
             {
-                temp = new HashSet<string>();
-                temp = DeleteModules(unionModules[i], i + 1, unionModules, repetedElement);
-                if (temp == null) continue;
-                else result.Add(temp);
+                for (int j = i+1; j < primaryModules.Count; j++)
+                {
+                    if(primaryModules[i].Count > primaryModules[j].Count)
+                    {
+                        var temps = primaryModules[i];
+                        primaryModules[i] = primaryModules[j];
+                        primaryModules[j] = temps;
+                    }
+                }
             }
+
+                for (int i = 0; i < primaryModules.Count; i++)
+                {
+                    temp = new HashSet<string>();
+                    temp = DeleteModules(primaryModules[i], i + 1, primaryModules, repetedElement);
+                    if (temp == null) continue;
+                    else result.Add(temp);
+                }
 
             return result;
         }

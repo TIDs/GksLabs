@@ -13,11 +13,14 @@ using GKSLab.Models.ViewModels;
 using GKSLab.Web.ExcelIOManager;
 using GKSLab.Bussiness.Entities.Graph;
 using GKSLab.fonts.Helpers.ExcelIO_Manager;
+using GKSLab.Bussiness.Logic.Modules_Manager;
+using GKSLab.Bussiness.Logic.FinishStructure_Manager;
 
 namespace GKSLab.Controllers
 {
     public class LabController : Controller
     {
+       
         // GET: Application
         public ActionResult Lab1(string id)
         {
@@ -94,6 +97,13 @@ namespace GKSLab.Controllers
             graphModel.Groups = groups;
             graphModel.GroupString = groupsWithStringElement;
             graphModel.RedistributedGroups = redistributionsGroup;
+            _currentGraph = new СreationGraphModel()
+            {
+                Groups = groups,
+                InputData = inputData,
+                RedistributedGroups = redistributionsGroup
+            };
+            _init = false;
             return View("Result", graphModel);
         }
 
@@ -164,7 +174,11 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult Test()
         {
-            var graphModel = new List<HashSet<string>>();
+            var graphModels = new List<HashSet<string>>();
+            List<string> moduleInGraph = new List<string>();
+            List<HashSet<string>> groupsWithAllModulesToSimpl = new List<HashSet<string>>();
+            HashSet<string> elementOneModule;
+            Dictionary<int, List<string>> allModules = new Dictionary<int, List<string>>();
             //creating graph
             //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             //{
@@ -192,12 +206,26 @@ namespace GKSLab.Controllers
 
                 var graph = GraphManager.Create(redistrItem, _currentGraph.InputData);
                 list = GraphManager.CreateModules(graph, list);
-                graphModel.Add(list);
+                graphModels.Add(list);
+                graph.Roots.ForEach(x => moduleInGraph.Add(x.Value));
+                allModules = FinishStructureManager.ConvertString(moduleInGraph);
+
+                foreach (var item in allModules)
+                {
+                    elementOneModule = new HashSet<string>();
+                    item.Value.ForEach(x => elementOneModule.Add(x));
+                    groupsWithAllModulesToSimpl.Add(elementOneModule);
+                }
+
+                allModules.Clear();
+                moduleInGraph.Clear();
+
             }
 
+            _currentGraph.moduleToSimpl = groupsWithAllModulesToSimpl;
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
-            return View("Test", model: graphModel.ToList());
+            return View("Test", model: graphModels.ToList());
         }
 
         public ActionResult TestFile(HttpPostedFileBase file)
@@ -255,5 +283,21 @@ namespace GKSLab.Controllers
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: model.ToList());
         }
+
+        public ActionResult Lab5()
+        {
+            List<HashSet<string>> simplifyModules = new List<HashSet<string>>();
+            List<HashSet<string>> moduleToSimpl = _currentGraph.moduleToSimpl;
+            
+
+
+            simplifyModules = SimplifyModulesManager.SimplifyModules(moduleToSimpl);
+
+            ViewBag.PrimaryData = moduleToSimpl;
+            return View("Lab5", simplifyModules);
+        }
+
+
+
     }
 }

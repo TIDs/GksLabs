@@ -14,5 +14,7 @@ namespace GKSLab.Models.ViewModels
         public List<List<int>> Groups { get; set; }
         public List<HashSet<string>> GroupString { get; set; }
         public List<List<int>> RedistributedGroups { get; set; }
+
+        public List<List<List<string>>> groupsWithModules = new List<List<List<string>>>();
     }
 }
