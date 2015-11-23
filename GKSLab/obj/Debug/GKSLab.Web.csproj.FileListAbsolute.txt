@@ -1,4 +1,3 @@
-C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Debug\GKSLab.Web.csprojResolveAssemblyReference.cache
 E:\KPI\KPI-5\GCS\Lab\GKSLab\bin\roslyn\csc.exe
 E:\KPI\KPI-5\GCS\Lab\GKSLab\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 E:\KPI\KPI-5\GCS\Lab\GKSLab\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -148,5 +147,6 @@ C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаб�
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Debug\GKSLab.Web.csprojResolveAssemblyReference.cache
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Debug\GKSLab.dll
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Debug\GKSLab.pdb

@@ -17,7 +17,7 @@ namespace GKSLab.Tests
             {
                 ControllerContext = new ControllerContext() {HttpContext = context.MockContext.Object}
             };
-            var resultArray = controller.Test(null);
+           // var resultArray = controller.Test(null);
             Assert.IsTrue(true);
         }
     }
