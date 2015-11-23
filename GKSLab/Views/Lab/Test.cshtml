@@ -64,6 +64,7 @@
             var dot = 'digraph {node[shape=rectangle];' + temp + '}'; //razor will encode model, for disable this - Html.Raw(string)
             var data = links.Network.util.DOTToNetwork(dot);
             // draw the data
+
             network.draw(data.nodes, data.edges, data.options);
             // resize the network when window resizes
             window.onresize = function () {
@@ -92,9 +93,11 @@
             $scope.graphArray[$scope.currentGraphTabIndex].nextState();
             $scope.draw();
         };
-        //$scope.changeGraph = function () {
-        //    $scope.draw();
-        //}
+
+        $scope.changeGraph = function () {
+            $scope.draw();
+            $scope.$apply();
+        }
     });
 </script>
 <body ng-app="sampleApp">
@@ -106,7 +109,7 @@
                     <ul>
                         @for (int i = 0; i < Model.Count; i++)
                         {
-                            <li><a ng-click="currentGraphTabIndex = @i; draw()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
+                            <li><a ng-click="currentGraphTabIndex = @i; changeGraph()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
                         }
                     </ul>
 
