@@ -147,11 +147,12 @@ namespace GKSLab.Controllers
                 InputData = inputData,
                 RedistributedGroups = redistributionsGroup
             };
+            _init = false;
             return View("Result", graphModel);
         }
 
         private static СreationGraphModel _currentGraph;
-
+        private static bool _init;
         public ActionResult Lab4()
         {
             return View();
@@ -166,12 +167,16 @@ namespace GKSLab.Controllers
 
             var graphModel = new List<HashSet<string>>();
             //creating graph
-            for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
+            if (!_init)
             {
-                for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
+                for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
                 {
-                    _currentGraph.RedistributedGroups[i][index] -= 1;
+                    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
+                    {
+                        _currentGraph.RedistributedGroups[i][index] -= 1;
+                    }
                 }
+                _init = true;
             }
 
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
