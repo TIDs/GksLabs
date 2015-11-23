@@ -21,7 +21,6 @@
     .disabled-btn {
         display: none;
     }
-       
 </style>
 <script>
     $(document).ready(function () {
@@ -54,7 +53,7 @@
                 $scope.graphArray.push(new graphModel(model[i]));
             }
             isInit = true;
-            $scope.draw(); 
+            $scope.draw();
         }
         $scope.draw = function () {
             // create a network view
@@ -93,9 +92,9 @@
             $scope.graphArray[$scope.currentGraphTabIndex].nextState();
             $scope.draw();
         };
-        $scope.changeGraph = function () {
-            $scope.draw();
-        }
+        //$scope.changeGraph = function () {
+        //    $scope.draw();
+        //}
     });
 </script>
 <body ng-app="sampleApp">
@@ -107,7 +106,7 @@
                     <ul>
                         @for (int i = 0; i < Model.Count; i++)
                         {
-                            <li><a ng-click="currentGraphTabIndex = @i; changeGraph()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
+                            <li><a ng-click="currentGraphTabIndex = @i; draw()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
                         }
                     </ul>
 
@@ -148,11 +147,11 @@
         @foreach (var item in Model)
         {
            @:strArray = new Array();
-                                                                           foreach (var str in item){
+                  foreach (var str in item){
                 @:strArray.push("@Html.Raw(str)");
-                                                                             }
+              }
         @:model.push(strArray);
-                                                      }
+                   }
 
     </script>
 </body>
