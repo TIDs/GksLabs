@@ -74,3 +74,6 @@ C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаб�
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Release\GKSLab.Web.csprojResolveAssemblyReference.cache
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Release\GKSLab.dll
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab\obj\Release\GKSLab.pdb
+E:\KPI\KPI-5\GCS\Lab\GKSLab\obj\Release\GKSLab.Web.csprojResolveAssemblyReference.cache
+E:\KPI\KPI-5\GCS\Lab\GKSLab\obj\Release\GKSLab.dll
+E:\KPI\KPI-5\GCS\Lab\GKSLab\obj\Release\GKSLab.pdb

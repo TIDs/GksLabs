@@ -178,13 +178,10 @@ namespace GKSLab.Controllers
            
             for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             {
-                for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
-                {
                     for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
                     {
                         _currentGraph.RedistributedGroups[i][index] -= 1;
                     }
-                }
                 _init = true;
             }
 
