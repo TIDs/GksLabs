@@ -1,4 +1,5 @@
-﻿@model GKSLab.Bussiness.Entities.ComparationResult
+﻿@using GKSLab.Models.ViewModels
+@model GKSLab.Models.ViewModels.GraphLabViewModel
 @{
     ViewBag.Title = "Result";
 }
@@ -18,19 +19,19 @@
                     <div class="col-lg-6">
                         <p> Введені дані </p>
                         <table class="table table-bordered">
-                            @foreach (var item in @ViewBag.InputData)
+                            @foreach (var item in Model.InputData)
                             {
                                 <tr>
                                     @for (int i = 0; i < @item.Count; i++)
                                     {
-                                       <td style="text-align:center">@item[i]</td> 
+                                        <td style="text-align:center">@item[i]</td>
                                     }
                                 </tr>
                             }
                         </table>
                     </div>
                     <div class="col-lg-6">
-                        <p> Кількість унікальних елементів @ViewBag.Unique</p>
+                        <p> Кількість унікальних елементів @Model.Unique</p>
                         <table class="table table-bordered">
                             @foreach (var item in Model.ResultingMatrix)
                             {
@@ -48,10 +49,10 @@
                     <div class="col-lg-6">
                         <p>Результат поділу на групи</p>
                         <table class="table table-bordered">
-                            @foreach (var item in @ViewBag.Groups)
+                            @foreach (var item in Model.Groups)
                             {
                                 <tr>
-                                    @for (int i = 0; i < @item.Count; i++)
+                                    @for (int i = 0; i < item.Count; i++)
                                     {
                                         <td style="text-align:center">@item[i]</td>
                                     }
@@ -62,10 +63,10 @@
                     <div class="col-lg-6">
                         <p>Групи із набором операцій</p>
                         <table class="table table-bordered">
-                            @foreach (var item in @ViewBag.GroupString)
+                            @foreach (var item in Model.GroupString)
                             {
                                 <tr>
-                                    @foreach (string i in @item)
+                                    @foreach (string i in item)
                                     {
                                         <td style="text-align:center">@i</td>
                                     }
@@ -76,29 +77,28 @@
                     </div>
                 </div>
 
-                 <div class="row">
-                     <div class="col-lg-6">
-                         <p>Перерозподіл груп</p>
-                         <table class="table table-bordered">
-                             @foreach (var item in @ViewBag.RedistributedGroups)
-                             {
-                                 <tr>
-                                     @for (int i = 0; i < @item.Count; i++)
-                                     {
-                                         <td style="text-align:center">@item[i]</td>
-                                     }
-                                 </tr>
-                             }
-                         </table>
-
-                         </table>
-                     </div>
-                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p>Перерозподіл груп</p>
+                        <table class="table table-bordered">
+                            @foreach (var item in Model.RedistributedGroups)
+                            {
+                                <tr>
+                                    @for (int i = 0; i < item.Count; i++)
+                                    {
+                                        <td style="text-align:center">@item[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
                 <div class="submitButton">
                     <button class="btn-lg btn-primary"><a id="Return" href="@Url.Action("Lab1", "Lab")">Порахувати ще раз</a></button>
+                    <button class="btn-lg btn-primary"><a id="Return" target="_blank" href="@Url.Action("Test", "Lab")">Побудувати граф</a></button>
                 </div>
-            <!-- end content-->
+                <!-- end content-->
+            </div>
         </div>
     </div>
-</div>
 </div>

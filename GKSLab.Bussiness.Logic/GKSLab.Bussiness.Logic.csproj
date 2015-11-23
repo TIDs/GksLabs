@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparison Manager\ComparisonManager.cs" />
+    <Compile Include="FinishStructure Manager\FinishStructureManager.cs" />
     <Compile Include="Graph Manager\GraphManager.cs" />
+    <Compile Include="Graph Manager\SearchInDepthCycle.cs" />
+    <Compile Include="Graph Manager\SearchInDepthFifthCase.cs" />
     <Compile Include="Groups Manager\DevisionGroupsManager.cs" />
     <Compile Include="Groups Manager\RedistributionGroupsManager.cs" />
     <Compile Include="Modules_Manager\SimplifyModulesManager.cs" />

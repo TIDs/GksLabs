@@ -26,6 +26,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 childValue = row.ElementAt(elementPosition + 1);
             return graph.Find(childValue);
         }
+
         /// <summary>
         /// Create graph. Return implementation of Graph
         /// </summary>
@@ -42,7 +43,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 //just adding all nodes 
                 foreach (var item in itemList)
                 {
-                    graph.Add(item);
+                    graph.AddNode(item);
                 }
                 //Updating all nodes. Adding children to existing nodes
                 foreach (var item in itemList)
@@ -50,13 +51,51 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                     //item is parent node, childNode - it's child node
                     var childNode = FindChildNodeInRow(graph, itemList, item);
                     if (childNode != null)
-                        graph.Add(item, childNode);
+                        graph.AddChildrens(item, childNode);
                 }
             }
             return graph;
         }
         
-        public static void FirstCasePack( Graph graph)
+        /// <summary>
+        /// Create modules in graph
+        /// </summary>
+        /// <param name="graph"></param>
+        public static HashSet<string> CreateModules(Graph graph, HashSet<string> model)
+        {
+            int amountNodesGraph;
+            model.Add(graph.ToString());
+            //wi'll take only not the same elements
+
+            do
+            {
+                amountNodesGraph = graph.Roots.Count;
+                
+                FirstCasePack(graph);
+                model.Add(graph.ToString());
+
+                SecondPack(graph);
+                model.Add(graph.ToString());
+
+                StrongConnection(graph);
+                model.Add(graph.ToString());
+
+                FindCycleInGraph(graph);
+                model.Add(graph.ToString());
+
+                FindFifthCaseInGraph(graph);
+                model.Add(graph.ToString());
+
+            } while (amountNodesGraph != graph.Roots.Count);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Find node that don`t have any Parents
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        public static void FirstCasePack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasChildren && !item.HasParrents))
             {
@@ -64,6 +103,10 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find node that don`t have any Children
+        /// </summary>
+        /// <param name="graph">Implementation of class graph<</param>
         public static void SecondPack(Graph graph)
         {
             foreach (var item in graph.Roots.Where(item => item.HasParrents && !item.HasChildren))
@@ -72,5 +115,55 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             }
         }
 
+        /// <summary>
+        /// Find strong connection  between nodes in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        public static void StrongConnection(Graph graph)
+        {
+            //find all nodes that have equal element in childrens and parents
+            foreach (var item in graph.Roots.Where(item => item.HasChildren && item.HasParrents))
+            {
+                var findNode = item.Parents.Find(x => item.Children.Contains(x));
+                if (findNode != null)
+                { 
+                    graph.UpdateGraph(graph, findNode, item);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Find cycle in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        public static void FindCycleInGraph(Graph graph)
+        {
+            List<Node<string>> catalogeCycle = new List<Node<string>>();
+            SearchInDepthCycle searchCycle = new SearchInDepthCycle();
+            catalogeCycle = searchCycle.FindCycle(graph);
+
+            // Count-2 because final element in cycle is a first element
+            for(int i = 0; i < catalogeCycle.Count-2; i++)
+            {
+                graph.UnionNodes(graph, catalogeCycle[0], catalogeCycle[i + 1]);
+            }
+        }
+
+        /// <summary>
+        /// Find fifth case in graph
+        /// </summary>
+        /// <param name="graph">Implementation of class graph</param>
+        public static void FindFifthCaseInGraph(Graph graph)
+        {
+            List<Node<string>> catalogeFifthCase = new List<Node<string>>();
+            SearchInDepthFifthCase fifthCase = new SearchInDepthFifthCase();
+            catalogeFifthCase = fifthCase.FindFifthCase(graph);
+
+            for (int i = 0; i < catalogeFifthCase.Count - 1; i++)
+            {
+                graph.UnionNodes(graph, catalogeFifthCase[0], catalogeFifthCase[i + 1]);
+            }
+        }
     }
 }
