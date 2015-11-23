@@ -96,7 +96,6 @@
 
         $scope.changeGraph = function () {
             $scope.draw();
-            $scope.$apply();
         }
     });
 </script>
@@ -109,7 +108,7 @@
                     <ul>
                         @for (int i = 0; i < Model.Count; i++)
                         {
-                            <li><a ng-click="currentGraphTabIndex = @i; changeGraph()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
+                            <li><a ng-click="currentGraphTabIndex = @i; changeGraph();prevState()" href="@String.Format("#tab{0}",i)">Tab @i</a></li>
                         }
                     </ul>
 
