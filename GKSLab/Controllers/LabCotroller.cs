@@ -164,31 +164,8 @@ namespace GKSLab.Controllers
         /// <returns></returns>
         public ActionResult Test()
         {
-
-<<<<<<< HEAD
-            ////second test data
-            //inputData.Add(new List<string>(7) { "T1", "C1", "F1", "F2", "T3", "T4" });
-            //inputData.Add(new List<string>(4) { "T4", "C1", "F2" });
-            //inputData.Add(new List<string>(6) { "T4", "T3", "F2" });
-            //inputData.Add(new List<string>(3) { "C1", "T1" });
-
-
-            //groups.Add(new List<int>() { 0, 1, 2, 3 });
-            //groups.Add(new List<int>() { 1, 2 });
-            //groups.Add(new List<int>() { 3,0 });
-
-            //redistributionsGroup.Add(new List<int>() {1,5,7,9,8});
-            //redistributionsGroup.Add(new List<int>() { 3, 4, 7, 9, 2 });
-            //redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
-
-
-            //var graphModel = new List<HashSet<string>>();
-            //creating graph
-            
-=======
             var graphModel = new List<HashSet<string>>();
             //creating graph
->>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             //{
             //    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
@@ -196,31 +173,10 @@ namespace GKSLab.Controllers
             //        _currentGraph.RedistributedGroups[0][index] -= 1;
             //    }
             //}
-<<<<<<< HEAD
-           
-            //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
-            //{
-            //    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
-            //    {
-            //        _currentGraph.RedistributedGroups[0][index] -= 1;
-            //    }
-            //}
-
-            var graphModel = new List<HashSet<string>>();
-            //creating graph
-            for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
-=======
             if (!_init)
->>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             {
                 for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
                 {
-<<<<<<< HEAD
-                    _currentGraph.RedistributedGroups[i][index] -= 1;
-                }
-            }
-
-=======
                     for (int index = 0; index < _currentGraph.RedistributedGroups[i].Count; index++)
                     {
                         _currentGraph.RedistributedGroups[i][index] -= 1;
@@ -228,7 +184,6 @@ namespace GKSLab.Controllers
                     _init = true;
                 }
             }
->>>>>>> 2774969ee991306f0a45ae4a1d50b4e63332a44c
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();
@@ -239,6 +194,7 @@ namespace GKSLab.Controllers
                 list = GraphManager.CreateModules(graph, list);
                 graphModel.Add(list);
             }
+
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: graphModel.ToList());

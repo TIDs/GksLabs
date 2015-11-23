@@ -106,7 +106,7 @@ namespace GKSLab.Bussiness.Entities.Graph
              foreach(var parent in parents)
                 {
                     //if node contain this Parent we will not add Parent to current node
-                    if (node.Children.FirstOrDefault(x => x.Value == parent.Value) == null)
+                    if (node.Parents.FirstOrDefault(x => x.Value == parent.Value) == null)
                     {
                         node.Parents.Add(parent);
                         node.Parents.Find(x => x.Value == parent.Value).Children.Add(node);
