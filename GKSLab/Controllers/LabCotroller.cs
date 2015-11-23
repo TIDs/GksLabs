@@ -180,9 +180,9 @@ namespace GKSLab.Controllers
             //redistributionsGroup.Add(new List<int>() { 12, 0,2, 7, 6 });
 
 
-            var graphModel = new List<HashSet<string>>();
+            //var graphModel = new List<HashSet<string>>();
             //creating graph
-<<<<<<< HEAD
+            
             //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             //{
             //    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
@@ -191,27 +191,34 @@ namespace GKSLab.Controllers
             //    }
             //}
            
-=======
+            //for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
+            //{
+            //    for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
+            //    {
+            //        _currentGraph.RedistributedGroups[0][index] -= 1;
+            //    }
+            //}
+
+            var graphModel = new List<HashSet<string>>();
+            //creating graph
             for (int i = 0; i < _currentGraph.RedistributedGroups.Count; i++)
             {
                 for (int index = 0; index < _currentGraph.RedistributedGroups[0].Count; index++)
                 {
-                    _currentGraph.RedistributedGroups[0][index] -= 1;
+                    _currentGraph.RedistributedGroups[i][index] -= 1;
                 }
             }
 
->>>>>>> 7fb64ad77ca6bcd152fd3d2a153d35f7bb80ff2a
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();
                 //creating graph
                 //changing index for 0-based array
-               
+
                 var graph = GraphManager.Create(redistrItem, _currentGraph.InputData);
                 list = GraphManager.CreateModules(graph, list);
                 graphModel.Add(list);
             }
-
 
             //Creating simplified graph model. It's should be like '[1->2,1->4,2->3]'
             return View("Test", model: graphModel.ToList());
