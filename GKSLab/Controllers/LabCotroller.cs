@@ -15,6 +15,7 @@ using GKSLab.Bussiness.Entities.Graph;
 using GKSLab.fonts.Helpers.ExcelIO_Manager;
 using GKSLab.Bussiness.Logic.Modules_Manager;
 using GKSLab.Bussiness.Logic.FinishStructure_Manager;
+using GKSLab.Bussiness.Logic.FinishStructure_Manager;
 
 namespace GKSLab.Controllers
 {
@@ -294,9 +295,60 @@ namespace GKSLab.Controllers
             simplifyModules = SimplifyModulesManager.SimplifyModules(moduleToSimpl);
 
             ViewBag.PrimaryData = moduleToSimpl;
+
+            _currentGraph.moduleToSimpl = simplifyModules;
+
             return View("Lab5", simplifyModules);
         }
 
+        public ActionResult Lab6()
+        {
+            var model = new List<HashSet<string>>();
+
+            // tests data
+          
+
+            Dictionary<int, List<string>> simpModule = new Dictionary<int, List<string>>();
+
+            Dictionary<int, List<string>> simplInputData = new Dictionary<int, List<string>>();
+
+            List<string> oneModule;
+
+            string temp = "";
+
+            // simplifyModules
+            for (int i = 0; i < _currentGraph.moduleToSimpl.Count; i++)
+            {
+                oneModule = new List<string>();
+
+                foreach (var item in _currentGraph.moduleToSimpl[i])
+                {
+                    oneModule.Add(item);
+                }
+                simpModule.Add(i, oneModule);
+            }
+
+            //primaryData
+            for (int i = 0; i < _currentGraph.InputData.Count; i++)
+            {
+                simplInputData.Add(i, _currentGraph.InputData[i]);
+            }
+
+            //simplify modules for graph
+            foreach (var item in _currentGraph.moduleToSimpl)
+            {
+                foreach (var element in item)
+                {
+                    temp += element;
+                }
+
+            }
+
+
+            //model = FinishStructureManager.CreateFinishStructure(simpModule, simplInputData);
+
+            return View("Test", model: model.ToList());
+        }
 
 
     }

@@ -14,19 +14,11 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// </summary>
         /// <param name="simplifyModules">Simplify modules</param>
         /// <param name="primaryData">Primary data</param>
-        public static void CreateFinishStructure(List<string> simplifyModules, List<string> primaryData)
+        public static void CreateFinishStructure(Dictionary<int, List<string>> singleModule, Dictionary<int, List<string>> singleOperation)
         {
-            // dictionary with single string element
-            Dictionary<int, List<string>> singleOperation = new Dictionary<int, List<string>>();
-
-            //dictionary with single string modules
-            Dictionary<int, List<string>> singleModule = new Dictionary<int, List<string>>();
-
+           
             // first and last elemеnts which in most primaryData in first and last positions 
             List<string> firstAndLastElements = new List<string>();
-
-            singleOperation = ConvertString(primaryData);
-            singleModule = ConvertString(simplifyModules);
 
             firstAndLastElements = FindFirstAndLastElements(singleOperation);
 
