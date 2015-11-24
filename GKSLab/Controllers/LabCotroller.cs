@@ -289,44 +289,16 @@ namespace GKSLab.Controllers
         {
             List<HashSet<string>> simplifyModules = new List<HashSet<string>>();
             List<HashSet<string>> moduleToSimpl = _currentGraph.moduleToSimpl;
-            
-
-
-            simplifyModules = SimplifyModulesManager.SimplifyModules(moduleToSimpl);
-
-            ViewBag.PrimaryData = moduleToSimpl;
-
-            _currentGraph.moduleToSimpl = simplifyModules;
-
-            return View("Lab5", simplifyModules);
-        }
-
-        public ActionResult Lab6()
-        {
-            var model = new List<HashSet<string>>();
-
-            // tests data
-          
 
             Dictionary<int, List<string>> simpModule = new Dictionary<int, List<string>>();
 
             Dictionary<int, List<string>> simplInputData = new Dictionary<int, List<string>>();
 
+            List<string> ForOutputInGraph = new List<string>();
+
             List<string> oneModule;
 
-            string temp = "";
-
-            // simplifyModules
-            for (int i = 0; i < _currentGraph.moduleToSimpl.Count; i++)
-            {
-                oneModule = new List<string>();
-
-                foreach (var item in _currentGraph.moduleToSimpl[i])
-                {
-                    oneModule.Add(item);
-                }
-                simpModule.Add(i, oneModule);
-            }
+            simplifyModules = SimplifyModulesManager.SimplifyModules(moduleToSimpl);
 
             //primaryData
             for (int i = 0; i < _currentGraph.InputData.Count; i++)
@@ -334,18 +306,49 @@ namespace GKSLab.Controllers
                 simplInputData.Add(i, _currentGraph.InputData[i]);
             }
 
-            //simplify modules for graph
-            foreach (var item in _currentGraph.moduleToSimpl)
+
+            // simplifyModules
+            for (int i = 0; i < simplifyModules.Count; i++)
             {
+                oneModule = new List<string>();
+
+                foreach (var item in simplifyModules[i])
+                {
+                    oneModule.Add(item);
+                }
+                simpModule.Add(i, oneModule);
+            }
+
+            //simplify modules for graph
+            foreach (var item in simplifyModules)
+            {
+                var temp = "";
+
                 foreach (var element in item)
                 {
                     temp += element;
                 }
-
+                ForOutputInGraph.Add(temp);
             }
 
+            SimplifyModulesManager.FindOrderModules(simpModule, simplInputData, ForOutputInGraph);
 
-            //model = FinishStructureManager.CreateFinishStructure(simpModule, simplInputData);
+            _currentGraph.ModuleSimplDictionary = simpModule;
+            _currentGraph.SimplInputDataDictionary = simplInputData;
+            _currentGraph.ForOutputInGraph = ForOutputInGraph;
+
+
+            ViewBag.PrimaryData = moduleToSimpl;
+
+            return View("Lab5", ForOutputInGraph);
+        }
+
+        public ActionResult Lab6()
+        {
+            // model in graph
+            var model = new List<HashSet<string>>();
+
+            model = FinishStructureManager.CreateFinishStructure(_currentGraph.ModuleSimplDictionary, _currentGraph.SimplInputDataDictionary, _currentGraph.ForOutputInGraph);
 
             return View("Test", model: model.ToList());
         }
