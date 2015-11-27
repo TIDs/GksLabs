@@ -220,7 +220,6 @@ namespace GKSLab.Controllers
 
                 allModules.Clear();
                 moduleInGraph.Clear();
-
             }
 
             _currentGraph.moduleToSimpl = groupsWithAllModulesToSimpl;
@@ -298,6 +297,10 @@ namespace GKSLab.Controllers
 
             List<string> oneModule;
 
+            List<HashSet<string>> finishGraph = new List<HashSet<string>>();
+
+            List<List<string>> optimalModules = new List<List<string>>();
+
             simplifyModules = SimplifyModulesManager.SimplifyModules(moduleToSimpl);
 
             //primaryData
@@ -331,26 +334,18 @@ namespace GKSLab.Controllers
                 ForOutputInGraph.Add(temp);
             }
 
-            SimplifyModulesManager.FindOrderModules(simpModule, simplInputData, ForOutputInGraph);
+            optimalModules = FinishStructureManager.CreateFinishStructure(simpModule, simplInputData, ForOutputInGraph, finishGraph);
 
-            _currentGraph.ModuleSimplDictionary = simpModule;
-            _currentGraph.SimplInputDataDictionary = simplInputData;
-            _currentGraph.ForOutputInGraph = ForOutputInGraph;
-
+            _currentGraph.finishGraphList = finishGraph;
 
             ViewBag.PrimaryData = moduleToSimpl;
 
-            return View("Lab5", ForOutputInGraph);
+            return View("Lab5", optimalModules);
         }
 
         public ActionResult Lab6()
         {
-            // model in graph
-            var model = new List<HashSet<string>>();
-
-            model = FinishStructureManager.CreateFinishStructure(_currentGraph.ModuleSimplDictionary, _currentGraph.SimplInputDataDictionary, _currentGraph.ForOutputInGraph);
-
-            return View("Test", model: model.ToList());
+            return View("Test", model: _currentGraph.finishGraphList.ToList());
         }
 
 

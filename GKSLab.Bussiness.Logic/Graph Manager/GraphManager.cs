@@ -80,7 +80,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 StrongConnection(graph);
                 model.Add(graph.ToString());
 
-                FindCycleInGraph(graph);
+                //FindCycleInGraph(graph);
                 model.Add(graph.ToString());
 
                 FindFifthCaseInGraph(graph);

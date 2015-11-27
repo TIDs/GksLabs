@@ -36,7 +36,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             List<Node<string>> newCycle;
 
             if (currentNode != endNode) currentNode.colorNode = 2;
-            else if (cycle.Count >= 2 && cycle.Count <= 5)
+            else if (cycle.Count >= 2 && cycle.Count <= 6)
             {
                 cycle.ForEach(x => findedCycles.Add(x));
             }

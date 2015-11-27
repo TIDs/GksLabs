@@ -11,22 +11,28 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
 {
     public static class FinishStructureManager
     {
+
+        public static List<List<string>> combinations;
+        
+        public static bool[] used;
         /// <summary>
         /// Create finish structure automatic system
         /// </summary>
         /// <param name="simplifyModules">Simplify modules</param>
         /// <param name="primaryData">Primary data</param>
-        public static List<HashSet<string>> CreateFinishStructure(Dictionary<int, List<string>> singleModule, Dictionary<int, List<string>> singleOperation, List<string> simplifyModules)
+        public static List<List<string>> CreateFinishStructure(Dictionary<int, List<string>> singleModule, Dictionary<int, List<string>> singleOperation, List<string> simplifyModules, List<HashSet<string>> statesFinishStructures)
         {
-           
+            // containt order modules and amount reverce connections
+            List<List<string>> resultOptimization = new List<List<string>>();
+
             // first and last elemеnts which in most primaryData in first and last positions 
             List<string> firstAndLastElements = new List<string>();
 
+            //
+            List<string> optimalGraph = new List<string>();
+
             //finish strucrute
             Graph graph = new Graph();
-
-            //states of the finish structure
-            List<HashSet<string>> statesFinishStructures = new List<HashSet<string>>();
 
             // amount reverse connections
             int amountReverseConnection = 0;
@@ -45,12 +51,18 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
             graph.Roots.ForEach(x => x.Parents.Clear());
 
             // create finish structure and counting the number of reverse
-            amountReverseConnection = CreateFinishStructure(graph, singleOperation, singleModule, simplifyModules);
-            
+            amountReverseConnection = CreateFinishStructure(graph, singleOperation, singleModule);
+
             //save first state graph
             statesFinishStructures.Add(new HashSet<string>() { graph.ToString() });
 
-            return statesFinishStructures;
+            optimalGraph = FindOptimalStructure(simplifyModules, singleOperation);
+            simplifyModules.Add(amountReverseConnection.ToString());
+
+            resultOptimization.Add(simplifyModules);
+            resultOptimization.Add(optimalGraph);
+
+            return resultOptimization;
         }
 
         /// <summary>
@@ -59,7 +71,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// <param name="dictModule"> Dictionary devision single module</param>
         /// <param name="simplifModule">Simplify modules</param>
         /// <param name="element">Element in first module</param>
-        private static void FindFirstModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule,  string element)
+        public static void FindFirstModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule, string element)
         {
             for (int i = 0; i < dictModule.Count; i++)
             {
@@ -85,7 +97,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// <param name="dictModule"> Dictionary devision single module</param>
         /// <param name="simplifModule">Simplify modules</param>
         /// <param name="element">Element in last module</param>
-        private static void FindLastModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule, string element)
+        public static void FindLastModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule, string element)
         {
             int amountElement = dictModule.Count - 1;
 
@@ -111,7 +123,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// Find first and last that a lot of see 
         /// </summary>
         /// <param name="prData">primaryData</param>
-        private static List<string> FindFirstAndLastElements(Dictionary<int, List<string>> prData)
+        public static List<string> FindFirstAndLastElements(Dictionary<int, List<string>> prData)
         {
             List<string> result = new List<string>();
             List<string> listFirstElemnts = new List<string>();
@@ -177,7 +189,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
             List<string> devisionOperations;
 
             // devision string by pattern (string element -> some element that dont equal null)
-            string pattern = @"(\w)(\S)";
+            string pattern = @"(\w)(\d+)";
 
             Dictionary<int, List<string>> singleOperation = new Dictionary<int, List<string>>();
 
@@ -202,7 +214,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// <param name="singleSimplModules">Dictionary simplify modules that devision to single modules</param>
         /// <param name="moduleInGraph">Modules in graph that consist in simple modules</param>
         /// <returns> Amount reverse connection</returns>
-        private static int CreateFinishStructure(Graph graph, Dictionary<int, List<string>> primData, Dictionary<int, List<string>> singleSimplModules, List<string> moduleInGraph)
+        private static int CreateFinishStructure(Graph graph, Dictionary<int, List<string>> primData, Dictionary<int, List<string>> singleSimplModules)
         {
             int numberModuleNext = 0;
             Node<string> cuurrentNode = new Node<string>();
@@ -264,6 +276,100 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
 
             return numberFindModule;
        }
-     }
+
+        private static List<Dictionary<int, List<string>>> FactorialElementInArray(List<string> singleModule)
+        {
+            List<Dictionary<int, List<string>>> listCombModules = new List<Dictionary<int, List<string>>>();
+
+            used = new bool[singleModule.Count];
+            //used.Fill(false);
+            combinations = new List<List<string>>(); 
+            List<string> c = new List<string>();
+            GetComb(singleModule, 0, c);
+
+            foreach (var item in combinations)
+            {
+                listCombModules.Add(ConvertString(item));
+            }
+
+            return listCombModules;
+
+        }
+
+        public static void GetComb(List<string> arr, int colindex, List<string> c)
+        {
+
+            if (colindex >= arr.Count-2)
+            {
+
+                combinations.Add(new List<string>(c));
+                return;
+            }
+            for (int i = 1; i < arr.Count-1; i++)
+            {
+                if (!used[i])
+                {
+                    used[i] = true;
+                    if(c.Count == 0)
+                    {
+                        c.Add(arr[0]);
+                    }
+                    c.Add(arr[i]);
+
+                    if (c.Count == arr.Count - 1)
+                    {
+                        c.Add(arr[arr.Count - 1]);
+                    }
+
+                    GetComb(arr, colindex + 1, c);
+
+                    if(c.Count == arr.Count)
+                    { 
+                        c.RemoveAt(c.Count - 1);
+                    }
+
+                    c.RemoveAt(c.Count - 1);
+                    used[i] = false;
+                }
+            }
+        }
+
+        public static List<string> FindOptimalStructure(List<string> simplifyModules, Dictionary<int, List<string>> singleOperation)
+        {
+            List<Dictionary<int, List<string>>> listCombModules = new List<Dictionary<int, List<string>>>();
+
+            List<string> optimalPosition = new List<string>();
+
+            listCombModules = FactorialElementInArray(simplifyModules);
+
+            int saveCounterI = 0;
+
+            int amountReverceConnection = 20;
+
+            int tempamountReverceConnection = 20;
+
+            for (int i = 0; i < listCombModules.Count; i++)
+            {
+                var graph = GraphManager.Create(new List<int> { 0 }, new List<List<string>> { combinations[i] });
+                // remove all childrens and parents in node
+                graph.Roots.ForEach(x => x.Children.Clear());
+                graph.Roots.ForEach(x => x.Parents.Clear());
+
+                // create finish structure and counting the number of reverse
+                tempamountReverceConnection = CreateFinishStructure(graph, singleOperation, listCombModules[i]);
+                if(tempamountReverceConnection < amountReverceConnection)
+                {
+                    saveCounterI = i;
+                    amountReverceConnection = tempamountReverceConnection;
+                }
+            }
+
+            optimalPosition = combinations[saveCounterI];
+            optimalPosition.Add(amountReverceConnection.ToString());
+
+            return optimalPosition;
+        }
     }
+}
+
 
