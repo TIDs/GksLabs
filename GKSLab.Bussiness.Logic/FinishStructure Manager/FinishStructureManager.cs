@@ -15,6 +15,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         public static List<List<string>> combinations;
         
         public static bool[] used;
+
         /// <summary>
         /// Create finish structure automatic system
         /// </summary>
@@ -42,7 +43,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
 
             // find first and last module in finish structured and shift him to accordyngly first and last position
             FindFirstModule(singleModule, simplifyModules, firstAndLastElements[0]);
-            FindLastModule(singleModule,simplifyModules, firstAndLastElements[1]);
+            FindLastModule(singleModule,simplifyModules, firstAndLastElements[1], singleOperation);
 
             //create primary graph
             graph = GraphManager.Create(new List<int> { 0 }, new List<List<string>> { simplifyModules });
@@ -76,7 +77,7 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
             for (int i = 0; i < dictModule.Count; i++)
             {
                  // find modules that contains first element and shift him in first position
-                if (dictModule[i].Contains(element) && i != 0)
+                if (dictModule[i].Contains(element))
                 {
                     // modules which element devision on single string element
                      var tempDictionary = dictModule[0];
@@ -97,15 +98,29 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// <param name="dictModule"> Dictionary devision single module</param>
         /// <param name="simplifModule">Simplify modules</param>
         /// <param name="element">Element in last module</param>
-        public static void FindLastModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule, string element)
+        public static void FindLastModule(Dictionary<int, List<string>> dictModule, List<string> simplifModule, string element, Dictionary<int, List<string>> prData)
         {
             int amountElement = dictModule.Count - 1;
+            List<string> findNewLastElement = new List<string>();
+            int amount = 0;
+
+            foreach(var item in prData)
+            {
+                amount = item.Value.Count - 1;
+                findNewLastElement.Add(item.Value[amount]);   
+            }
 
             for (int i = 0; i < dictModule.Count; i++)
             {
                  // find modules that contains last element and shift him in last position
                 if (dictModule[i].Contains(element) && i != amountElement)
                 {
+                    if (i == 0)
+                    {
+                        element = FindGivenElement(findNewLastElement, element);
+                        i = -1;
+                        continue;
+                    }
                     // modules which element devision on single string element
                     var tempDictionary = dictModule[amountElement];
                     dictModule[amountElement] = dictModule[i];
@@ -145,7 +160,6 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
             //find element that often found in last position
             result.Add(FindGivenElement(listLastElements));
 
-
             return result;
         }
 
@@ -154,23 +168,29 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
         /// </summary>
         /// <param name="listForFind"></param>
         /// <returns>Element that is most frequent</returns>
-        private static string FindGivenElement(List<string> listForFind)
+        private static string FindGivenElement(List<string> listForFind, params string[] repetedElement)
         {
             string element;
             string findedElement = "";
             int amountOneElementInList = 0;
+            string repetElement = "";
 
+            foreach (var repElem in repetedElement)
+            {
+                repetElement = repElem;
+            }
+            
             for (int i = 0; i < listForFind.Count; i++)
             {
                 element = listForFind[i];
                 if (i == 0)
                 {
-                     // choose the first element as most frequent
-                    amountOneElementInList = listForFind.Count(x => x == element);
+                    // choose the first element as most frequent
+                    amountOneElementInList = listForFind.Count(x => x == element && x != repetElement);
                     findedElement = element;
                 }
-                    // check if exist element that is more frequent than previosely
-                else if (amountOneElementInList < listForFind.Count(x => x == element))
+                // check if exist element that is more frequent than previosely
+                else if (amountOneElementInList < listForFind.Count(x => x == element && x != repetElement))
                 {
                     amountOneElementInList = listForFind.Count(x => x == element);
                     findedElement = element;
@@ -236,7 +256,12 @@ namespace GKSLab.Bussiness.Logic.FinishStructure_Manager
                     }
 
                     // if connection to the same module or this module is have next children -> continue
-                    if (cuurrentNode == graph.Roots[numberModuleNext] || cuurrentNode.Children.Contains(graph.Roots[numberModuleNext])) continue;
+                    if (cuurrentNode == graph.Roots[numberModuleNext] || cuurrentNode.Children.Contains(graph.Roots[numberModuleNext]))
+                    {
+                        cuurrentNode = graph.Roots[numberModuleNext];
+                        orderModules = numberModuleNext;
+                        continue;
+                    }
 
                     // if next module finded in number of order that less than this module -> reverse connection
                     if (orderModules > numberModuleNext)
