@@ -5,3 +5,10 @@ C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаб�
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.csprojResolveAssemblyReference.cache
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.dll
 C:\Users\Руслан\SkyDrive\KPI\3 курс\1-й семестр\ГКС\Лаби\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.pdb
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\bin\Debug\GKSLab.Bussiness.Logic.dll
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\bin\Debug\GKSLab.Bussiness.Logic.pdb
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\bin\Debug\GKSLab.Bussiness.Entities.dll
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\bin\Debug\GKSLab.Bussiness.Entities.pdb
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.csprojResolveAssemblyReference.cache
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.dll
+E:\KPI\KPI-5\GCS\LabFull\GksLabs\GKSLab.Bussiness.Logic\obj\Debug\GKSLab.Bussiness.Logic.pdb
