@@ -40,7 +40,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
             List<Node<string>> newCycle;
 
             if (firstNode.Children.Count < 2) return;
-            else if (currentNode != firstNode && currentNode.Children.Count > 1) return;
+            else if (currentNode != firstNode && (currentNode.Children.Count > 1 || currentNode.Parents.Count > 1)) return;
 
             if (currentNode != firstNode) currentNode.colorNode = 2;
 
