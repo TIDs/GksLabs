@@ -18,27 +18,48 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
         {
             findedCycles.Clear();
             List<Node<string>> elementInCycle;
+            bool union = true;
 
             for (int i = 0; i < graph.Roots.Count; i++)
             {
                 graph.Roots.ForEach(x => x.colorNode = 1);
                 elementInCycle = new List<Node<string>>();
                 elementInCycle.Add(graph.Roots[i]);
-                DFSCycle(graph.Roots[i], graph.Roots[i], graph, elementInCycle);
+                DFSCycle(graph.Roots[i], graph.Roots[i], graph, elementInCycle, union);
                 if (findedCycles.Count > 0) break;
             }
 
             return findedCycles;
         }
 
-        private static void DFSCycle(Node<string> currentNode, Node<string> endNode, Graph graph, List<Node<string>> cycle)
+        private static void DFSCycle(Node<string> currentNode, Node<string> endNode, Graph graph, List<Node<string>> cycle, bool union)
         {
             List<Node<string>> newCycle;
 
             if (currentNode != endNode) currentNode.colorNode = 2;
-            else if (cycle.Count >= 2 && cycle.Count <= 6)
+            else if (cycle.Count >= 4 && cycle.Count <= 6)
             {
-                cycle.ForEach(x => findedCycles.Add(x));
+                var amount = 0;
+                union = true;
+                for (int i = 0; i < cycle.Count; i++)
+			    {
+                    amount += cycle[i].CountUnion;
+			    }
+
+                if (amount > 6)
+                {
+                    union = false; 
+                } 
+
+                if (union == true) {
+                    for (int i = 0; i < cycle.Count; i++)
+                    {
+                        if (i != cycle.Count - 1)
+                        {
+                            findedCycles.Add(cycle[i]);
+                        }
+                    }
+                }   
             }
 
             for (int i = 0; i < currentNode.Children.Count; i++)
@@ -48,7 +69,7 @@ namespace GKSLab.Bussiness.Logic.Graph_Manager
                 {
                     newCycle = new List<Node<string>>(cycle);
                     newCycle.Add(currentNode.Children[i]);
-                    DFSCycle(currentNode.Children[i], endNode, graph, newCycle);
+                    DFSCycle(currentNode.Children[i], endNode, graph, newCycle, union );
                 }
             }
         }

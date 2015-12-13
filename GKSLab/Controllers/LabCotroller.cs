@@ -84,12 +84,6 @@ namespace GKSLab.Controllers
                 Debug.Write(e.Message);
                 return View(error);
             }
-            //returning partial view
-            //ViewBag.InputData = inputData;
-            //ViewBag.Unique = uniqueElements;
-            //ViewBag.Groups = groups;
-            //ViewBag.GroupString = groupsWithStringElement;
-            //ViewBag.RedistributedGroups = redistributionsGroup;
 
             var graphModel = new GraphLabViewModel();
             graphModel.ResultingMatrix = result.ResultingMatrix;
@@ -199,6 +193,7 @@ namespace GKSLab.Controllers
                     _init = true;
                 }
             }
+
             foreach (var redistrItem in _currentGraph.RedistributedGroups)
             {
                 var list = new HashSet<string>();

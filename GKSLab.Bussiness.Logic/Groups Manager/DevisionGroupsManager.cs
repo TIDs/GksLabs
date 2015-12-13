@@ -17,6 +17,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
             var size = dataForCreateGroups.ResultingMatrix.Count();
             List<List<int>> groups = new List<List<int>>();
             List<int> position = new List<int>();
+            int countCycle = 0;
 
             for (int i = 0; i < size; i++)
             {
@@ -42,13 +43,14 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                     groups.Add(position);
                     break;
                 }
-
+                countCycle = 2;
                 uniqueElement.Clear();
-
-                for (int i = 0; i < size; i++ )
+                while(countCycle >=1)
                 {
-                    for(int j = 0; j < size; j++)
+                    for (int i = 0; i < size; i++ )
                     {
+                         for(int j = 0; j < size; j++)
+                         {
                         if(dataForCreateGroups.ResultingMatrix[i][j] == maxElement)
                         {
                             if(!elementInGroup.Contains(i+1) && !elementInGroup.Contains(j+1) && position.Count() == 0)
@@ -74,8 +76,10 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                             }
                         }
                     }
+                    }
+                    countCycle--;
                 }
-
+                
                 if (position.Count() == 0)
                     maxElement -= 1;
                 else

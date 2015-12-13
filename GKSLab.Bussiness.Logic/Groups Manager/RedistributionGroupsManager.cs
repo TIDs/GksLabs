@@ -161,7 +161,7 @@ namespace GKSLab.Bussiness.Logic.Groups_Manager
                         for (int k = 0; k < groupsWithInt[j].Count; k++)
                         {
                             var newElementInGroup = OverlappingElement(inputDate, fixedGroupWithString, groupsWithString[j], groupsWithInt[j][k]);
-                            if (newElementInGroup != 0)
+                            if (newElementInGroup != 0 && !uniqueElement.Contains(newElementInGroup))
                             {
                                 result.Add(newElementInGroup);
                                 uniqueElement.Add(newElementInGroup);
